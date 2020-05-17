@@ -2,6 +2,7 @@ package swsports.daousuarios;
 
 import java.util.List;
 
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 interface IDAOUsuarios {
@@ -9,8 +10,10 @@ interface IDAOUsuarios {
 	 * Devuelve una lista de los usuarios que se adhieren a los parámetros de
 	 * búsqueda proporcionados. Los parámetros que sean nulos no se usarán para la
 	 * búsqueda.
+	 * 
+	 * @param tUsu TODO
 	 */
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion);
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu);
 
 	/**
 	 * Cierra la sesión actual.
@@ -31,24 +34,12 @@ interface IDAOUsuarios {
 	 * Edita los datos de un usuario. Su identificador (id) se usará para buscar el
 	 * usuario que se quiere editar y se sobrescribirán el resto de datos.
 	 */
-	public boolean editarUsuario(Usuario usu);
-
-	/**
-	 * Concede privilegios de administrador a un usuario dado su identificador (id).
-	 * Falla si el usuario no existe o ya tenía privilegios de administrador.
-	 */
-	public boolean hacerAdmin(String id);
+	public boolean editarUsuario(TransferUsuario usu);
 
 	/**
 	 * Inicia la sesión de un usuario dado su identificador (id) y su contraseña.
 	 */
 	public boolean login(String id, String contrasenya);
-
-	/**
-	 * Revoca los privilegios de administrador de un usuario dado su identificador
-	 * (id). Falla si el usuario no existe o ya carecía de dichos privilegios.
-	 */
-	public boolean quitarAdmin(String id);
 
 	/**
 	 * Da de alta un usuario y lo registra en la apliación.

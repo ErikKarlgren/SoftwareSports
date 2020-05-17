@@ -2,6 +2,7 @@ package swsports.daousuarios;
 
 import java.util.List;
 
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
@@ -18,8 +19,8 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 	 * búsqueda.
 	 */
 	@Override
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion) {
-		return dao.busquedaUsuarios(nombre, mail, id, telefono, direccion);
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
+		return dao.busquedaUsuarios(null);
 	}
 
 	/**
@@ -51,17 +52,8 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 	 * usuario que se quiere editar y se sobrescribirán el resto de datos.
 	 */
 	@Override
-	public boolean editarUsuario(Usuario usu) {
+	public boolean editarUsuario(TransferUsuario usu) {
 		return dao.editarUsuario(usu);
-	}
-
-	/**
-	 * Concede privilegios de administrador a un usuario dado su identificador (id).
-	 * Falla si el usuario no existe o ya tenía privilegios de administrador.
-	 */
-	@Override
-	public boolean hacerAdmin(String id) {
-		return dao.hacerAdmin(id);
 	}
 
 	/**
@@ -70,15 +62,6 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 	@Override
 	public boolean login(String id, String contrasenya) {
 		return dao.login(id, contrasenya);
-	}
-
-	/**
-	 * Revoca los privilegios de administrador de un usuario dado su identificador
-	 * (id). Falla si el usuario no existe o ya carecía de dichos privilegios.
-	 */
-	@Override
-	public boolean quitarAdmin(String id) {
-		return dao.quitarAdmin(id);
 	}
 
 	/**

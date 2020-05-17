@@ -2,6 +2,7 @@ package swsports.daousuarios;
 
 import java.util.List;
 
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 class DAOUsuarios implements IDAOUsuarios {
@@ -19,7 +20,7 @@ class DAOUsuarios implements IDAOUsuarios {
 	}
 
 	@Override
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion) {
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,19 +38,7 @@ class DAOUsuarios implements IDAOUsuarios {
 	}
 
 	@Override
-	public boolean editarUsuario(Usuario usu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hacerAdmin(String id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean quitarAdmin(String id) {
+	public boolean editarUsuario(TransferUsuario usu) {
 		// TODO Auto-generated method stub
 		return false;
 	}

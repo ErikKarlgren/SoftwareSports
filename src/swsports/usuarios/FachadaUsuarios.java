@@ -2,6 +2,7 @@ package swsports.usuarios;
 
 import java.util.List;
 
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 /**
@@ -23,8 +24,8 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 	 * búsqueda.
 	 */
 	@Override
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion) {
-		return sa.busquedaUsuarios(nombre, mail, id, telefono, direccion);
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
+		return sa.busquedaUsuarios(null);
 	}
 
 	/**
@@ -56,17 +57,8 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 	 * usuario que se quiere editar y se sobrescribirán el resto de datos.
 	 */
 	@Override
-	public boolean editarUsuario(Usuario usu) {
+	public boolean editarUsuario(TransferUsuario usu) {
 		return sa.editarUsuario(usu);
-	}
-
-	/**
-	 * Concede privilegios de administrador a un usuario dado su identificador (id).
-	 * Falla si el usuario no existe o ya tenía privilegios de administrador.
-	 */
-	@Override
-	public boolean hacerAdmin(String id) {
-		return sa.hacerAdmin(id);
 	}
 
 	/**
@@ -75,15 +67,6 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 	@Override
 	public boolean login(String id, String contrasenya) {
 		return sa.login(id, contrasenya);
-	}
-
-	/**
-	 * Revoca los privilegios de administrador de un usuario dado su identificador
-	 * (id). Falla si el usuario no existe o ya carecía de dichos privilegios.
-	 */
-	@Override
-	public boolean quitarAdmin(String id) {
-		return sa.quitarAdmin(id);
 	}
 
 	/**

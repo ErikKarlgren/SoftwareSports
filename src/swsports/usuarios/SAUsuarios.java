@@ -4,6 +4,7 @@ import java.util.List;
 
 import swsports.daousuarios.FachadaDAOUsuarios;
 import swsports.daousuarios.IFachadaDAOUsuarios;
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 class SAUsuarios implements ISAUsuarios {
@@ -20,8 +21,8 @@ class SAUsuarios implements ISAUsuarios {
 	 * búsqueda.
 	 */
 	@Override
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion) {
-		return dao.busquedaUsuarios(nombre, mail, id, telefono, direccion);
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
+		return dao.busquedaUsuarios(null);
 	}
 
 	/**
@@ -29,6 +30,7 @@ class SAUsuarios implements ISAUsuarios {
 	 */
 	@Override
 	public boolean cerrarSesion() {
+		// FIXME no hace falta consultar la base de datos a menos que queramos guardar el cierre de sesión
 		return dao.cerrarSesion();
 	}
 
@@ -37,7 +39,7 @@ class SAUsuarios implements ISAUsuarios {
 	 */
 	@Override
 	public Usuario consultaUsuario(String id) {
-		return dao.consultaUsuario(id);
+		return id == null ? null : dao.consultaUsuario(id);
 	}
 
 	/**
@@ -53,18 +55,8 @@ class SAUsuarios implements ISAUsuarios {
 	 * usuario que se quiere editar y se sobrescribirán el resto de datos.
 	 */
 	@Override
-	public boolean editarUsuario(Usuario usu) {
-		return dao.editarUsuario(usu);
-	}
-
-	/**
-	 * Concede privilegios de administrador a un usuario dado su identificador (id).
-	 * Falla si el usuario no existe o ya tenía privilegios de administrador.
-	 */
-	@Override
-	public boolean hacerAdmin(String id) {
-		Usuario u = dao.consultaUsuario(id);
-		return (u != null) && !u.esAdmin() && dao.hacerAdmin(id);
+	public boolean editarUsuario(TransferUsuario usu) {
+		return usu != null && dao.editarUsuario(usu);
 	}
 
 	/**
@@ -72,17 +64,7 @@ class SAUsuarios implements ISAUsuarios {
 	 */
 	@Override
 	public boolean login(String id, String contrasenya) {
-		return dao.login(id, contrasenya);
-	}
-
-	/**
-	 * Revoca los privilegios de administrador de un usuario dado su identificador
-	 * (id). Falla si el usuario no existe o ya carecía de dichos privilegios.
-	 */
-	@Override
-	public boolean quitarAdmin(String id) {
-		Usuario u = dao.consultaUsuario(id);
-		return (u != null) && u.esAdmin() && dao.quitarAdmin(id);
+		return id != null && contrasenya != null && dao.login(id, contrasenya);
 	}
 
 	/**
@@ -90,7 +72,7 @@ class SAUsuarios implements ISAUsuarios {
 	 */
 	@Override
 	public boolean registroUsuario(Usuario usu) {
-		return (dao.consultaUsuario(usu.getId()) == null) && dao.registroUsuario(usu);
+		return usu != null && (dao.consultaUsuario(usu.getId()) == null) && dao.registroUsuario(usu);
 	}
 
 }

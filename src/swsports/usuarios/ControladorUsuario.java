@@ -2,6 +2,7 @@ package swsports.usuarios;
 
 import java.util.List;
 
+import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 
 public class ControladorUsuario {
@@ -18,8 +19,8 @@ public class ControladorUsuario {
 	 * búsqueda.
 	 */
 
-	public List<Usuario> busquedaUsuarios(String nombre, String mail, String id, int telefono, String direccion) {
-		return fachUsu.busquedaUsuarios(nombre, mail, id, telefono, direccion);
+	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
+		return fachUsu.busquedaUsuarios(tUsu);
 	}
 
 	/**
@@ -51,17 +52,8 @@ public class ControladorUsuario {
 	 * usuario que se quiere editar y se sobrescribirán el resto de datos.
 	 */
 
-	public boolean editarUsuario(Usuario usu) {
+	public boolean editarUsuario(TransferUsuario usu) {
 		return fachUsu.editarUsuario(usu);
-	}
-
-	/**
-	 * Concede privilegios de administrador a un usuario dado su identificador (id).
-	 * Falla si el usuario no existe o ya tenía privilegios de administrador.
-	 */
-
-	public boolean hacerAdmin(String id) {
-		return fachUsu.hacerAdmin(id);
 	}
 
 	/**
@@ -70,15 +62,6 @@ public class ControladorUsuario {
 
 	public boolean login(String id, String contrasenya) {
 		return fachUsu.login(id, contrasenya);
-	}
-
-	/**
-	 * Revoca los privilegios de administrador de un usuario dado su identificador
-	 * (id). Falla si el usuario no existe o ya carecía de dichos privilegios.
-	 */
-
-	public boolean quitarAdmin(String id) {
-		return fachUsu.quitarAdmin(id);
 	}
 
 	/**
