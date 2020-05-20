@@ -9,7 +9,7 @@ public class TransferProducto {
 	private final String id;
 	private String nombre;
 	private String desc;
-	private Integer stock;
+	private int stock;
 	private double precio;
 
 	/**
@@ -22,7 +22,7 @@ public class TransferProducto {
 	 * @param precio          Precio del producto.
 	 * .
 	 */
-	public TransferProducto(String id, String nombre, String desc, Integer stock, double precio) {
+	public TransferProducto(String id, String nombre, String desc, int stock, double precio) {
 		this(id, nombre, desc, stock, precio);
 	}
 
@@ -35,7 +35,7 @@ public class TransferProducto {
 	 * @param stock       Número de Productos disponibles.
 	 * @param precio      Precio del producto
 	 */
-	public TransferProducto(String id, String nombre, String desc, Integer stock, double precio) {
+	public TransferProducto(String id, String nombre, String desc, int stock, double precio) {
 		this.id = id;
 		this.nombre = nombre;
 		this.desc = desc;
@@ -80,7 +80,7 @@ public class TransferProducto {
 	/**
 	 * @return El stock del que se dispone
 	 */
-	public Integer getStock() {
+	public int getStock() {
 		return stock;
 	}
 
