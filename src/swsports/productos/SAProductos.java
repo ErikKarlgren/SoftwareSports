@@ -53,7 +53,7 @@ class SAProductos implements ISAProductos {
           return dao.quitarProducto(prod);
 
         @Override
-        public boolean comprar(Tarjeta t, List<Producto>){
-          return dao.comprar(t, List);
+        public boolean comprar(Tarjeta t, List<Producto> lp){
+          return dao.comprar(t, lp);
         }
 }
