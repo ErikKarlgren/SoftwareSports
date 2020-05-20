@@ -7,8 +7,8 @@ public class TransferProducto {
 	private final String id;
 	private String nombre;
 	private String desc;
-	private int stock;
-	private double precio;
+	private Integer stock;
+	private Double precio;
 
 	/**
 	 * Crea un {@link TransferProducto} a partir de los argumentos dados.
@@ -64,14 +64,14 @@ public class TransferProducto {
 	/**
 	 * @return El stock del que se dispone
 	 */
-	public int getStock() {
+	public Integer getStock() {
 		return this.stock;
 	}
 
 	/**
 	 * @return El precio del producto
 	 */
-	public double getPrecio() {
+	public Double getPrecio() {
 		return this.precio;
 	}
 }
