@@ -2,10 +2,11 @@ package swsports.productos;
 
 import java.util.List;
 
-import swsports.daousuarios.FachadaDAOProductos;
-import swsports.daousuarios.IFachadaDAOProductos;
+import swsports.daoproductos.FachadaDAOProductos;
+import swsports.daoproductos.IFachadaDAOProductos;
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 /**
 * Clase encargada de la lógica del módulo de Productos
@@ -20,7 +21,7 @@ class SAProductos implements ISAProductos {
 
         @Override
         public boolean altaProducto(Producto prod){
-              return prod != null && (dao.consultaProducto(prod.getId() == null) && dao.altaProducto(prod);
+              return prod != null && (dao.consultaProducto(prod.getId()) == null) && dao.altaProducto(prod);
         }
 
         @Override
@@ -45,12 +46,13 @@ class SAProductos implements ISAProductos {
 
         @Override
         public boolean anyadirProducto(Producto prod){
-          return dao.anyadirProducto(prod)
+          return dao.anyadirProducto(prod);
         }
 
         @Override
         public boolean quitarProducto(Producto prod){
           return dao.quitarProducto(prod);
+        }
 
         @Override
         public boolean comprar(Tarjeta t, List<Producto> lp){
