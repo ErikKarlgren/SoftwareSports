@@ -1,7 +1,5 @@
 package swsports.modelo;
 
-package swsports.modelo;
-
 import java.util.Map;
 import java.util.HashMap;
 
@@ -67,6 +65,4 @@ public class Carrito {
     }
     
     return eliminado;
-}public class Carrito {
-
 }
