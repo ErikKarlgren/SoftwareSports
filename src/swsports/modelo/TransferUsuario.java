@@ -1,120 +1,79 @@
 package swsports.modelo;
 
-import org.json.JSONObject;
-
 /**
- * Clase para transferir los datos sin más de un usuario.
+ * Clase para transferir los datos sin mÃ¡s de un producto.
  */
-public class TransferUsuario {
+public class TransferProducto {
 	private final String id;
 	private String nombre;
-	private String mail;
-	private String contrasenya;
-	private Integer telefono;
-	private String direccion;
-	private Boolean esAdmin;
+	private String desc;
+	private int stock;
+	private double precio;
 
 	/**
-	 * Crea un {@link TransferUsuario} equivalente a un {@link Usuario} sin
-	 * privilegios de administrador.
+	 * Crea un {@link TransferProducto} a partir de los argumentos dados.
 	 * 
-	 * @param id          Identificador del usuario.
-	 * @param nombre      Nombre del usuario.
-	 * @param mail        Correo electrónico del usuario.
-	 * @param contrasenya Contraseña del usuario.
-	 * @param tlfn        Teléfono del usuario.
-	 * @param dir         Dirección del usuario.
+	 * @param id          Identificador del producto.
+	 * @param nombre      Nombre del producto.
+	 * @param desc        DescripciÃ³n del producto..
+	 * @param stock       NÃºmero de Productos disponibles.
+	 * @param precio      Precio del producto
 	 */
-	public TransferUsuario(String id, String nombre, String mail, String contrasenya, Integer tlfn, String dir) {
-		this(id, nombre, mail, contrasenya, tlfn, dir, false);
-	}
-
-	/**
-	 * Crea un {@link TransferUsuario} a partir de los argumentos dados.
-	 * 
-	 * @param id          Identificador del usuario.
-	 * @param nombre      Nombre del usuario.
-	 * @param mail        Correo electrónico del usuario.
-	 * @param contrasenya Contraseña del usuario.
-	 * @param tlfn        Teléfono del usuario.
-	 * @param dir         Dirección del usuario.
-	 * @param esAdmin     Especifica si el usuario tendrá privilegios de
-	 *                    administrador (<code>true</code>) o no
-	 *                    (<code>false</code>).
-	 */
-	public TransferUsuario(String id, String nombre, String mail, String contrasenya, Integer tlfn, String dir,
-			boolean esAdmin) {
+	public TransferProducto(String id, String nombre, String desc, int stock, double precio) {
 		this.id = id;
 		this.nombre = nombre;
-		this.mail = mail;
-		this.contrasenya = contrasenya;
-		this.telefono = tlfn;
-		this.direccion = dir;
-		this.esAdmin = esAdmin;
+		this.desc = desc;
+		this.stock = stock;
+		this.precio = precio;
 	}
 
 	/**
-	 * Crea un {@link TransferUsuario} a partir de los datos de un {@link Usuario}.
+	 * Crea un {@link TransferProducto} a partir de los datos de un {@link Producto}.
 	 * 
-	 * @param usu Usuario del que se extraen los datos.
+	 * @param prod Producto del que se extraen los datos.
 	 */
-	public TransferUsuario(Usuario usu) {
-		this.id = usu.getId();
-		this.nombre = usu.getNombre();
-		this.mail = usu.getMail();
-		this.contrasenya = usu.getContrasenya();
-		this.telefono = usu.getTelefono();
-		this.direccion = usu.getDireccion();
-		this.esAdmin = usu.esAdmin();
+	public TransferProducto(Producto prod) {
+		this.id = prod.getId();
+		this.nombre = prod.getNombre();
+		this.desc = prod.getDesc();
+		this.stock = prod.getStock();
+		this.precio = prod.getPrecio();
 	}
 
 	/**
-	 * @return El identificador del usuario
+	 * @return El identificador del producto
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
-	 * @return El nombre del usuario
+	 * @return El nombre del producto
 	 */
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	/**
-	 * @return El mail del usuario
+	 * @return La descripciÃ³n del producto
 	 */
-	public String getMail() {
-		return mail;
+	public String getDesc() {
+		return this.desc;
 	}
 
 	/**
-	 * @return La contrasenya del usuario
+	 * @return El stock del que se dispone
 	 */
-	public String getContrasenya() {
-		return contrasenya;
+	public int getStock() {
+		return this.stock;
 	}
 
 	/**
-	 * @return El telefono del usuario
+	 * @return El precio del producto
 	 */
-	public Integer getTelefono() {
-		return telefono;
+	public double getPrecio() {
+		return this.precio;
 	}
-
-	/**
-	 * @return La direccion del usuario
-	 */
-	public String getDireccion() {
-		return direccion;
-	}
-
-	/**
-	 * @return Si es admin o no el usuario
-	 */
-	public Boolean esAdmin() {
-		return esAdmin;
-	}
+}
 
 }
