@@ -6,9 +6,26 @@ import java.util.HashMap;
 public class Carrito {
 
   private Map<Producto, Integer> listaProductos;
+  private int numProductos;
+  private int precioTotal;
   
   public Carrito(){
     this.listaProductos = new HashMap<Producto, Integer>();
+    this.numProductos = 0;
+    this.precioTotal = 0;
+  }
+  
+  
+  public boolean carritoVacio(){
+    return this.listaProductos.size() == 0;
+  }
+  
+  public int getPrecioTotal(){
+    return this.precioTotal;
+  }
+  
+  public int getNumProductos(){
+    return this.numProductos;
   }
   
   /*
@@ -22,6 +39,9 @@ public class Carrito {
     else{
       this.listaProductos.put(p, 1);
     }
+    
+    this.numProductos++;
+    this.precioTotal += p.getPrecio();
   }
   
   public boolean eliminarProducto(Producto p){
@@ -36,6 +56,8 @@ public class Carrito {
       }
       
       eliminado = true;
+      this.numProductos--;
+      this.precioTotal -= p.getPrecio();
     }
     
     return eliminado;
