@@ -44,6 +44,10 @@ public class Carrito {
     this.precioTotal += p.getPrecio();
   }
   
+  /*
+  * Elimina un producto p al carrito. Si el número de unidades es 1, lo elimina del mapa, si no, le resta una unidad.
+  * También devuelve true si el producto se ha eliminado, es decir, existe en el mapa.
+  */
   public boolean eliminarProducto(Producto p){
     boolean eliminado = false;
     
