@@ -4,6 +4,7 @@ import java.util.List;
 
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 /*
 * Fachada del modulo Productos. Todas las operaciones que tengan
@@ -30,7 +31,7 @@ public class FachadaProductos implements IFachadaProductos {
 
         @Override
         public boolean editarProducto(TransferProducto prod){
-          return sa.editarProducto(prod)
+          return sa.editarProducto(prod);
         }
 
         @Override
@@ -45,12 +46,13 @@ public class FachadaProductos implements IFachadaProductos {
 
         @Override
         public boolean anyadirProducto(Producto prod){
-          return sa.anyadirProducto(prod)
+          return sa.anyadirProducto(prod);
         }
 
         @Override
         public boolean quitarProducto(Producto prod){
           return sa.quitarProducto(prod);
+        }
 
         @Override
         public boolean comprar(Tarjeta t, List<Producto> lp){
@@ -58,3 +60,4 @@ public class FachadaProductos implements IFachadaProductos {
         }	
 
 }
+
