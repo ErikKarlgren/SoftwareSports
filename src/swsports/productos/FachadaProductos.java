@@ -60,4 +60,3 @@ public class FachadaProductos implements IFachadaProductos {
         }	
 
 }
-
