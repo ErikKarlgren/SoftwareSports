@@ -101,8 +101,8 @@ public class ControladorProductos {
       * @return <code>true</code> si se ha podido realizar la compra correctamente.
       *         <code>false</code> en caso contrario.
       */  
-      public boolean comprar(Tarjeta t, List<Producto>){
-        return facProd.comprar(t, List);
+      public boolean comprar(Tarjeta t, List<Producto> lp){
+        return facProd.comprar(t, lp);
       }	
   
 }
