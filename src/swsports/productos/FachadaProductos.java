@@ -20,41 +20,41 @@ public class FachadaProductos implements IFachadaProductos {
 
         @Override
         public boolean altaProducto(Producto prod){
-              return facProd.altaProducto(prod);
+              return sa.altaProducto(prod);
         }
 
         @Override
         public boolean bajaProducto(Producto prod){
-              return facProd.bajaProducto(prod);
+              return sa.bajaProducto(prod);
         }
 
         @Override
         public boolean editarProducto(TransferProducto prod){
-          return facProd.editarProducto(prod)
+          return sa.editarProducto(prod)
         }
 
         @Override
         public Producto consultaProducto(String id){
-          return facProd.consultaProducto(id);
+          return sa.consultaProducto(id);
         }
 
         @Override
         public List<Producto> busquedaProducto(TransferProducto tProd){
-          return facProd.busquedaProducto(null);
+          return sa.busquedaProducto(null);
         }
 
         @Override
         public boolean anyadirProducto(Producto prod){
-          return facProd.anyadirProducto(prod)
+          return sa.anyadirProducto(prod)
         }
 
         @Override
         public boolean quitarProducto(Producto prod){
-          return facProd.quitarProducto(prod);
+          return sa.quitarProducto(prod);
 
         @Override
         public boolean comprar(Tarjeta t, List<Producto>){
-          return facProd.comprar(t, List);
+          return sa.comprar(t, List);
         }	
 
 }
