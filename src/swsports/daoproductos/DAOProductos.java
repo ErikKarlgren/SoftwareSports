@@ -77,10 +77,12 @@ class DAOProductos implements IDAOProductos {
   
   @Override
   public boolean anyadirProducto(Producto prod){
+  	return consultaProducto(prod.getId()) != null;
   }
   
   @Override 
   public boolean quitarProducto(Producto prod){
+	return consultaProducto(prod.getId()) != null;
   }
   
   @Override 
