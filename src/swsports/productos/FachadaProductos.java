@@ -53,8 +53,8 @@ public class FachadaProductos implements IFachadaProductos {
           return sa.quitarProducto(prod);
 
         @Override
-        public boolean comprar(Tarjeta t, List<Producto>){
-          return sa.comprar(t, List);
+        public boolean comprar(Tarjeta t, List<Producto> lp){
+          return sa.comprar(t, lp);
         }	
 
 }
