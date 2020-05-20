@@ -14,30 +14,30 @@ interface IDAOProductos {
       * Da de alta un producto nuevo.
       * 
       * @param prod Producto nuevo
-      * @return   < code > true </code> si se puede registrar el producto.
-      * < code > false </code> en caso contrario.
+      * @return   <code> true </code> si se puede registrar el producto.
+      * <code> false </code> en caso contrario.
       */
-       altaProducto booleano  público ( Producto prod ); 
+       altaProducto booleano  público (Producto prod); 
   
       /**
       * Da de baja un producto. Su identificador (id) se usará para buscar el
       * usuario que se quiere eliminar.
       * 
       * @param prod Objeto con los atributos del producto a eliminar.
-      * @return < code > true </code> si se puede dar dar de baja el producto.
-      * < code > false </code> en caso contrario.
+      * @return <code> true </code> si se puede dar dar de baja el producto.
+      * <code> false </code> en caso contrario.
       */
-      público  booleano  bajaProducto ( Producto  prod );
+      público  booleano  bajaProducto (Producto  prod);
   
       /**
       * Edita los datos de un producto. Su identificador (id) se usará para buscar el
       * usuario que se quiere editar y se sobrescribirán el resto de datos. 
       * 
       * @param prod Objeto con los nuevos stributos del producto.
-      * @return < code > true </code> si se puede editar el producto.
-      * < code > false </code> en caso contrario.
+      * @return <code> true </code> si se puede editar el producto.
+      * <code> false </code> en caso contrario.
       */
-      público  booleano  editarProducto ( TransferProducto  prod );
+      público  booleano  editarProducto (TransferProducto  prod);
   
       /**
       * Devuelve los datos de un producto dado su identificador (id).
@@ -45,7 +45,7 @@ interface IDAOProductos {
       * @param id Identificador del producto.
       * @return Producto con el identificador buscado (puede ser nulo).
       */
-      public  Product  consultaProducto ( ID de cadena  );
+      public  Product  consultaProducto (String id);
   
       /**
       * Devuelve una lista de los productos que se adhieren a los parámetros
@@ -55,32 +55,32 @@ interface IDAOProductos {
       * @param tProd Objeto { @link TransferProducto} usado como parámetro de búsqueda
       * @return Lista con los productos que buscamos
       */
-       Lista  pública < Producto > busquedaProducto ( TransferProducto  tProd );
+       Lista  pública < Producto > busquedaProducto (TransferProducto  tProd);
   
       /**
       * Anyade un producto al carrito
       * 
       * @param prod Producto que se anyade
-      * @return < code > true </code> si se ha podido activar el producto correctamente.
-      * < code > false </code> en caso contrario.
+      * @return <code> true </code> si se ha podido activar el producto correctamente.
+      * <code> false </code> en caso contrario.
       */
-      public  boolean  anyadirProducto ( Producto  prod );
+      public  boolean  anyadirProducto (Producto  prod);
   
       /**
       * Eliminar un producto del carrito
       * 
       * @param prod Producto que se quiere eliminar
-      * @return < code > true </code> si se puede eliminar el producto correctamente.
-      * < code > false </code> en caso contrario.
+      * @return <code> true </code> si se puede eliminar el producto correctamente.
+      * <code> false </code> en caso contrario.
       */ 
-      pública  boolean  quitarProducto ( Producto  prod );
+      pública  boolean  quitarProducto (Producto  prod);
   
       /**
       * 
       * 
       * @param prod Producto que se quiere eliminar
-      * @return < code > true </code> si se ha realizado la compra correctamente.
-      * < code > false </code> en caso contrario.
+      * @return <code> true </code> si se ha realizado la compra correctamente.
+      * <code> false </code> en caso contrario.
       */  
-      public  boolean  comprar ( Tarjeta  t , List < Producto > lp );
+      public  boolean  comprar (Tarjeta  t, List <Producto> lp);
 }
