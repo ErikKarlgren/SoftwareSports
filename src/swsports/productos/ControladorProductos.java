@@ -13,7 +13,7 @@ public class ControladorProductos {
       private IFachadaProductos  facProd;
 	
       public ControladorProductos(){
-        facProd=new FachadaProductos();
+        facProd = new FachadaProductos();
       }
   
       /*
@@ -107,4 +107,3 @@ public class ControladorProductos {
       }	
   
 }
-
