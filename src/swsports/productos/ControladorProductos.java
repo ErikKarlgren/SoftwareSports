@@ -3,6 +3,7 @@ import java.util.List;
 
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 /**
 * Controlador de lo relativo a los productos ({@link Producto})
@@ -11,7 +12,7 @@ public class ControladorProductos {
       
       private IFachadaProductos  facProd;
 	
-      public ControladorProducto(){
+      public ControladorProductos(){
         facProd=new FachadaProductos();
       }
   
@@ -47,7 +48,7 @@ public class ControladorProductos {
       *         <code>false</code> en caso contrario.
       */
       public boolean editarProducto(TransferProducto prod){
-        return facProd.editarProducto(prod)
+        return facProd.editarProducto(prod);
       }
   
       /**
@@ -69,7 +70,7 @@ public class ControladorProductos {
       * @return Lista con los productos que buscamos
       */
       public List<Producto> busquedaProducto(TransferProducto tProd){
-        return facProd.busquedaProducto(prod);
+        return facProd.busquedaProducto(tProd);
       }
   
       /**
@@ -80,7 +81,7 @@ public class ControladorProductos {
       *         <code>false</code> en caso contrario.
       */
       public boolean anyadirProducto(Producto prod){
-        return facProd.anyadirProducto(prod)
+        return facProd.anyadirProducto(prod);
       }
   
       /**
@@ -106,3 +107,4 @@ public class ControladorProductos {
       }	
   
 }
+
