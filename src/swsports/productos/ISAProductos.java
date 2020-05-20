@@ -4,6 +4,7 @@ import java.util.List;
 
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 /**
 * Interfaz con los métodos para la lógica de negocio del módulo Productos.
