@@ -14,7 +14,7 @@ public class Carrito {
   /*
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
-  public anyadirProducto(Producto p){
+  public void anyadirProducto(Producto p){
     if(this.listaProductos.containsValue(p)){
       this.listaProductos.put(p, this.listaProductos.get(p) + 1);
     }
@@ -24,4 +24,19 @@ public class Carrito {
     }
   }
   
+  public boolean eliminarProducto(Producto p){
+    boolean eliminado = false;
+    
+    if(this.listaProductos.containsValue(p)){
+      if(this.listaProductos.get(p) == 1){
+        this.listaProductos.remove(p);
+      }
+      else{
+        this.listaProductos.put(p, this.listaProductos.get(p) - 1);
+      }
+      
+      eliminado = true;
+    }
+    
+    return eliminado;
 }
