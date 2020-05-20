@@ -4,6 +4,7 @@ import java.util.List;
 
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 /**Interfaz para la fachada del módulo DAOProductos, es decir, el que se encarga
  * de acceder a los contenidos de la base de datos.
