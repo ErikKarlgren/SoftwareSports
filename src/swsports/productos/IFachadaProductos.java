@@ -4,6 +4,7 @@ import java.util.List;
 
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 public interface IFachadaProductos {
       /**
