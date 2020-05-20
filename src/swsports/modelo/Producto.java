@@ -6,7 +6,7 @@ import org.json.JSONObject;
 * Clase que representa un producto
 */
 
-public class Producto {
+public class Producto implements Reportable {
 	private final String id;
 	private String nombre;
 	private String desc;
@@ -19,7 +19,7 @@ public class Producto {
 	 * 
 	 * @param prod Objeto {@link JSONObject} con los datos del producto.
 	 */
-  	public Producto(JSONObject prod) {
+	public Producto(JSONObject prod) {
       this.id = prod.getString("id");
       this.nombre = prod.getString("nombre");
       this.desc = prod.getString("desc");
@@ -37,9 +37,6 @@ public class Producto {
 	 * @param stock       Número de Productos disponibles.
 	 * @param precio      Precio del producto
 	 */
-  	public Producto(String id, String nombre, String desc, int stock, double precio) {
-		this(id, nombre, desc, stock, precio);
-	}
 	public Producto(String id, String nombre, String desc, int stock, double precio) {
 		this.id = id;
 		this.nombre = nombre;
@@ -49,7 +46,7 @@ public class Producto {
 	}
 	/**
 	 * Crea un {@link Producto} a partir de un objeto {@link TransferProducto}
-   *que contenga todos los datos.
+	 * que contenga todos los datos.
 	 * 
 	 * @param prod Objeto con los datos.
 	 */
@@ -57,8 +54,8 @@ public class Producto {
 		this.id = prod.getId();
 		this.nombre = prod.getNombre();
 		this.desc = prod.getDesc();
-		this.stock = usu.getStock();
-		this.precio = usu.getPrecio();
+		this.stock = prod.getStock();
+		this.precio = prod.getPrecio();
 	}
 
 	/**
@@ -93,11 +90,11 @@ public class Producto {
 	 * @return El precio del producto.
 	 */
 	public double getPrecio() {
-		return telefono;
+		return this.precio;
 	}
   
-  @Overrade
-  	public JSONObject report() {
+	@Override
+	public JSONObject report() {
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
 		obj.put("nombre", nombre);
@@ -107,36 +104,36 @@ public class Producto {
 		return obj;
 	}
   
-  /**
-  * Cambia el número de productos de los que se dispone en tienda.
-  * @param stock Nuevo stock.
-  */
-  public void setStock(int stock){
-    this.stock=stock;
-  }
+	/**
+	 * Cambia el número de productos de los que se dispone en tienda.
+	 * @param stock Nuevo stock.
+	 */
+	public void setStock(int stock){
+		this.stock=stock;
+	}
   
-  /**
-  * Cambia el precio del producto.
-  * @param precio Nuevo precio.
-  */
-  public void setPrecio(double precio){
-    this.precio=precio;
-  }
+	/**
+	 * Cambia el precio del producto.
+	 * @param precio Nuevo precio.
+	 */
+	public void setPrecio(double precio){
+		this.precio=precio;
+	}
   
+	/**
+	 * Cambia la descripción del producto.
+	 * @param desc Nueva descripción.
+	 */
+	public void setDesc(String desc){
+		this.desc=desc;
+	}
   
-  /**
-  * Cambia la descripción del producto.
-  * @param desc Nueva descripción.
-  */
-  public void setDesc(String desc){
-    this.desc=desc;
-  }
-  
-  /**
-  * Cambia el nombre del producto.
-  * @param nombre Nuevo nombre.
-  */
-  public void setNombre(String nombre){
-    this.nombre=nombre;
-  }
+	/**
+	 * Cambia el nombre del producto.
+	 * @param nombre Nuevo nombre.
+	 */
+	public void setNombre(String nombre){
+		this.nombre=nombre;
+	}
+	
 }
