@@ -7,7 +7,7 @@ public class Carrito {
 
   private Map<Producto, Integer> listaProductos;
   private int numProductos;
-  private int precioTotal;
+  private float precioTotal;
   
   public Carrito(){
     this.listaProductos = new HashMap<Producto, Integer>();
