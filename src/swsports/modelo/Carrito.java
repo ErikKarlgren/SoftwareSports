@@ -7,62 +7,66 @@ public class Carrito {
 
   private Map<Producto, Integer> listaProductos;
   private int numProductos;
-  private float precioTotal;
+  private Double precioTotal;
   
   public Carrito(){
     this.listaProductos = new HashMap<Producto, Integer>();
     this.numProductos = 0;
-    this.precioTotal = 0;
+    this.precioTotal = 0.0;
   }
   
   
   public boolean carritoVacio(){
-    return this.listaProductos.size() == 0;
+	  return this.listaProductos.size() == 0;
   }
   
-  public int getPrecioTotal(){
-    return this.precioTotal;
+  public Double getPrecioTotal(){
+	  return this.precioTotal;
   }
   
   public int getNumProductos(){
-    return this.numProductos;
+	  return this.numProductos;
   }
   
-  /*
+  /**
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
   public void anyadirProducto(Producto p){
-    if(this.listaProductos.containsValue(p)){
-      this.listaProductos.put(p, this.listaProductos.get(p) + 1);
-    }
+	  if(this.listaProductos.containsKey(p)){
+		  this.listaProductos.put(p, this.listaProductos.get(p) + 1);
+	  }
     
-    else{
-      this.listaProductos.put(p, 1);
-    }
+	  else {
+		  this.listaProductos.put(p, 1);
+	  }
     
-    this.numProductos++;
-    this.precioTotal += p.getPrecio();
+	  this.numProductos++;
+	  this.precioTotal += p.getPrecio();
   }
   
-  /*
+  /**
   * Elimina un producto p al carrito. Si el número de unidades es 1, lo elimina del mapa, si no, le resta una unidad.
   * También devuelve true si el producto se ha eliminado, es decir, existe en el mapa.
   */
   public boolean eliminarProducto(Producto p){
-    boolean eliminado = false;
-    
-    if(this.listaProductos.containsValue(p)){
-      if(this.listaProductos.get(p) == 1){
-        this.listaProductos.remove(p);
-      }
-      else{
-        this.listaProductos.put(p, this.listaProductos.get(p) - 1);
-      }
-      
-      eliminado = true;
-      this.numProductos--;
-      this.precioTotal -= p.getPrecio();
-    }
-    
-    return eliminado;
+	  
+	  boolean eliminado = false;
+	     
+	  if(this.listaProductos.containsKey(p)){
+		  if(this.listaProductos.get(p) == 1){
+			  this.listaProductos.remove(p);
+	  }
+		  
+	  else{
+		  this.listaProductos.put(p, this.listaProductos.get(p) - 1);
+	  }
+	   
+	  eliminado = true;
+	  this.numProductos--;
+	  this.precioTotal -= p.getPrecio();
+	  
+	  }
+	    
+	  return eliminado;
+	  }
 }
