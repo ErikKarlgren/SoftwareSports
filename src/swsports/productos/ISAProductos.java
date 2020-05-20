@@ -81,5 +81,5 @@ interface ISAProductos {
       * @return <code>true</code> si se ha podido realizar la compra correctamente.
       *         <code>false</code> en caso contrario.
       */  
-      public boolean comprar(Tarjeta t, List<Producto>);
+      public boolean comprar(Tarjeta t, List<Producto> lp);
 }
