@@ -15,7 +15,7 @@ class DAOProductos implements IDAOProductos {
   private BaseDatos<Producto> bd;
   
   public DAOProductos(){
-    bd=BAseDatosProductoJSON.getInstance();
+    bd = BaseDatosProductoJSON.getInstance();
   }
   
   @Override
