@@ -3,12 +3,11 @@ package swsports.daoproductos;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.json.JSONObject;
-
 import swsports.basedatos.BaseDatos;
 import swsports.basedatos.BaseDatosProductoJSON;
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Tarjeta;
 
 class DAOProductos implements IDAOProductos {
   
@@ -31,7 +30,7 @@ class DAOProductos implements IDAOProductos {
   @Override
   public boolean bajaProducto(Producto prod){
     try{
-      bd.eliminar(prod);
+      bd.eliminar(prod.getId());
       return true;
     } catch (IllegalArgumentException e){
       return false;
@@ -39,7 +38,7 @@ class DAOProductos implements IDAOProductos {
   }
   
   @Override 
-  public boolean editarProducto(Transfer prod){
+  public boolean editarProducto(TransferProducto prod){
     try{
       bd.editar(new Producto(prod));
       return true;
@@ -58,20 +57,22 @@ class DAOProductos implements IDAOProductos {
       Predicate<Producto> pred = new Predicate<Producto>(){
         @Override
         public boolean test(Producto p){
-          boolean ok=true;          
+          boolean ok = true;          
           
           ok &= (tProd.getId() == null || p.getId().equals(tProd.getId()));
           ok &= (tProd.getNombre() == null || p.getNombre().equals(tProd.getNombre()));
           ok &= (tProd.getDesc() == null || p.getDesc().contains(tProd.getDesc()));
+     
           ok &= (tProd.getStock() == null
-              || String.valueOf(p.getTelefono()).contains(String.valueOf(tProd.getTelefono())));
+                  || String.valueOf(p.getStock()).contains(String.valueOf(tProd.getStock())));
 
-          ok &= (tProd.getPrecio() == null
-              || String.valueOf(p.getPrecio()).contains(String.valueOf(tProd.getPrecio())));
-
+              ok &= (tProd.getPrecio() == null
+                  || String.valueOf(p.getPrecio()).contains(String.valueOf(tProd.getPrecio())));
+              
           return ok;
-			}
-		};
+		}
+      };
+      
 		return bd.busqueda(pred);
 	}
   
@@ -87,6 +88,7 @@ class DAOProductos implements IDAOProductos {
   
   @Override 
   public boolean comprar(Tarjeta t, List<Producto> lp){
+	return false;
   } 
 
 }
