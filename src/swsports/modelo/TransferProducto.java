@@ -1,7 +1,5 @@
 package swsports.modelo;
 
-import org.json.JSONObject;
-
 /**
  * Clase para transferir los datos sin más de un producto.
  */
@@ -11,20 +9,6 @@ public class TransferProducto {
 	private String desc;
 	private int stock;
 	private double precio;
-
-	/**
-	 * Crea un {@link TransferProducto} equivalente a un {@link Producto}.
-	 * 
-	 * @param id              Identificador del producto.
-	 * @param nombre          Nombre del producto.
-	 * @param desc            Descripción del producto.
-	 * @param stock           Número de Productos disponibles.
-	 * @param precio          Precio del producto.
-	 * .
-	 */
-	public TransferProducto(String id, String nombre, String desc, int stock, double precio) {
-		this(id, nombre, desc, stock, precio);
-	}
 
 	/**
 	 * Crea un {@link TransferProducto} a partir de los argumentos dados.
@@ -52,42 +36,42 @@ public class TransferProducto {
 		this.id = prod.getId();
 		this.nombre = prod.getNombre();
 		this.desc = prod.getDesc();
-		this.stock = usu.getStock();
-		this.precio = usu.getPrecio();
+		this.stock = prod.getStock();
+		this.precio = prod.getPrecio();
 	}
 
 	/**
 	 * @return El identificador del producto
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
 	 * @return El nombre del producto
 	 */
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	/**
 	 * @return La descripción del producto
 	 */
 	public String getDesc() {
-		return desc;
+		return this.desc;
 	}
 
 	/**
 	 * @return El stock del que se dispone
 	 */
 	public int getStock() {
-		return stock;
+		return this.stock;
 	}
 
 	/**
 	 * @return El precio del producto
 	 */
 	public double getPrecio() {
-		return telefono;
+		return this.precio;
 	}
 }
