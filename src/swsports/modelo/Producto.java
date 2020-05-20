@@ -10,8 +10,8 @@ public class Producto implements Reportable {
 	private final String id;
 	private String nombre;
 	private String desc;
-	private int stock;
-	private double precio;
+	private Integer stock;
+	private Double precio;
 
 	/**
 	 * Crea un producto a partir de unos datos en formato JSON. Hay que asegurar
@@ -82,14 +82,14 @@ public class Producto implements Reportable {
 	/**
 	 * @return El stock del que se dispone.
 	 */
-	public int getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
 	/**
 	 * @return El precio del producto.
 	 */
-	public double getPrecio() {
+	public Double getPrecio() {
 		return this.precio;
 	}
   
@@ -137,4 +137,3 @@ public class Producto implements Reportable {
 	}
 	
 }
-
