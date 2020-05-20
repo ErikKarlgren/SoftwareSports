@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Carrito {
 
   private Map<Producto, Integer> listaProductos;
-  private int numProductos;
+  private Integer numProductos;
   private Double precioTotal;
   
   public Carrito(){
@@ -24,7 +24,7 @@ public class Carrito {
 	  return this.precioTotal;
   }
   
-  public int getNumProductos(){
+  public Integer getNumProductos(){
 	  return this.numProductos;
   }
   
