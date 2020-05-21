@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import swsports.modelo.Usuario;
+import swsports.usuarios.ControladorUsuario;
+
 import javax.swing.SwingConstants;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,6 +17,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTabbedPane;
 import java.awt.Component;
@@ -31,6 +37,7 @@ public class LoginWindow extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private ControladorUsuario ctrl;
 	private JPanel contentPane;
 	private JTextField loginIDTextField;
 	private JPasswordField loginPasswordField;
@@ -43,26 +50,13 @@ public class LoginWindow extends JFrame {
 	private JPasswordField registerConfirmPasswordField;
 	private ButtonGroup adminSiONoButtonGroup;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginWindow frame = new LoginWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public LoginWindow() {
+	public LoginWindow(ControladorUsuario _ctrl) {
+		ctrl = _ctrl;
+		
 		setTitle("Software Sports");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 575);
@@ -75,7 +69,7 @@ public class LoginWindow extends JFrame {
 		contentPane.add(tabbedPane);
 
 		JPanel panelLogin = new JPanel();
-		tabbedPane.addTab("Iniciar sesi�n", null, new JScrollPane(panelLogin), null);
+		tabbedPane.addTab("Iniciar sesión", null, new JScrollPane(panelLogin), null);
 		panelLogin.setLayout(new BorderLayout(0, 0));
 
 		Component horizontalStrutLeft = Box.createHorizontalStrut(10);
@@ -349,10 +343,61 @@ public class LoginWindow extends JFrame {
 	}
 
 	private void login() {
-		// TODO implementar login llamando a la fachada de usuarios
+		String id = loginIDTextField.getText();
+		String contrasenya = "";
+		for(int i = 0; i < loginPasswordField.getPassword().length; i++)
+			contrasenya += loginPasswordField.getPassword()[i];
+		
+		if(ctrl.login(id, contrasenya)) {
+			this.setVisible(false);
+			new MainWindow();                                                //Es posible que haya que añadirle parametros en un futuro
+		}
+		else {
+			JOptionPane.showMessageDialog(this,"Usuario y/o contraseña incorrectos", "Login Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void registrar() {
-		// TODO implementar registrar un usuario llamando a la fachada de usuarios
+		if(!registerIDTextfield.getText().trim().equals("") && !registerNameTextfield.getText().trim().equals("") &&
+		   !registerTlfnTextfield.getText().trim().equals("") && (registerPasswordField.getPassword().length != 0) &&
+		   (registerConfirmPasswordField.getPassword().length != 0) && (adminSiONoButtonGroup.getSelection() != null)) {
+			
+			if(registerConfirmPasswordField.getPassword().equals(registerPasswordField.getPassword())) {
+				JSONObject objectUsu = new JSONObject();
+				
+				String contrasenya = "";
+				for(int i = 0; i < registerPasswordField.getPassword().length; i++)
+					contrasenya += registerPasswordField.getPassword()[i];
+				
+				boolean admin;
+				if(adminSiONoButtonGroup.getSelection().getActionCommand().equals("Si"))
+					admin = true;
+				else
+					admin = false;
+				
+				objectUsu.put("id",registerIDTextfield.getText());
+				objectUsu.put("nombre", registerNameTextfield.getText());
+				objectUsu.put("mail", registerEmailTextfield.getText());
+				objectUsu.put("telefono", Integer.parseInt(registerTlfnTextfield.getText()));
+				objectUsu.put("direccion", registerDirectionTextfield.getText());
+				objectUsu.put("admin", admin);
+				objectUsu.put("contrasenya", contrasenya);
+				
+				if(ctrl.registroUsuario(new Usuario(objectUsu))) {
+					JOptionPane.showMessageDialog(this,"Registro completado!","Register Success", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(this,"Usuario ya existente", "Register Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(this,"La contraseña no coincide en ambas casillas...", "Password Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(this,"Datos incompletos (unicos optativos: mail y direccion)", "Register Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
 	}
 }
