@@ -13,6 +13,8 @@ import swsports.modelo.Usuario;
 import swsports.usuarios.ControladorUsuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 
@@ -39,28 +41,6 @@ public class PerfilMainPanel extends JPanel {
 	private JToggleButton editUserButton;
 	private Usuario usuario;
 	private ControladorUsuario controlador;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorUsuario ctrl = new ControladorUsuario();
-					Usuario usu = ctrl.consultaUsuario("z2");
-
-					JFrame frame = new JFrame();
-					frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-					frame.getContentPane().add(new PerfilMainPanel(usu, ctrl));
-					frame.pack();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the panel.
@@ -246,7 +226,7 @@ public class PerfilMainPanel extends JPanel {
 		panel.add(editUserButton, gbc_editUserButton);
 		if (usuario != null) {
 			if (usuario.esAdmin())
-				isAdminLabel.setText("Sí");
+				isAdminLabel.setText("SÃ­");
 			else
 				isAdminLabel.setText("No");
 		}
@@ -260,7 +240,14 @@ public class PerfilMainPanel extends JPanel {
 			setTextFieldsEditable(true);
 		} else {
 			setTextFieldsEditable(false);
-			controlador.editarUsuario(leerDatos());
+			if(!nameTextField.getText().trim().equals("") && !String.copyValueOf(passwordField.getPassword()).trim().equals("") &&
+			   !telephoneTextField.getText().trim().equals("")) {
+				controlador.editarUsuario(leerDatos());
+			}
+			else {
+				editUserButton.doClick(); 
+				JOptionPane.showMessageDialog(this,"Datos incompletos (unicos optativos: mail y direccion)", "Edit Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		// }
 	}
