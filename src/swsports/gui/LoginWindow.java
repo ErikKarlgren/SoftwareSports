@@ -57,7 +57,8 @@ public class LoginWindow extends JFrame {
 	private JTextField registerEmailTextfield;
 	private JPasswordField registerPasswordField;
 	private JPasswordField registerConfirmPasswordField;
-	private ButtonGroup adminSiONoButtonGroup;
+	private JRadioButton yesAdminButton;
+	private JRadioButton noAdminButton;
 
 	/**
 	 * Create the frame.
@@ -335,15 +336,15 @@ public class LoginWindow extends JFrame {
 		gbc_adminPanel.gridy = 17;
 		panelAuxRegistro.add(adminPanel, gbc_adminPanel);
 
-		JRadioButton yesAdminButton = new JRadioButton("S\u00ED");
+		yesAdminButton = new JRadioButton("S\u00ED");
 		yesAdminButton.setActionCommand("Si");
 		adminPanel.add(yesAdminButton);
 
-		JRadioButton noAdminButton = new JRadioButton("No");
+		noAdminButton = new JRadioButton("No");
 		noAdminButton.setSelected(true);
 		adminPanel.add(noAdminButton);
 
-		adminSiONoButtonGroup = new ButtonGroup();
+		ButtonGroup adminSiONoButtonGroup = new ButtonGroup();
 		adminSiONoButtonGroup.add(yesAdminButton);
 		adminSiONoButtonGroup.add(noAdminButton);
 
@@ -356,6 +357,7 @@ public class LoginWindow extends JFrame {
 
 		this.pack();
 		this.setResizable(false);
+		this.setVisible(true);
 	}
 
 	/**
@@ -369,7 +371,7 @@ public class LoginWindow extends JFrame {
 			new MainWindow(controladorUsuario, controladorProductos, controladorProveedores);
 			this.dispose();
 		} else {
-			JOptionPane.showMessageDialog(this, "Usuario y/o contraseña incorrectos", "Login Error",
+			JOptionPane.showMessageDialog(this, "Usuario y/o contrase\u00f1a incorrectos", "Login Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -391,7 +393,7 @@ public class LoginWindow extends JFrame {
 					"Ha podido registrarse con \u00e9xito. Inicie sesi\u00f3n para comenzar a usar Software Sports.",
 					"Registro completado", JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(this, "Usuario ya existente", "Error al registrarse",
+			JOptionPane.showMessageDialog(this, "Ya existe un usuario con el mismo ID", "Error al registrarse",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -411,7 +413,7 @@ public class LoginWindow extends JFrame {
 		String mail = registerEmailTextfield.getText();
 		Integer telefono = Integer.parseInt(registerTlfnTextfield.getText());
 		String direccion = registerDirectionTextfield.getText();
-		boolean admin = adminSiONoButtonGroup.getSelection().getActionCommand().equals("Si");
+		boolean admin = yesAdminButton.isSelected();
 		String contrasenya = new String(registerPasswordField.getPassword());
 		return new Usuario(id, nombre, mail, contrasenya, telefono, direccion, admin);
 	}
@@ -426,7 +428,6 @@ public class LoginWindow extends JFrame {
 		return !registerIDTextfield.getText().trim().equals("") && !registerNameTextfield.getText().trim().equals("")
 				&& !registerTlfnTextfield.getText().trim().equals("")
 				&& (registerPasswordField.getPassword().length != 0)
-				&& (registerConfirmPasswordField.getPassword().length != 0)
-				&& (adminSiONoButtonGroup.getSelection() != null);
+				&& (registerConfirmPasswordField.getPassword().length != 0);
 	}
 }
