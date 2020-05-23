@@ -1,16 +1,17 @@
 package swsports.gui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import swsports.modelo.Usuario;
+import swsports.productos.ControladorProductos;
+import swsports.proveedores.ControladorProveedores;
 import swsports.usuarios.ControladorUsuario;
 
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -28,16 +29,24 @@ import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.awt.Color;
+import java.awt.SystemColor;
 
+/**
+ * Ventana para iniciar sesión o registrarse como usuario en el programa. Debe
+ * ser la primera ventana en abrirse. Después de que un usuario haya iniciado
+ * sesión, se cerrará esta ventana y se abrirá la ventana principal.
+ */
 public class LoginWindow extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ControladorUsuario ctrl;
+	private ControladorUsuario controladorUsuario;
+	private ControladorProductos controladorProductos;
+	private ControladorProveedores controladorProveedores;
 	private JPanel contentPane;
 	private JTextField loginIDTextField;
 	private JPasswordField loginPasswordField;
@@ -50,26 +59,30 @@ public class LoginWindow extends JFrame {
 	private JPasswordField registerConfirmPasswordField;
 	private ButtonGroup adminSiONoButtonGroup;
 
-	
 	/**
 	 * Create the frame.
 	 */
-	public LoginWindow(ControladorUsuario _ctrl) {
-		ctrl = _ctrl;
-		
+	public LoginWindow(ControladorUsuario ctrlUsu, ControladorProductos ctrlProd, ControladorProveedores ctrlProv) {
+		setBackground(Color.ORANGE);
+		controladorUsuario = ctrlUsu;
+		controladorProductos = ctrlProd;
+		controladorProveedores = ctrlProv;
+
 		setTitle("Software Sports");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 575);
 		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		contentPane.add(tabbedPane);
 
 		JPanel panelLogin = new JPanel();
-		tabbedPane.addTab("Iniciar sesiÃ³n", null, new JScrollPane(panelLogin), null);
+		panelLogin.setBackground(Color.WHITE);
+		tabbedPane.addTab("Iniciar sesi\u00F3n", null, new JScrollPane(panelLogin), null);
 		panelLogin.setLayout(new BorderLayout(0, 0));
 
 		Component horizontalStrutLeft = Box.createHorizontalStrut(10);
@@ -85,6 +98,7 @@ public class LoginWindow extends JFrame {
 		panelLogin.add(verticalStrutBottom, BorderLayout.SOUTH);
 
 		JPanel panelAuxLogin = new JPanel();
+		panelAuxLogin.setBackground(Color.WHITE);
 		panelLogin.add(panelAuxLogin, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] { 0, 0 };
@@ -152,6 +166,7 @@ public class LoginWindow extends JFrame {
 		panelAuxLogin.add(loginButton, gbc_loginButton);
 
 		JPanel panelRegistro = new JPanel();
+		panelRegistro.setBackground(Color.WHITE);
 		tabbedPane.addTab("Registrarse", null, new JScrollPane(panelRegistro), null);
 		panelRegistro.setLayout(new BorderLayout(0, 0));
 
@@ -168,6 +183,7 @@ public class LoginWindow extends JFrame {
 		panelRegistro.add(verticalStrutBottom2, BorderLayout.SOUTH);
 
 		JPanel panelAuxRegistro = new JPanel();
+		panelAuxRegistro.setBackground(Color.WHITE);
 		panelRegistro.add(panelAuxRegistro, BorderLayout.CENTER);
 		GridBagLayout gbl_panelAuxRegistro = new GridBagLayout();
 		gbl_panelAuxRegistro.columnWidths = new int[] { 0, 0 };
@@ -186,7 +202,7 @@ public class LoginWindow extends JFrame {
 		gbc_lblNewLabel_2.gridy = 0;
 		panelAuxRegistro.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
-		JLabel RegisterIDLabel = new JLabel("ID");
+		JLabel RegisterIDLabel = new JLabel("ID*");
 		GridBagConstraints gbc_RegisterIDLabel = new GridBagConstraints();
 		gbc_RegisterIDLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_RegisterIDLabel.fill = GridBagConstraints.BOTH;
@@ -203,7 +219,7 @@ public class LoginWindow extends JFrame {
 		panelAuxRegistro.add(registerIDTextfield, gbc_RegisterIDTextfield);
 		registerIDTextfield.setColumns(10);
 
-		JLabel RegisterNameLabel = new JLabel("Nombre");
+		JLabel RegisterNameLabel = new JLabel("Nombre*");
 		GridBagConstraints gbc_RegisterNameLabel = new GridBagConstraints();
 		gbc_RegisterNameLabel.fill = GridBagConstraints.BOTH;
 		gbc_RegisterNameLabel.insets = new Insets(0, 0, 5, 0);
@@ -220,7 +236,7 @@ public class LoginWindow extends JFrame {
 		panelAuxRegistro.add(registerNameTextfield, gbc_RegisterNameTextfield);
 		registerNameTextfield.setColumns(10);
 
-		JLabel RegisterTlfnLabel = new JLabel("Tel\u00E9fono");
+		JLabel RegisterTlfnLabel = new JLabel("Tel\u00E9fono*");
 		GridBagConstraints gbc_RegisterTlfnLabel = new GridBagConstraints();
 		gbc_RegisterTlfnLabel.fill = GridBagConstraints.BOTH;
 		gbc_RegisterTlfnLabel.insets = new Insets(0, 0, 5, 0);
@@ -271,7 +287,7 @@ public class LoginWindow extends JFrame {
 		panelAuxRegistro.add(registerEmailTextfield, gbc_RegisterEmailTextfield);
 		registerEmailTextfield.setColumns(10);
 
-		JLabel registerPasswordLabel = new JLabel("Contrase\u00F1a");
+		JLabel registerPasswordLabel = new JLabel("Contrase\u00F1a*");
 		GridBagConstraints gbc_RegisterPasswordLabel = new GridBagConstraints();
 		gbc_RegisterPasswordLabel.fill = GridBagConstraints.BOTH;
 		gbc_RegisterPasswordLabel.insets = new Insets(0, 0, 5, 0);
@@ -287,7 +303,7 @@ public class LoginWindow extends JFrame {
 		gbc_registerPasswordField.gridy = 13;
 		panelAuxRegistro.add(registerPasswordField, gbc_registerPasswordField);
 
-		JLabel registerConfirmPassowordLabel = new JLabel("Confirmar contrase\u00F1a");
+		JLabel registerConfirmPassowordLabel = new JLabel("Confirmar contrase\u00F1a*");
 		GridBagConstraints gbc_registerConfirmPassowordLabel = new GridBagConstraints();
 		gbc_registerConfirmPassowordLabel.fill = GridBagConstraints.BOTH;
 		gbc_registerConfirmPassowordLabel.insets = new Insets(0, 0, 5, 0);
@@ -342,62 +358,75 @@ public class LoginWindow extends JFrame {
 		this.setResizable(false);
 	}
 
+	/**
+	 * Intenta iniciar sesión con los datos introducidos por el usuario.
+	 */
 	private void login() {
 		String id = loginIDTextField.getText();
-		String contrasenya = "";
-		for(int i = 0; i < loginPasswordField.getPassword().length; i++)
-			contrasenya += loginPasswordField.getPassword()[i];
-		
-		if(ctrl.login(id, contrasenya)) {
-			this.setVisible(false);
-			new MainWindow();                                                //Es posible que haya que aÃ±adirle parametros en un futuro
-		}
-		else {
-			JOptionPane.showMessageDialog(this,"Usuario y/o contraseÃ±a incorrectos", "Login Error", JOptionPane.ERROR_MESSAGE);
+		String contrasenya = new String(loginPasswordField.getPassword());
+
+		if (controladorUsuario.login(id, contrasenya)) {
+			new MainWindow(controladorUsuario, controladorProductos, controladorProveedores);
+			this.dispose();
+		} else {
+			JOptionPane.showMessageDialog(this, "Usuario y/o contraseÃ±a incorrectos", "Login Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
+	/**
+	 * Intenta registrar a un usuario en la base de datos. Para acceder al programa
+	 * tendrá que iniciar sesión usando los datos de la cuenta que acaba de crear en
+	 * caso de éxito.
+	 */
 	private void registrar() {
-		if(!registerIDTextfield.getText().trim().equals("") && !registerNameTextfield.getText().trim().equals("") &&
-		   !registerTlfnTextfield.getText().trim().equals("") && (registerPasswordField.getPassword().length != 0) &&
-		   (registerConfirmPasswordField.getPassword().length != 0) && (adminSiONoButtonGroup.getSelection() != null)) {
-			
-			if(registerConfirmPasswordField.getPassword().equals(registerPasswordField.getPassword())) {
-				JSONObject objectUsu = new JSONObject();
-				
-				String contrasenya = "";
-				for(int i = 0; i < registerPasswordField.getPassword().length; i++)
-					contrasenya += registerPasswordField.getPassword()[i];
-				
-				boolean admin;
-				if(adminSiONoButtonGroup.getSelection().getActionCommand().equals("Si"))
-					admin = true;
-				else
-					admin = false;
-				
-				objectUsu.put("id",registerIDTextfield.getText());
-				objectUsu.put("nombre", registerNameTextfield.getText());
-				objectUsu.put("mail", registerEmailTextfield.getText());
-				objectUsu.put("telefono", Integer.parseInt(registerTlfnTextfield.getText()));
-				objectUsu.put("direccion", registerDirectionTextfield.getText());
-				objectUsu.put("admin", admin);
-				objectUsu.put("contrasenya", contrasenya);
-				
-				if(ctrl.registroUsuario(new Usuario(objectUsu))) {
-					JOptionPane.showMessageDialog(this,"Registro completado!","Register Success", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
-					JOptionPane.showMessageDialog(this,"Usuario ya existente", "Register Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			else {
-				JOptionPane.showMessageDialog(this,"La contraseÃ±a no coincide en ambas casillas...", "Password Error", JOptionPane.WARNING_MESSAGE);
-			}
+		if (!datosEstanCompletos()) {
+			JOptionPane.showMessageDialog(this, "Datos incompletos (unicos optativos: mail y direccion)",
+					"Error al registrarse", JOptionPane.ERROR_MESSAGE);
+		} else if (!Arrays.equals(registerConfirmPasswordField.getPassword(), registerPasswordField.getPassword())) {
+			JOptionPane.showMessageDialog(this, "La contrase\u00f1a debe coincidir en ambos campos de texto.",
+					"Error al registrarse", JOptionPane.WARNING_MESSAGE);
+		} else if (controladorUsuario.registroUsuario(crearUsuario())) {
+			JOptionPane.showMessageDialog(this,
+					"Ha podido registrarse con \u00e9xito. Inicie sesi\u00f3n para comenzar a usar Software Sports.",
+					"Registro completado", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this, "Usuario ya existente", "Error al registrarse",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		else {
-			JOptionPane.showMessageDialog(this,"Datos incompletos (unicos optativos: mail y direccion)", "Register Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		
+
+	}
+
+	/**
+	 * Crea un {@link Usuario} a partir de los datos introducidos en los campos de
+	 * texto de la pestaña para registrar un nuevo usuario. Debe comprobarse antes
+	 * que el formato de los datos de dichos campos de texto sea el correcto así
+	 * como que se hayan introducido los datos obligatorios.
+	 * 
+	 * @return Un nuevo {@link Usuario} para registrarse.
+	 */
+	private Usuario crearUsuario() {
+		String id = registerIDTextfield.getText();
+		String nombre = registerNameTextfield.getText();
+		String mail = registerEmailTextfield.getText();
+		Integer telefono = Integer.parseInt(registerTlfnTextfield.getText());
+		String direccion = registerDirectionTextfield.getText();
+		boolean admin = adminSiONoButtonGroup.getSelection().getActionCommand().equals("Si");
+		String contrasenya = new String(registerPasswordField.getPassword());
+		return new Usuario(id, nombre, mail, contrasenya, telefono, direccion, admin);
+	}
+
+	/**
+	 * Comprueba que se hayan introducido todos los datos obligatorios.
+	 * 
+	 * @return <code>true</code> si están todos los datos necesarios,
+	 *         <code>false</code> en caso contrario.
+	 */
+	private boolean datosEstanCompletos() {
+		return !registerIDTextfield.getText().trim().equals("") && !registerNameTextfield.getText().trim().equals("")
+				&& !registerTlfnTextfield.getText().trim().equals("")
+				&& (registerPasswordField.getPassword().length != 0)
+				&& (registerConfirmPasswordField.getPassword().length != 0)
+				&& (adminSiONoButtonGroup.getSelection() != null);
 	}
 }
