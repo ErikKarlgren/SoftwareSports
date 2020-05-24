@@ -24,11 +24,6 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 	}
 
 	@Override
-	public boolean cerrarSesion() {
-		return sa.cerrarSesion();
-	}
-
-	@Override
 	public Usuario consultaUsuario(String id) {
 		return sa.consultaUsuario(id);
 	}

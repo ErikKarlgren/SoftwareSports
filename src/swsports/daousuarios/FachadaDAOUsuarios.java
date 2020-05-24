@@ -22,11 +22,6 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 	}
 
 	@Override
-	public boolean cerrarSesion() {
-		return dao.cerrarSesion();
-	}
-
-	@Override
 	public Usuario consultaUsuario(String id) {
 		return dao.consultaUsuario(id);
 	}

@@ -24,14 +24,6 @@ class SAUsuarios implements ISAUsuarios {
 	}
 
 	@Override
-	public boolean cerrarSesion() {
-		// FIXME no hace falta consultar la base de datos a menos que queramos guardar
-		// el cierre de sesión
-		throw new UnsupportedOperationException("Hay que empezar a diseñar la GUI primero.");
-		// return dao.cerrarSesion();
-	}
-
-	@Override
 	public Usuario consultaUsuario(String id) {
 		return id == null ? null : dao.consultaUsuario(id);
 	}
