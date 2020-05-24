@@ -13,6 +13,7 @@ public class Usuario implements Reportable {
 	private int telefono;
 	private String direccion;
 	private boolean esAdmin;
+	private Carrito carrito;
 
 	/**
 	 * Crea un usuario a partir de unos datos en formato JSON. Hay que asegurar
@@ -28,6 +29,7 @@ public class Usuario implements Reportable {
 		this.telefono = usu.getInt("telefono");
 		this.direccion = usu.getString("direccion");
 		this.esAdmin = usu.getBoolean("admin");
+		this.carrito = new Carrito();
 	}
 
 	/**

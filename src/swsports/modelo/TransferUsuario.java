@@ -41,7 +41,7 @@ public class TransferUsuario {
 	 *                    (<code>false</code>).
 	 */
 	public TransferUsuario(String id, String nombre, String mail, String contrasenya, Integer tlfn, String dir,
-			boolean esAdmin) {
+			Boolean esAdmin) {
 		this.id = id;
 		this.nombre = nombre;
 		this.mail = mail;

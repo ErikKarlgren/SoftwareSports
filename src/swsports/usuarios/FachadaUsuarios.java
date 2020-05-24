@@ -20,7 +20,7 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 
 	@Override
 	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
-		return sa.busquedaUsuarios(null);
+		return sa.busquedaUsuarios(tUsu);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 
 	@Override
 	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
-		return dao.busquedaUsuarios(null);
+		return dao.busquedaUsuarios(tUsu);
 	}
 
 	@Override
