@@ -5,7 +5,6 @@ import org.json.JSONObject;
 /**
 * Clase que representa un producto
 */
-
 public class Producto implements Reportable {
 	private final String id;
 	private String nombre;
@@ -59,12 +58,11 @@ public class Producto implements Reportable {
 	}
 
 	/**
-	 * @return La descripción del producto.
+   * @return La descripción del producto.
 	 */
 	public String getDesc() {
 		return desc;
 	}
-
 	/**
 	 * @return El identificador del producto.
 	 */
@@ -106,20 +104,20 @@ public class Producto implements Reportable {
 	}
   
 	/**
-	 * Cambia la descripción del producto.
+   * Cambia la descripción del producto.
 	 * @param desc Nueva descripción.
 	 */
 	public void setDesc(String desc){
 		this.desc=desc;
 	}
   
-	/**
+  /**
 	 * Cambia el nombre del producto.
 	 * @param nombre Nuevo nombre.
 	 */
 	public void setNombre(String nombre){
-		this.nombre=nombre;
-	}
+		this.nombre=nombre;	
+}
   
 	/**
 	 * Cambia el precio del producto.
@@ -130,7 +128,7 @@ public class Producto implements Reportable {
 	}
   
 	/**
-	 * Cambia el número de productos de los que se dispone en tienda.
+   * Cambia el número de productos de los que se dispone en tienda.
 	 * @param stock Nuevo stock.
 	 */
 	public void setStock(int stock){
