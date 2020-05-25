@@ -54,7 +54,7 @@ public class Proveedor implements Reportable {
 		this.nombre = nombre;
 	}
 
-	public String getDescripcion() {
+	public String getDesc() {
 		return descripcion;
 	}
 
