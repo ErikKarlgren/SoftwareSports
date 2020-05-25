@@ -3,8 +3,6 @@ package swsports.daousuarios;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.json.JSONObject;
-
 import swsports.basedatos.BaseDatos;
 import swsports.basedatos.BaseDatosUsuarioJSON;
 import swsports.modelo.TransferUsuario;
@@ -19,22 +17,6 @@ class DAOUsuarios implements IDAOUsuarios {
 
 	public DAOUsuarios() {
 		bd = BaseDatosUsuarioJSON.getInstance();
-	}
-
-	@Override
-	public boolean registroUsuario(Usuario usu) {
-		try {
-			bd.anyadir(usu);
-			return true;
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean login(String id, String contrasenya) {
-		Usuario usu = consultaUsuario(id);
-		return usu != null && usu.getContrasenya().equals(contrasenya);
 	}
 
 	@Override
@@ -85,10 +67,19 @@ class DAOUsuarios implements IDAOUsuarios {
 	}
 
 	@Override
-	public boolean cerrarSesion() {
-		// TODO este método igual habría que quitarlo si no guardamos en
-		// la base de datos los cierres de sesión
-		return false;
+	public boolean login(String id, String contrasenya) {
+		Usuario usu = consultaUsuario(id);
+		return usu != null && usu.getContrasenya().equals(contrasenya);
+	}
+
+	@Override
+	public boolean registroUsuario(Usuario usu) {
+		try {
+			bd.anyadir(usu);
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 }

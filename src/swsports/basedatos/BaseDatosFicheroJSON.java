@@ -34,6 +34,20 @@ import swsports.modelo.Usuario;
 abstract class BaseDatosFicheroJSON<T extends Reportable> implements BaseDatos<T> {
 
 	/**
+	 * Dado un objeto {@link JSONObject}, comprueba si tiene la clave
+	 * <code>key</code> y si su valor es de la clase dada.
+	 * 
+	 * @param obj   Objeto a testear
+	 * @param key   Clave que queremos comprobar si está o no en <code>obj</code>.
+	 * @param clase Clase que queremos comprobar si es la misma que la del valor
+	 *              guardado en la clave <code>key</code>.
+	 * @return <code>true</code> si el formato es correcto. Devuelve
+	 *         <code>false</code> en caso contrario.
+	 */
+	protected static boolean comprobarClaveYClase(JSONObject obj, String key, Class<?> clase) {
+		return obj.has(key) && clase.isInstance(obj.get(key));
+	}
+	/**
 	 * Como todos los {@link JSONObject} tienen al menos una etiqueta, especificamos
 	 * cuál esperamos en nuestra base de datos con este atributo.
 	 */
@@ -48,6 +62,7 @@ abstract class BaseDatosFicheroJSON<T extends Reportable> implements BaseDatos<T
 	 * no directas (es decir, que no se busca un elemento por su identificador).
 	 */
 	private List<T> list;
+
 	/**
 	 * Mapa que guarda los objetos de la base de datos usando el identificador de
 	 * cada uno de ellos como su clave respectiva.
@@ -79,21 +94,6 @@ abstract class BaseDatosFicheroJSON<T extends Reportable> implements BaseDatos<T
 		} catch (IOException | JSONException e) {
 			crearFichero(etiqueta);
 		}
-	}
-
-	/**
-	 * Dado un objeto {@link JSONObject}, comprueba si tiene la clave
-	 * <code>key</code> y si su valor es de la clase dada.
-	 * 
-	 * @param obj   Objeto a testear
-	 * @param key   Clave que queremos comprobar si está o no en <code>obj</code>.
-	 * @param clase Clase que queremos comprobar si es la misma que la del valor
-	 *              guardado en la clave <code>key</code>.
-	 * @return <code>true</code> si el formato es correcto. Devuelve
-	 *         <code>false</code> en caso contrario.
-	 */
-	protected static boolean comprobarClaveYClase(JSONObject obj, String key, Class<?> clase) {
-		return obj.has(key) && clase.isInstance(obj.get(key));
 	}
 
 	/**

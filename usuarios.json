@@ -1,0 +1,47 @@
+{"usuarios": [
+    {
+        "mail": "hola@gmail.com",
+        "direccion": "plaza hola",
+        "admin": false,
+        "contrasenya": "asdf12234",
+        "id": "z7",
+        "telefono": 92221,
+        "nombre": "Hola"
+    },
+    {
+        "mail": "hola@gmail.com",
+        "direccion": "plaza hola2",
+        "admin": false,
+        "contrasenya": "asdf12234",
+        "id": "z1",
+        "telefono": 92221,
+        "nombre": "Hola"
+    },
+    {
+        "mail": "hola@gmail.com",
+        "direccion": "plaza hola",
+        "admin": true,
+        "contrasenya": "asdf12234",
+        "id": "z8",
+        "telefono": 666,
+        "nombre": "Hola"
+    },
+    {
+        "mail": "lelouch@d.com",
+        "direccion": "Japon",
+        "admin": false,
+        "contrasenya": "geass2141",
+        "id": "z9",
+        "telefono": 9224,
+        "nombre": "Zero"
+    },
+    {
+        "mail": "erik@swsports.com",
+        "direccion": "Mi casa",
+        "admin": true,
+        "contrasenya": "1234",
+        "id": "z6",
+        "telefono": 777,
+        "nombre": "Erik"
+    }
+]}
