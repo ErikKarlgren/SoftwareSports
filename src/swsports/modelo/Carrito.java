@@ -15,8 +15,7 @@ public class Carrito {
     this.precioTotal = 0.0;
   }
   
-  
-  public boolean carritoVacio(){
+    public boolean carritoVacio(){
 	  return this.listaProductos.size() == 0;
   }
   
@@ -27,7 +26,7 @@ public class Carrito {
   public Integer getNumProductos(){
 	  return this.numProductos;
   }
-  
+
   /**
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
@@ -69,4 +68,5 @@ public class Carrito {
 	    
 	  return eliminado;
 	  }
+
 }

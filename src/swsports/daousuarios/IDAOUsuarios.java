@@ -20,13 +20,6 @@ interface IDAOUsuarios {
 	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu);
 
 	/**
-	 * Cierra la sesión actual.
-	 * 
-	 * @return <code>true</code> si se ha podido cerrar la sesión correctamente.
-	 */
-	public boolean cerrarSesion();
-
-	/**
 	 * Devuelve los datos de un usuario dado su identificador (id).
 	 * 
 	 * @param id Identificador del usuario.

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 /**
 * Clase que representa un producto
 */
-
 public class Producto implements Reportable {
 	private final String id;
 	private String nombre;
@@ -59,8 +58,15 @@ public class Producto implements Reportable {
 	}
 
 	/**
+   * @return La descripción del producto.
+	 */
+	public String getDesc() {
+		return desc;
+	}
+	/**
 	 * @return El identificador del producto.
 	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -73,10 +79,10 @@ public class Producto implements Reportable {
 	}
 
 	/**
-	 * @return La descripción del producto.
+	 * @return El precio del producto.
 	 */
-	public String getDesc() {
-		return desc;
+	public Double getPrecio() {
+		return this.precio;
 	}
 
 	/**
@@ -84,13 +90,6 @@ public class Producto implements Reportable {
 	 */
 	public Integer getStock() {
 		return stock;
-	}
-
-	/**
-	 * @return El precio del producto.
-	 */
-	public Double getPrecio() {
-		return this.precio;
 	}
   
 	@Override
@@ -105,12 +104,20 @@ public class Producto implements Reportable {
 	}
   
 	/**
-	 * Cambia el número de productos de los que se dispone en tienda.
-	 * @param stock Nuevo stock.
+   * Cambia la descripción del producto.
+	 * @param desc Nueva descripción.
 	 */
-	public void setStock(int stock){
-		this.stock=stock;
+	public void setDesc(String desc){
+		this.desc=desc;
 	}
+  
+  /**
+	 * Cambia el nombre del producto.
+	 * @param nombre Nuevo nombre.
+	 */
+	public void setNombre(String nombre){
+		this.nombre=nombre;	
+}
   
 	/**
 	 * Cambia el precio del producto.
@@ -121,19 +128,11 @@ public class Producto implements Reportable {
 	}
   
 	/**
-	 * Cambia la descripción del producto.
-	 * @param desc Nueva descripción.
+   * Cambia el número de productos de los que se dispone en tienda.
+	 * @param stock Nuevo stock.
 	 */
-	public void setDesc(String desc){
-		this.desc=desc;
-	}
-  
-	/**
-	 * Cambia el nombre del producto.
-	 * @param nombre Nuevo nombre.
-	 */
-	public void setNombre(String nombre){
-		this.nombre=nombre;
+	public void setStock(int stock){
+		this.stock=stock;
 	}
 	
 }

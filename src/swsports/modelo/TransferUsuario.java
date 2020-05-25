@@ -41,7 +41,7 @@ public class TransferUsuario {
 	 *                    (<code>false</code>).
 	 */
 	public TransferUsuario(String id, String nombre, String mail, String contrasenya, Integer tlfn, String dir,
-			boolean esAdmin) {
+			Boolean esAdmin) {
 		this.id = id;
 		this.nombre = nombre;
 		this.mail = mail;
@@ -67,24 +67,10 @@ public class TransferUsuario {
 	}
 
 	/**
-	 * @return El identificador del usuario
+	 * @return Si es admin o no el usuario
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @return El nombre del usuario
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * @return El mail del usuario
-	 */
-	public String getMail() {
-		return mail;
+	public Boolean esAdmin() {
+		return esAdmin;
 	}
 
 	/**
@@ -95,13 +81,6 @@ public class TransferUsuario {
 	}
 
 	/**
-	 * @return El telefono del usuario
-	 */
-	public Integer getTelefono() {
-		return telefono;
-	}
-
-	/**
 	 * @return La direccion del usuario
 	 */
 	public String getDireccion() {
@@ -109,10 +88,31 @@ public class TransferUsuario {
 	}
 
 	/**
-	 * @return Si es admin o no el usuario
+	 * @return El identificador del usuario
 	 */
-	public Boolean esAdmin() {
-		return esAdmin;
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @return El mail del usuario
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @return El nombre del usuario
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @return El telefono del usuario
+	 */
+	public Integer getTelefono() {
+		return telefono;
 	}
 
 }

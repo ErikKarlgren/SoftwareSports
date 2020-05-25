@@ -74,4 +74,5 @@ public class TransferProducto {
 	public Double getPrecio() {
 		return this.precio;
 	}
+  
 }
