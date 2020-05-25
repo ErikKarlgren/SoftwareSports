@@ -11,19 +11,6 @@ public class TransferProducto {
 	private Double precio;
 
 	/**
-	 * Crea un {@link TransferProducto} a partir de los datos de un {@link Producto}.
-	 * 
-	 * @param prod Producto del que se extraen los datos.
-	 */
-	public TransferProducto(Producto prod) {
-		this.id = prod.getId();
-		this.nombre = prod.getNombre();
-		this.desc = prod.getDesc();
-		this.stock = prod.getStock();
-		this.precio = prod.getPrecio();
-	}
-
-	/**
 	 * Crea un {@link TransferProducto} a partir de los argumentos dados.
 	 * 
 	 * @param id          Identificador del producto.
@@ -41,10 +28,16 @@ public class TransferProducto {
 	}
 
 	/**
-	 * @return La descripción del producto
+	 * Crea un {@link TransferProducto} a partir de los datos de un {@link Producto}.
+	 * 
+	 * @param prod Producto del que se extraen los datos.
 	 */
-	public String getDesc() {
-		return this.desc;
+	public TransferProducto(Producto prod) {
+		this.id = prod.getId();
+		this.nombre = prod.getNombre();
+		this.desc = prod.getDesc();
+		this.stock = prod.getStock();
+		this.precio = prod.getPrecio();
 	}
 
 	/**
@@ -62,10 +55,10 @@ public class TransferProducto {
 	}
 
 	/**
-	 * @return El precio del producto
+	 * @return La descripción del producto
 	 */
-	public Double getPrecio() {
-		return this.precio;
+	public String getDesc() {
+		return this.desc;
 	}
 
 	/**
@@ -74,4 +67,12 @@ public class TransferProducto {
 	public Integer getStock() {
 		return this.stock;
 	}
+
+	/**
+	 * @return El precio del producto
+	 */
+	public Double getPrecio() {
+		return this.precio;
+	}
+  
 }
