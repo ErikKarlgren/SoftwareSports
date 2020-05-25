@@ -36,7 +36,7 @@ public class TransferProveedor {
 	public TransferProveedor(Proveedor prov) {
 		this.id = prov.getId();
 		this.nombre = prov.getNombre();
-		this.descripcion = prov.getDescripcion();
+		this.descripcion = prov.getDesc();
 		this.idProducto = prov.getIdProducto();
 		this.stock = prov.getStock();
 		this.precio = prov.getPrecio();

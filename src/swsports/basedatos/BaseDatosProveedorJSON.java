@@ -54,4 +54,3 @@ public class BaseDatosProveedorJSON extends BaseDatosFicheroJSON<Proveedor>{
 		anyadir(new Proveedor(obj));
 	}
 }
-© 2020 GitHub, Inc.

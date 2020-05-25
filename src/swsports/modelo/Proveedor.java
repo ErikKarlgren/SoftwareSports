@@ -33,7 +33,7 @@ public class Proveedor implements Reportable {
 		this.id = p.getId();
 		this.nombre = p.getNombre();
 		this.descripcion = p.getDesc();
-		this.idProducto = p.getIdProd();
+		this.idProducto = p.getIdProducto();
 		this.stock = p.getStock();
 		this.precio = p.getPrecio();
 	}

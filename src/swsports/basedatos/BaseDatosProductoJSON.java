@@ -19,7 +19,7 @@ public class BaseDatosProductoJSON extends BaseDatosFicheroJSON<Producto>{
 		return bdProducto;
 	}
 	
-	protected BaseDatosProductoJSON() {
+	private BaseDatosProductoJSON() {
 		super("productos.json", "productos");
 	}
 
