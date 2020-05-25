@@ -13,7 +13,7 @@ public class BaseDatosProveedorJSON extends BaseDatosFicheroJSON<Proveedor>{
 	}
 	
 	/**
-	 * Devuelve una instancia única en el programa de {@link BaseDatosProductoJSON}.
+	 * Devuelve una instancia Ãºnica en el programa de {@link BaseDatosProductoJSON}.
 	 * 
 	 * @return Instancia de {@link BaseDatosProductoJSON}.
 	 */
@@ -27,20 +27,22 @@ public class BaseDatosProveedorJSON extends BaseDatosFicheroJSON<Proveedor>{
 	 * Comprueba que el formato de <code>obj</code> contenga las siguientes claves y
 	 * sus valores correspondientes tengan la clase correcta:
 	 * <ul>
-	 * <li>"id": {@link Integer}</li>
+	 * <li>"id": {@link String}</li>
 	 * <li>"nombre": {@link String}</li>
-	 * <li>"desc": {@link String}</li>
-	 * <li>"stock": {@link Integer}</li>
-	 * <li>"precio": {@link Double}</li>
+	 * <li>"descipcion": {@link String}</li>
+	 * <li>"idProducto": {@link String}</li>
+	 * <li>"stock": {@link int}</li>
+	 * <li>"precio": {@link double}</li>
 	 * </ul>
 	 */
 	@Override
 	protected boolean comprobarFormatoDatos(JSONObject obj) {
 		boolean correcto = true;
 
-		correcto &= comprobarClaveYClase(obj, "id", Integer.class);
+		correcto &= comprobarClaveYClase(obj, "id", String.class);
 		correcto &= comprobarClaveYClase(obj, "nombre", String.class);
 		correcto &= comprobarClaveYClase(obj, "descipcion", String.class);
+		correcto &= comprobarClaveYClase(obj, "idProducto", String.class);
 		correcto &= comprobarClaveYClase(obj, "stock", Integer.class);
 		correcto &= comprobarClaveYClase(obj, "precio", Double.class);
 
@@ -52,4 +54,3 @@ public class BaseDatosProveedorJSON extends BaseDatosFicheroJSON<Proveedor>{
 		anyadir(new Proveedor(obj));
 	}
 }
-© 2020 GitHub, Inc.
