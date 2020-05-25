@@ -96,6 +96,10 @@ public class Usuario implements Reportable {
 		return esAdmin;
 	}
 
+	public Carrito getCarrito() {
+		return carrito;
+	}
+
 	/**
 	 * Devuelve la contraseña del usuario. Este método no es seguro y en una
 	 * aplicación real las contraseñas estarían encriptadas.

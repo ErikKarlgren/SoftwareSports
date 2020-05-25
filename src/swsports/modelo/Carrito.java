@@ -16,18 +16,6 @@ public class Carrito {
   }
   
   
-  public boolean carritoVacio(){
-	  return this.listaProductos.size() == 0;
-  }
-  
-  public Double getPrecioTotal(){
-	  return this.precioTotal;
-  }
-  
-  public Integer getNumProductos(){
-	  return this.numProductos;
-  }
-  
   /**
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
@@ -42,6 +30,10 @@ public class Carrito {
     
 	  this.numProductos++;
 	  this.precioTotal += p.getPrecio();
+  }
+  
+  public boolean carritoVacio(){
+	  return this.listaProductos.size() == 0;
   }
   
   /**
@@ -69,4 +61,12 @@ public class Carrito {
 	    
 	  return eliminado;
 	  }
+  
+  public Integer getNumProductos(){
+	  return this.numProductos;
+  }
+  
+  public Double getPrecioTotal(){
+	  return this.precioTotal;
+  }
 }

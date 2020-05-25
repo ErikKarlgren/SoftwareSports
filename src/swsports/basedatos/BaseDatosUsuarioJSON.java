@@ -13,10 +13,6 @@ public class BaseDatosUsuarioJSON extends BaseDatosFicheroJSON<Usuario> {
 
 	static BaseDatosUsuarioJSON bdUsuario;
 
-	private BaseDatosUsuarioJSON() {
-		super("usuarios.json", "usuarios");
-	}
-
 	/**
 	 * Devuelve una instancia única en el programa de {@link BaseDatosUsuarioJSON}.
 	 * 
@@ -26,6 +22,10 @@ public class BaseDatosUsuarioJSON extends BaseDatosFicheroJSON<Usuario> {
 		if (bdUsuario == null)
 			bdUsuario = new BaseDatosUsuarioJSON();
 		return bdUsuario;
+	}
+
+	private BaseDatosUsuarioJSON() {
+		super("usuarios.json", "usuarios");
 	}
 
 	/**

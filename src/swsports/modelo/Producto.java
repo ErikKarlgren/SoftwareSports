@@ -59,8 +59,16 @@ public class Producto implements Reportable {
 	}
 
 	/**
+	 * @return La descripción del producto.
+	 */
+	public String getDesc() {
+		return desc;
+	}
+
+	/**
 	 * @return El identificador del producto.
 	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -73,10 +81,10 @@ public class Producto implements Reportable {
 	}
 
 	/**
-	 * @return La descripción del producto.
+	 * @return El precio del producto.
 	 */
-	public String getDesc() {
-		return desc;
+	public Double getPrecio() {
+		return this.precio;
 	}
 
 	/**
@@ -84,13 +92,6 @@ public class Producto implements Reportable {
 	 */
 	public Integer getStock() {
 		return stock;
-	}
-
-	/**
-	 * @return El precio del producto.
-	 */
-	public Double getPrecio() {
-		return this.precio;
 	}
   
 	@Override
@@ -102,22 +103,6 @@ public class Producto implements Reportable {
 		obj.put("stock", stock);
 		obj.put("precio", precio);
 		return obj;
-	}
-  
-	/**
-	 * Cambia el número de productos de los que se dispone en tienda.
-	 * @param stock Nuevo stock.
-	 */
-	public void setStock(int stock){
-		this.stock=stock;
-	}
-  
-	/**
-	 * Cambia el precio del producto.
-	 * @param precio Nuevo precio.
-	 */
-	public void setPrecio(double precio){
-		this.precio=precio;
 	}
   
 	/**
@@ -134,6 +119,22 @@ public class Producto implements Reportable {
 	 */
 	public void setNombre(String nombre){
 		this.nombre=nombre;
+	}
+  
+	/**
+	 * Cambia el precio del producto.
+	 * @param precio Nuevo precio.
+	 */
+	public void setPrecio(double precio){
+		this.precio=precio;
+	}
+  
+	/**
+	 * Cambia el número de productos de los que se dispone en tienda.
+	 * @param stock Nuevo stock.
+	 */
+	public void setStock(int stock){
+		this.stock=stock;
 	}
 	
 }

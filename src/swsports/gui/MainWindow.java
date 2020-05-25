@@ -29,10 +29,12 @@ public class MainWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Controlador ctrl;
+	private Usuario usuario;
 
 	public MainWindow(Usuario usu, Controlador ctrl) {
-		getContentPane().setBackground(Color.WHITE);
 		this.ctrl = ctrl;
+		this.usuario = usu;
+		getContentPane().setBackground(Color.WHITE);
 
 		setTitle("Software Sports");
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -45,13 +47,13 @@ public class MainWindow extends JFrame {
 
 		Color panelBG = Color.WHITE;
 		JPanel panel = new JPanel();
-		//JToolBar panel = new JToolBar();
+		// JToolBar panel = new JToolBar();
 		panel.setForeground(Color.BLACK);
-		//panel.setFloatable(false);
+		// panel.setFloatable(false);
 		panel.setBackground(panelBG);
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		//panel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+		// panel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
 
 		JButton btnCerrarSesion = new JButton(new ImageIcon("icons/cerrar_sesion.png"));
 		btnCerrarSesion.setSize(new Dimension(0, 15));
@@ -65,7 +67,7 @@ public class MainWindow extends JFrame {
 		Component horizontalGlue = Box.createHorizontalGlue();
 		panel.add(horizontalGlue);
 		panel.add(btnCerrarSesion);
-		
+
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut);
 
@@ -82,7 +84,11 @@ public class MainWindow extends JFrame {
 	private void cerrarSesion() {
 		int n = JOptionPane.showOptionDialog(this, "¿Seguro que quiere cerrar sesión?", "Cerrar sesión",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
-		if(n == JOptionPane.OK_OPTION)
+		if (n == JOptionPane.OK_OPTION)
 			ctrl.cerrarSesion(this);
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 }

@@ -30,12 +30,15 @@ public class Controlador {
 	}
 
 	/**
-	 * Devuelve el controlador del módulo Usuarios.
+	 * Cierra la ventana de {@link MainWindow} y vuelve a crear una ventana
+	 * {@link LoginWindow}.
 	 * 
-	 * @return Controlador del módulo Usuarios.
+	 * @param mWindow Ventana {@link MainWindow} que se cierra llamando a
+	 *                {@link JFrame#dispose()}.
 	 */
-	public ControladorUsuario getControladorUsuario() {
-		return controladorUsuario;
+	public void cerrarSesion(MainWindow mWindow) {
+		mWindow.dispose();
+		start();
 	}
 
 	/**
@@ -57,10 +60,12 @@ public class Controlador {
 	}
 
 	/**
-	 * Aquí empieza el programa. Crea una ventana {@link LoginWindow}.
+	 * Devuelve el controlador del módulo Usuarios.
+	 * 
+	 * @return Controlador del módulo Usuarios.
 	 */
-	public void start() {
-		new LoginWindow(this);
+	public ControladorUsuario getControladorUsuario() {
+		return controladorUsuario;
 	}
 
 	/**
@@ -78,14 +83,9 @@ public class Controlador {
 	}
 
 	/**
-	 * Cierra la ventana de {@link MainWindow} y vuelve a crear una ventana
-	 * {@link LoginWindow}.
-	 * 
-	 * @param mWindow Ventana {@link MainWindow} que se cierra llamando a
-	 *                {@link JFrame#dispose()}.
+	 * Aquí empieza el programa. Crea una ventana {@link LoginWindow}.
 	 */
-	public void cerrarSesion(MainWindow mWindow) {
-		mWindow.dispose();
-		start();
+	public void start() {
+		new LoginWindow(this);
 	}
 }
