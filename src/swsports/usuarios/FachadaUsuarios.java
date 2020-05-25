@@ -20,12 +20,7 @@ public class FachadaUsuarios implements IFachadaUsuarios {
 
 	@Override
 	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
-		return sa.busquedaUsuarios(null);
-	}
-
-	@Override
-	public boolean cerrarSesion() {
-		return sa.cerrarSesion();
+		return sa.busquedaUsuarios(tUsu);
 	}
 
 	@Override

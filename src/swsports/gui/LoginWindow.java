@@ -5,11 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import swsports.main.Controlador;
 import swsports.modelo.Usuario;
-import swsports.productos.ControladorProductos;
-import swsports.proveedores.ControladorProveedores;
-import swsports.usuarios.ControladorUsuario;
-
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.Box;
@@ -44,9 +41,6 @@ public class LoginWindow extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ControladorUsuario controladorUsuario;
-	private ControladorProductos controladorProductos;
-	private ControladorProveedores controladorProveedores;
 	private JPanel contentPane;
 	private JTextField loginIDTextField;
 	private JPasswordField loginPasswordField;
@@ -59,15 +53,16 @@ public class LoginWindow extends JFrame {
 	private JPasswordField registerConfirmPasswordField;
 	private JRadioButton yesAdminButton;
 	private JRadioButton noAdminButton;
+	private Controlador controlador;
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
+	 * 
+	 * @param ctrl Controlador de la aplicación.
 	 */
-	public LoginWindow(ControladorUsuario ctrlUsu, ControladorProductos ctrlProd, ControladorProveedores ctrlProv) {
+	public LoginWindow(Controlador ctrl) {
 		setBackground(Color.ORANGE);
-		controladorUsuario = ctrlUsu;
-		controladorProductos = ctrlProd;
-		controladorProveedores = ctrlProv;
+		controlador = ctrl;
 
 		setTitle("Software Sports");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -361,45 +356,6 @@ public class LoginWindow extends JFrame {
 	}
 
 	/**
-	 * Intenta iniciar sesión con los datos introducidos por el usuario.
-	 */
-	private void login() {
-		String id = loginIDTextField.getText();
-		String contrasenya = new String(loginPasswordField.getPassword());
-
-		if (controladorUsuario.login(id, contrasenya)) {
-			new MainWindow(controladorUsuario, controladorProductos, controladorProveedores);
-			this.dispose();
-		} else {
-			JOptionPane.showMessageDialog(this, "Usuario y/o contrase\u00f1a incorrectos", "Login Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	/**
-	 * Intenta registrar a un usuario en la base de datos. Para acceder al programa
-	 * tendrá que iniciar sesión usando los datos de la cuenta que acaba de crear en
-	 * caso de éxito.
-	 */
-	private void registrar() {
-		if (!datosEstanCompletos()) {
-			JOptionPane.showMessageDialog(this, "Datos incompletos (unicos optativos: mail y direccion)",
-					"Error al registrarse", JOptionPane.ERROR_MESSAGE);
-		} else if (!Arrays.equals(registerConfirmPasswordField.getPassword(), registerPasswordField.getPassword())) {
-			JOptionPane.showMessageDialog(this, "La contrase\u00f1a debe coincidir en ambos campos de texto.",
-					"Error al registrarse", JOptionPane.WARNING_MESSAGE);
-		} else if (controladorUsuario.registroUsuario(crearUsuario())) {
-			JOptionPane.showMessageDialog(this,
-					"Ha podido registrarse con \u00e9xito. Inicie sesi\u00f3n para comenzar a usar Software Sports.",
-					"Registro completado", JOptionPane.INFORMATION_MESSAGE);
-		} else {
-			JOptionPane.showMessageDialog(this, "Ya existe un usuario con el mismo ID", "Error al registrarse",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-	}
-
-	/**
 	 * Crea un {@link Usuario} a partir de los datos introducidos en los campos de
 	 * texto de la pestaña para registrar un nuevo usuario. Debe comprobarse antes
 	 * que el formato de los datos de dichos campos de texto sea el correcto así
@@ -429,5 +385,44 @@ public class LoginWindow extends JFrame {
 				&& !registerTlfnTextfield.getText().trim().equals("")
 				&& (registerPasswordField.getPassword().length != 0)
 				&& (registerConfirmPasswordField.getPassword().length != 0);
+	}
+
+	/**
+	 * Intenta iniciar sesión con los datos introducidos por el usuario.
+	 */
+	private void login() {
+		String id = loginIDTextField.getText();
+		String contrasenya = new String(loginPasswordField.getPassword());
+
+		if (controlador.getControladorUsuario().login(id, contrasenya)) {
+			Usuario usu = controlador.getControladorUsuario().consultaUsuario(id);
+			controlador.launchMainWindow(this, usu);
+		} else {
+			JOptionPane.showMessageDialog(this, "Usuario y/o contrase\u00f1a incorrectos", "Login Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * Intenta registrar a un usuario en la base de datos. Para acceder al programa
+	 * tendrá que iniciar sesión usando los datos de la cuenta que acaba de crear en
+	 * caso de éxito.
+	 */
+	private void registrar() {
+		if (!datosEstanCompletos()) {
+			JOptionPane.showMessageDialog(this, "Datos incompletos (unicos optativos: mail y direccion)",
+					"Error al registrarse", JOptionPane.ERROR_MESSAGE);
+		} else if (!Arrays.equals(registerConfirmPasswordField.getPassword(), registerPasswordField.getPassword())) {
+			JOptionPane.showMessageDialog(this, "La contrase\u00f1a debe coincidir en ambos campos de texto.",
+					"Error al registrarse", JOptionPane.WARNING_MESSAGE);
+		} else if (controlador.getControladorUsuario().registroUsuario(crearUsuario())) {
+			JOptionPane.showMessageDialog(this,
+					"Ha podido registrarse con \u00e9xito. Inicie sesi\u00f3n para comenzar a usar Software Sports.",
+					"Registro completado", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this, "Ya existe un usuario con el mismo ID", "Error al registrarse",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 }

@@ -10,6 +10,16 @@ import java.util.function.Predicate;
  */
 public interface BaseDatos<T> {
 	/**
+	 * Añade un objeto a la base de datos. Si ya había un elemento con el mismo
+	 * identificador, lanza una excepción.
+	 * 
+	 * @param obj El objeto que queremos añadir
+	 * @throws IllegalArgumentException - Si ya existía un elemento con el mismo
+	 *                                  identificador
+	 */
+	public void anyadir(T obj);
+
+	/**
 	 * Devuelve una lista de con todos los objetos que cumplan el predicado (es
 	 * decir, los objetos para los que {@link Predicate#test(Object)} devuelve
 	 * <code>true</code>).
@@ -27,16 +37,6 @@ public interface BaseDatos<T> {
 	 * @return El objeto buscado si se encuentra. Si no, devuelve <code>null</code>.
 	 */
 	public T consulta(String id);
-
-	/**
-	 * Añade un objeto a la base de datos. Si ya había un elemento con el mismo
-	 * identificador, lanza una excepción.
-	 * 
-	 * @param obj El objeto que queremos añadir
-	 * @throws IllegalArgumentException - Si ya existía un elemento con el mismo
-	 *                                  identificador
-	 */
-	public void anyadir(T obj);
 
 	/**
 	 * Busca un objeto con el mismo identificador y lo reemplaza con los nuevos

@@ -18,12 +18,7 @@ public class FachadaDAOUsuarios implements IFachadaDAOUsuarios {
 
 	@Override
 	public List<Usuario> busquedaUsuarios(TransferUsuario tUsu) {
-		return dao.busquedaUsuarios(null);
-	}
-
-	@Override
-	public boolean cerrarSesion() {
-		return dao.cerrarSesion();
+		return dao.busquedaUsuarios(tUsu);
 	}
 
 	@Override

@@ -3,12 +3,8 @@ package swsports.gui;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.EventQueue;
-
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-
 import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 import swsports.usuarios.ControladorUsuario;
@@ -21,7 +17,7 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.WindowConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JPasswordField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -58,16 +54,16 @@ public class PerfilMainPanel extends JPanel {
 // Descomentar este constructor cuando no se vaya a editar más la interfaz gráfica.
 // Dejarlo descomentado para luego intentar usar el plugin para editarlo provoca problemas.
 
-//	/**
-//	 * Crea un panel para poder editar el perfil de un usuario sin poder dar o
-//	 * revocar los privilegios de administrador.
-//	 * 
-//	 * @param usu  {@link Usuario} del que se quiere consultar el perfil.
-//	 * @param ctrl Controlador del módulo Usuarios.
-//	 */
-//	public PerfilMainPanel(Usuario usu, ControladorUsuario ctrl) {
-//		this(usu, ctrl, false);
-//	}
+	/**
+	 * Crea un panel para poder editar el perfil de un usuario sin poder dar o
+	 * revocar los privilegios de administrador.
+	 * 
+	 * @param usu  {@link Usuario} del que se quiere consultar el perfil.
+	 * @param ctrl Controlador del módulo Usuarios.
+	 */
+	public PerfilMainPanel(Usuario usu, ControladorUsuario ctrl) {
+		this(usu, ctrl, false);
+	}
 
 	/**
 	 * Crea un panel para poder editar el perfil de un usuario teniendo que
@@ -87,19 +83,29 @@ public class PerfilMainPanel extends JPanel {
 		initGUI();
 	}
 
+	/**
+	 * Comprueba si se han rellenado todos los datos obligatorios.
+	 * 
+	 * @return <code>true</code> si se han rellenado todos los datos necesarios,
+	 *         <code>false</code> en caso contrario.
+	 */
+	private boolean datosCompletos() {
+		return !nameTextField.getText().trim().equals("")
+				&& !String.copyValueOf(passwordField.getPassword()).trim().equals("")
+				&& !telephoneTextField.getText().trim().equals("");
+	}
+
 	private void editar(ItemEvent i) {
 		if (i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
-		} else {
+		} else if (datosCompletos()) {
+			controlador.editarUsuario(leerDatos());
 			setTextFieldsEditable(false);
-			if(!nameTextField.getText().trim().equals("") && !String.copyValueOf(passwordField.getPassword()).trim().equals("") &&
-			   !telephoneTextField.getText().trim().equals("")) {
-				controlador.editarUsuario(leerDatos());
-			}
-			else {
-				editUserButton.doClick(); 
-				JOptionPane.showMessageDialog(this,"Datos incompletos (unicos optativos: mail y direccion)", "Edit Error", JOptionPane.ERROR_MESSAGE);
-			}
+			SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
+					"Editar usuario", JOptionPane.PLAIN_MESSAGE));
+		} else {
+			JOptionPane.showMessageDialog(this, "Datos incompletos (unicos optativos: mail y direccion)", "Edit Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
