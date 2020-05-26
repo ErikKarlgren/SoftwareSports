@@ -17,43 +17,31 @@ import java.awt.event.ItemEvent;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
-import javax.swing.JPasswordField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JRadioButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 import javax.swing.JSeparator;
 
 
-public class EditProductoPanel {
+public class EditProductoPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JTextField nameTextField;
 	private JTextField descTextField;
 	private JTextField stockTextField;
 	private JTextField precioTextField;
-	//private JPasswordField passwordField;
 	private JLabel productIDLabel;
 	private JToggleButton editProductoButton;
 	private Producto producto;
 	private ControladorProductos controlador;
-
-	private boolean adminMode;
-
 	
 	public EditProductoPanel(Producto prod, ControladorProductos ctrl) {
-		this(prod, ctrl, false);
-	}
-
-	
-	public EditProductoPanel(Producto prod, ControladorProductos ctrl, boolean adminMode) {
 		setBackground(SystemColor.textHighlight);
 		this.producto = prod;
 		this.controlador = ctrl;
-		this.adminMode = adminMode;
 		initGUI();
 	}
 
@@ -161,7 +149,7 @@ public class EditProductoPanel {
 		dataAuxPanel.add(nameTextField, gbc_nameTextField);
 		nameTextField.setColumns(10);
 
-		JLabel lblNewLabel_2 = new JLabel("Descripción");
+		JLabel lblNewLabel_2 = new JLabel("Descripciï¿½n");
 		lblNewLabel_2.setForeground(Color.BLACK);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
@@ -235,10 +223,6 @@ public class EditProductoPanel {
 		gbc_panel_1.gridx = 2;
 		gbc_panel_1.gridy = 6;
 		dataAuxPanel.add(adminButtonsPanel, gbc_panel_1);
-
-		
-		ButtonGroup adminButtonGroup = new ButtonGroup();
-		
 
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
 		dataPanel.add(horizontalStrut_2, BorderLayout.WEST);

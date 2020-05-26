@@ -2,6 +2,7 @@ package swsports.gui;
 
 import javax.swing.JFrame;
 
+import swsports.gui.productos.PanelMainProductos;
 import swsports.gui.usuarios.PanelMainUsuarios;
 import swsports.main.Controlador;
 import swsports.modelo.Usuario;
@@ -74,7 +75,14 @@ public class MainWindow extends JFrame {
 		if (usu.esAdmin()) {
 			tabbedPane.addTab("Usuarios", null, new PanelMainUsuarios(ctrl.getControladorUsuario()),
 					"Consultar y manejar los usuarios guardados en la base de datos");
+			
+			tabbedPane.addTab("Productos", null, new PanelMainProductos(ctrl.getControladorProductos()), 
+					"Consultar y manejar los productos guardados en la base de datos");
 		}
+		
+		tabbedPane.addTab("Tienda", null, new PanelMainProductos(ctrl.getControladorProductos()), 
+				"Consultar productos y comprar en la tienda");
+		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
 		this.setMinimumSize(getSize());
@@ -82,7 +90,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void cerrarSesion() {
-		int n = JOptionPane.showOptionDialog(this, "¿Seguro que quiere cerrar sesión?", "Cerrar sesión",
+		int n = JOptionPane.showOptionDialog(this, "ï¿½Seguro que quiere cerrar sesiï¿½n?", "Cerrar sesiï¿½n",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (n == JOptionPane.OK_OPTION)
 			ctrl.cerrarSesion(this);
