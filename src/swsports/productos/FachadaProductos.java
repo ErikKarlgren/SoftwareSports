@@ -41,7 +41,7 @@ public class FachadaProductos implements IFachadaProductos {
 
         @Override
         public List<Producto> busquedaProducto(TransferProducto tProd){
-          return sa.busquedaProducto(null);
+          return sa.busquedaProducto(tProd);
         }
 
         @Override
