@@ -56,10 +56,11 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
 			TransferProducto tProd = new TransferProducto(id, nombre, desc, stock, precio);
 			objetos = controlador.busquedaProducto(tProd);
-
+			
 			removeReportablePanels();
+			
 			for (Producto p : objetos) {
-				publish(new ProductoDataPanel(p, tProd, controlador));
+				publish(new ProductoDataPanel(p, controlador));
 			}
 						
 			return null;
