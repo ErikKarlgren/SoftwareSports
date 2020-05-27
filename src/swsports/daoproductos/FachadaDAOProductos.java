@@ -36,7 +36,7 @@ public class FachadaDAOProductos implements IFachadaDAOProductos  {
   
   @Override
   public List<Producto> busquedaProducto(TransferProducto tProd){
-  	return dao.busquedaProducto(null);
+  	return dao.busquedaProducto(tProd);
   }
   
   @Override
