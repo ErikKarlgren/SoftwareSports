@@ -11,7 +11,10 @@ import swsports.productos.ControladorProductos;
 
 public class ProductoDataPanel extends DataPanel<Producto> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ControladorProductos controlador;
+	private boolean esModoTienda;
 	
 	private class EditarProductoDialog extends JDialog {
 		
@@ -27,18 +30,24 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 	}
 	
-	private static final long serialVersionUID = 1L;
-	
-	public ProductoDataPanel(Producto prod, ControladorProductos ctrl) {
+	public ProductoDataPanel(Producto prod, ControladorProductos ctrl, boolean tienda) {
 		super(prod);
 		this.controlador = ctrl;
+		this.esModoTienda = tienda;
 		addData();
 		addActions();
 	}
 
 	private void addActions() {
-		addAction("Editar producto", a -> new EditarProductoDialog());
-		addAction("Dar de baja", a -> darDeBaja());
+		
+		if(esModoTienda) {
+			addAction("Anyadir al carrito", a -> anyadirCarrito());
+		}
+		
+		else {
+			addAction("Editar producto", a -> new EditarProductoDialog());
+			addAction("Eliminar producto", a -> eliminarProducto());
+		}	
 	}
 
 	private void addData() {
@@ -48,13 +57,23 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		addDataField("Precio", String.valueOf(object.getPrecio()));
 	}
 
-	private void darDeBaja() {
+	private void eliminarProducto() {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres dar de baja este producto?",
 				"Dar producto de baja", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
 				options[1]);
 		if (option == JOptionPane.YES_OPTION) {
 			controlador.bajaProducto(object);
+		}
+	}
+	
+	private void anyadirCarrito() {
+		String[] options = { "Si", "No" };
+		int option = JOptionPane.showOptionDialog(this, "Quieres anyadir este producto a tu carrito?",
+				"Anyadir carrito", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+				options[1]);
+		if (option == JOptionPane.YES_OPTION) {
+			controlador.anyadirProducto(object);
 		}
 	}
 }

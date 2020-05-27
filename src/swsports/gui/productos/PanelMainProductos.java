@@ -10,7 +10,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -25,15 +24,6 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.add(new PanelMainProductos(new ControladorProductos()));
-		
-		frame.pack();
-		frame.setVisible(true);
-	}
-
 	private JTextField idTextField;
 	private JTextField nombreTextField;
 	private JTextField descTextField;
@@ -41,6 +31,8 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private JTextField precioTextField;
 	private ControladorProductos controlador;
 	private JButton anyadirProductoButton;
+	private JButton carritoButton;
+	private boolean esModoTienda;
 
 	private class BuscarProductoWorker extends BuscarSwingWorker {
 
@@ -60,30 +52,42 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 			removeReportablePanels();
 			
 			for (Producto p : objetos) {
-				publish(new ProductoDataPanel(p, controlador));
+				publish(new ProductoDataPanel(p, controlador, esModoTienda));
 			}
 						
 			return null;
 		}
 	}
 	
-	public PanelMainProductos(ControladorProductos ctrl) {
+	public PanelMainProductos(ControladorProductos ctrl, boolean tienda) {
 		super("Productos");
-		controlador = ctrl;
-		initGUI();
+		this.controlador = ctrl;
+		this.esModoTienda = tienda;
+		
+		if(esModoTienda) this.initGUITienda();
+		else this.initGUIProductos();
 		
 	}
 	
-	private void initGUI() {
+	private void initGUIProductos() {
 		anyadirProductoButton = new JButton("Anyadir Producto");
 		add(anyadirProductoButton, BorderLayout.SOUTH);
 		anyadirProductoButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new AnyadirProductoDialog();
 			}
-			
+		});
+	}
+	
+	private void initGUITienda() {
+		carritoButton = new JButton("Carrito");
+		add(carritoButton, BorderLayout.SOUTH);
+		carritoButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				new CarritoDialog();
+			}
 		});
 	}
 	
@@ -99,8 +103,18 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 			this.setVisible(true);
 		}
 	}
+	
+	private class CarritoDialog extends JDialog{
+		private static final long serialVersionUID = 1L;
 
-	@Override
+		CarritoDialog() {
+			super();
+			this.setTitle("Carrito");
+			
+			this.setVisible(true);
+		}
+	}
+
 	protected LinkedHashMap<String, JComponent> getComponentesBusqueda() {
 		LinkedHashMap<String, JComponent> map = new LinkedHashMap<>();
 
@@ -122,7 +136,6 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		return map;
 	}
 
-	@Override
 	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
 		return new BuscarProductoWorker();
 	}
