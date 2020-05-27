@@ -76,9 +76,12 @@ public class MainWindow extends JFrame {
 			tabbedPane.addTab("Usuarios", null, new PanelMainUsuarios(ctrl.getControladorUsuario()),
 					"Consultar y manejar los usuarios guardados en la base de datos");
 			
-			tabbedPane.addTab("Productos", null, new PanelMainProductos(ctrl.getControladorProductos()), 
+			tabbedPane.addTab("Productos", null, new PanelMainProductos(ctrl.getControladorProductos(), false), 
 					"Consultar y manejar los productos guardados en la base de datos");
 		}
+		
+		tabbedPane.addTab("Tienda", null, new PanelMainProductos(ctrl.getControladorProductos(), true), 
+				"Consultar y comprar los productos disponibles en la tienda");
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
