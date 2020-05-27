@@ -5,19 +5,19 @@ import java.util.HashMap;
 
 public class Carrito {
 
-  private Map<Producto, Integer> listaProductos;
+  private Map<Producto, Integer> mapaProductos;
   private Integer numProductos;
   private Double precioTotal;
   
   public Carrito(){
-    this.listaProductos = new HashMap<Producto, Integer>();
+    this.mapaProductos = new HashMap<Producto, Integer>();
     this.numProductos = 0;
     this.precioTotal = 0.0;
   }
   
   
   public boolean carritoVacio(){
-	  return this.listaProductos.size() == 0;
+	  return this.mapaProductos.size() == 0;
   }
   
   public Double getPrecioTotal(){
@@ -32,12 +32,12 @@ public class Carrito {
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
   public void anyadirProducto(Producto p){
-	  if(this.listaProductos.containsKey(p)){
-		  this.listaProductos.put(p, this.listaProductos.get(p) + 1);
+	  if(this.mapaProductos.containsKey(p)){
+		  this.mapaProductos.put(p, this.mapaProductos.get(p) + 1);
 	  }
     
 	  else {
-		  this.listaProductos.put(p, 1);
+		  this.mapaProductos.put(p, 1);
 	  }
     
 	  this.numProductos++;
@@ -52,13 +52,13 @@ public class Carrito {
 	  
 	  boolean eliminado = false;
 	     
-	  if(this.listaProductos.containsKey(p)){
-		  if(this.listaProductos.get(p) == 1){
-			  this.listaProductos.remove(p);
+	  if(this.mapaProductos.containsKey(p)){
+		  if(this.mapaProductos.get(p) == 1){
+			  this.mapaProductos.remove(p);
 	  }
 		  
 	  else{
-		  this.listaProductos.put(p, this.listaProductos.get(p) - 1);
+		  this.mapaProductos.put(p, this.mapaProductos.get(p) - 1);
 	  }
 	   
 	  eliminado = true;
