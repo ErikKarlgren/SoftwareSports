@@ -80,9 +80,6 @@ public class MainWindow extends JFrame {
 					"Consultar y manejar los productos guardados en la base de datos");
 		}
 		
-		tabbedPane.addTab("Tienda", null, new PanelMainProductos(ctrl.getControladorProductos()), 
-				"Consultar productos y comprar en la tienda");
-		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
 		this.setMinimumSize(getSize());
