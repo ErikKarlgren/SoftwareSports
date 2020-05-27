@@ -1,0 +1,23 @@
+{"productos": [
+    {
+        "precio": 49.99,
+        "id": "128",
+        "stock": 56,
+        "nombre": "Mancuernas",
+        "desc": "Set de mancuernas hasta 20kg"
+    },
+    {
+        "precio": 29.99,
+        "id": "123",
+        "stock": 202,
+        "nombre": "Balon de Futbol",
+        "desc": "Balon oficial de LaLiga 19/20"
+    },
+    {
+        "precio": 59.99,
+        "id": "125",
+        "stock": 56,
+        "nombre": "Patinete",
+        "desc": "Patinete deportivo"
+    }
+]}
