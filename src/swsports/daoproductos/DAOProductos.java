@@ -60,14 +60,10 @@ class DAOProductos implements IDAOProductos {
           boolean ok = true;          
           
           ok &= (tProd.getId() == null || p.getId().equals(tProd.getId()));
-          ok &= (tProd.getNombre() == null || p.getNombre().equals(tProd.getNombre()));
+          ok &= (tProd.getNombre() == null || p.getNombre().contains(tProd.getNombre()));
           ok &= (tProd.getDesc() == null || p.getDesc().contains(tProd.getDesc()));
-     
-          ok &= (tProd.getStock() == null
-                  || String.valueOf(p.getStock()).contains(String.valueOf(tProd.getStock())));
-
-              ok &= (tProd.getPrecio() == null
-                  || String.valueOf(p.getPrecio()).contains(String.valueOf(tProd.getPrecio())));
+          ok &= (tProd.getStock() == null || p.getStock() == tProd.getStock());
+          ok &= (tProd.getPrecio() == null || p.getPrecio() == tProd.getPrecio());
               
           return ok;
 		}
