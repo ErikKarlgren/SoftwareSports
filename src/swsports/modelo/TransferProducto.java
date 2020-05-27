@@ -19,7 +19,7 @@ public class TransferProducto {
 	 * @param stock       Número de Productos disponibles.
 	 * @param precio      Precio del producto
 	 */
-	public TransferProducto(String id, String nombre, String desc, int stock, double precio) {
+	public TransferProducto(String id, String nombre, String desc, Integer stock, Double precio) {
 		this.id = id;
 		this.nombre = nombre;
 		this.desc = desc;
