@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import swsports.gui.DataPanel;
+import swsports.gui.EditarProductoPanel;
 import swsports.modelo.Producto;
 import swsports.modelo.TransferProducto;
 
@@ -23,8 +24,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		EditarProductoDialog() {
 			super();
 			this.setTitle("Editar producto");
-			
-			//this.add(new PerfilMainPanel(object, controlador, true)); editProductoPanel
+			this.add(new EditarProductoPanel(object, controlador, false));
 			this.pack();
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setVisible(true);

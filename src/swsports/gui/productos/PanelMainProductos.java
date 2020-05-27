@@ -1,16 +1,22 @@
 package swsports.gui.productos;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import swsports.gui.AbstractPanelMain;
+import swsports.gui.EditarProductoPanel;
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
 import swsports.productos.ControladorProductos;
@@ -23,6 +29,7 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.add(new PanelMainProductos(new ControladorProductos()));
+		
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -33,8 +40,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private JTextField stockTextField;
 	private JTextField precioTextField;
 	private ControladorProductos controlador;
+	private JButton anyadirProductoButton;
 
-	private class BuscarUsuarioWorker extends BuscarSwingWorker {
+	private class BuscarProductoWorker extends BuscarSwingWorker {
 
 		@Override
 		protected Void doInBackground() throws Exception {
@@ -61,6 +69,34 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	public PanelMainProductos(ControladorProductos ctrl) {
 		super("Productos");
 		controlador = ctrl;
+		initGUI();
+		
+	}
+	
+	private void initGUI() {
+		anyadirProductoButton = new JButton("Anyadir Producto");
+		add(anyadirProductoButton, BorderLayout.SOUTH);
+		anyadirProductoButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new AnyadirProductoDialog();
+			}
+			
+		});
+	}
+	
+	private class AnyadirProductoDialog extends JDialog {
+		private static final long serialVersionUID = 1L;
+
+		AnyadirProductoDialog() {
+			super();
+			this.setTitle("Anyadir producto");
+			this.add(new EditarProductoPanel(null, controlador, true));
+			this.pack();
+			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setVisible(true);
+		}
 	}
 
 	@Override
@@ -87,7 +123,7 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
 	@Override
 	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
-		return new BuscarUsuarioWorker();
+		return new BuscarProductoWorker();
 	}
 
 }
