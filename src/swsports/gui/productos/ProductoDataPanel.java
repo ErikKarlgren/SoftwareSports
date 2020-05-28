@@ -6,6 +6,7 @@ import javax.swing.WindowConstants;
 
 import swsports.gui.DataPanel;
 import swsports.gui.EditarProductoPanel;
+import swsports.gui.MainWindow;
 import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
 import swsports.productos.ControladorProductos;
@@ -13,12 +14,12 @@ import swsports.productos.ControladorProductos;
 public class ProductoDataPanel extends DataPanel<Producto> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ControladorProductos controlador;
 	private EnumModoPanelProductos modo;
-	
+
 	private class EditarProductoDialog extends JDialog {
-		
+
 		private static final long serialVersionUID = 1L;
 
 		EditarProductoDialog() {
@@ -30,9 +31,10 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 			this.setVisible(true);
 		}
 	}
-	
-	public ProductoDataPanel(Producto prod, ControladorProductos ctrl, EnumModoPanelProductos m, Carrito c) {
-		super(prod);
+
+	public ProductoDataPanel(MainWindow owner, ControladorProductos ctrl, Producto prod, EnumModoPanelProductos m,
+			Carrito c) {
+		super(owner, prod);
 		this.controlador = ctrl;
 		this.modo = m;
 		addData(c, prod);
@@ -40,17 +42,16 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	}
 
 	private void addActions(Carrito c) {
-		
-		if(this.modo == EnumModoPanelProductos.PRODUCTOS) {
+
+		if (this.modo == EnumModoPanelProductos.PRODUCTOS) {
 			addAction("Editar producto", a -> new EditarProductoDialog());
 			addAction("Eliminar producto", a -> eliminarProducto());
-			
 		}
-		
-		else if(this.modo == EnumModoPanelProductos.TIENDA){
+
+		else if (this.modo == EnumModoPanelProductos.TIENDA) {
 			addAction("Anyadir al carrito", a -> anyadirCarrito(c));
 		}
-		
+
 		else {
 			addAction("Eliminar del carrito", a -> eliminarCarrito(c));
 		}
@@ -59,25 +60,18 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	private void addData(Carrito c, Producto p) {
 		addDataField("Nombre", String.valueOf(object.getNombre()));
 		addDataField("Descripcion", object.getDesc());
-		
-		if(this.modo == EnumModoPanelProductos.CARRITO) {
+
+		if (this.modo == EnumModoPanelProductos.CARRITO) {
 			addDataField("Unidades", Integer.toString(c.getNumUnidadesProducto(p)));
 		}
-		
+
 		else {
 			addDataField("Stock", String.valueOf(object.getStock()));
 		}
-		
+
 		addDataField("Precio", String.valueOf(object.getPrecio()));
 	}
 
-	/*
-	private int ventanaDialogo(String title, String message) {
-		String[] options = { "Si", "No" };
-		int option = JOptionPane.showOptionDialog(this, message, title, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-		return option;
-	}*/
-	
 	private void eliminarProducto() {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres dar de baja este producto?",
@@ -87,17 +81,17 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 			controlador.bajaProducto(object);
 		}
 	}
-	
+
 	private void anyadirCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres anyadir este producto a tu carrito?",
-				"Anyadir carrito", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
-				options[1]);
+				"Anyadir carrito", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		if (option == JOptionPane.YES_OPTION) {
 			controlador.anyadirProducto(object, c);
+			owner.actualizarPanelCarrito();
 		}
 	}
-	
+
 	private void eliminarCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres eliminar este producto de tu carrito?",
@@ -105,6 +99,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 				options[1]);
 		if (option == JOptionPane.YES_OPTION) {
 			controlador.quitarProducto(object, c);
+			owner.actualizarPanelCarrito();
 		}
 	}
 }

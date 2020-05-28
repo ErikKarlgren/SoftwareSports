@@ -38,6 +38,7 @@ public class Proveedor implements Reportable {
 		this.precio = p.getPrecio();
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
