@@ -31,7 +31,7 @@ public class FachadaProveedores implements IFachadaProveedores {
 		return sa.anyadirProveedor(prov);
 	}
 
-	public boolean pedidoProveedor(TransferProveedor tProv){
+	public boolean pedidoProveedor(TransferProveedor prov){
 		return sa.pedidoProveedor(tProv);
 	}
 

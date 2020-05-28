@@ -55,11 +55,11 @@ public interface IFachadaProveedores {
 	/**
 	 * Se realiza un pedido a un proveedor.
 	 * 
-	 * @param tProv Proveedor al que se realiza el pedido.
+	 * @param prov Proveedor al que se realiza el pedido.
 	 * @return <code>true</code> si se ha podido realizar el pedido al Proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
-	public boolean pedidoProveedor(TransferProveedor tProv);
+	public boolean pedidoProveedor(TransferProveedor prov);
 
 	/**
 	 * Cancela el pedido que se realiza al proveedor.

@@ -79,8 +79,8 @@ public class ControladorProveedores {
 	 * @return <code>true</code> si se ha podido realizar el pedido al Proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
-	public boolean pedidoProveedor(TransferProveedor tProv){
-		return fachProv.pedidoProveedor(tProv);
+	public boolean pedidoProveedor(TransferProveedor prov){
+		return fachProv.pedidoProveedor(prov);
 	}
 
 	/**
