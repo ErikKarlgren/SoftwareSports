@@ -2,6 +2,8 @@ package swsports.gui;
 
 import javax.swing.JFrame;
 
+import swsports.gui.productos.CarritoPanel;
+import swsports.gui.productos.EnumModoPanelProductos;
 import swsports.gui.productos.PanelMainProductos;
 import swsports.gui.usuarios.PanelMainUsuarios;
 import swsports.main.Controlador;
@@ -76,12 +78,18 @@ public class MainWindow extends JFrame {
 			tabbedPane.addTab("Usuarios", null, new PanelMainUsuarios(ctrl.getControladorUsuario()),
 					"Consultar y manejar los usuarios guardados en la base de datos");
 			
-			tabbedPane.addTab("Productos", null, new PanelMainProductos(ctrl.getControladorProductos(), false), 
+			tabbedPane.addTab("Productos", null, new PanelMainProductos(ctrl.getControladorProductos(), EnumModoPanelProductos.PRODUCTOS, null), 
 					"Consultar y manejar los productos guardados en la base de datos");
 		}
 		
-		tabbedPane.addTab("Tienda", null, new PanelMainProductos(ctrl.getControladorProductos(), true), 
+		tabbedPane.addTab("Tienda", null, new PanelMainProductos(ctrl.getControladorProductos(),  EnumModoPanelProductos.TIENDA, this.usuario.getCarrito()), 
 				"Consultar y comprar los productos disponibles en la tienda");
+		/*
+		tabbedPane.addTab("Carrito", null, new PanelMainProductos(ctrl.getControladorProductos(),  EnumModoPanelProductos.CARRITO, this.usuario.getCarrito()), 
+				"Consultar productos del carrito y tramitar pedido");*/
+		
+		tabbedPane.addTab("Carrito", null, new CarritoPanel(ctrl.getControladorProductos(), this.usuario.getCarrito()), 
+				"Consultar productos del carrito y tramitar pedido");
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
