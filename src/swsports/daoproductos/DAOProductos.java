@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 import swsports.basedatos.BaseDatos;
 import swsports.basedatos.BaseDatosProductoJSON;
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 class DAOProductos implements IDAOProductos {
   
@@ -73,18 +73,33 @@ class DAOProductos implements IDAOProductos {
 	}
   
   @Override
-  public boolean anyadirProducto(Producto prod){
-  	return consultaProducto(prod.getId()) != null;
+  public boolean anyadirProducto(Producto prod, Carrito carrito){
+	  carrito.anyadirProducto(prod);
+	  prod.setStock(prod.getStock() - 1);
+	  return true;
   }
   
   @Override 
-  public boolean quitarProducto(Producto prod){
-	return consultaProducto(prod.getId()) != null;
+  public boolean quitarProducto(Producto prod, Carrito carrito){
+	  if(carrito.eliminarProducto(prod)) {
+		  prod.setStock(prod.getStock() + 1);
+		  return true;
+	  }
+	  else {
+		  return false;
+	  }
   }
   
   @Override 
-  public boolean comprar(Tarjeta t, List<Producto> lp){
-	return false;
+  public boolean comprar(Carrito carrito){
+	  if(carrito.carritoVacio()) {
+		  return false;
+	  }
+	  
+	  else {
+		  carrito.vaciarCarrito();
+		  return true;
+	  }
   } 
 
 }
