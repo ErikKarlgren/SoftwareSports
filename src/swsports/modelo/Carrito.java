@@ -1,16 +1,21 @@
 package swsports.modelo;
 
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class Carrito {
 
   private Map<Producto, Integer> mapaProductos;
+  private List<Producto> listaProductos;
   private Integer numProductos;
   private Double precioTotal;
   
   public Carrito(){
     this.mapaProductos = new HashMap<Producto, Integer>();
+    this.listaProductos = new ArrayList<Producto>();
     this.numProductos = 0;
     this.precioTotal = 0.0;
   }
@@ -28,6 +33,25 @@ public class Carrito {
 	  return this.numProductos;
   }
   
+  public void vaciarCarrito() {
+	  this.mapaProductos.clear();
+	  this.numProductos = 0;
+	  this.precioTotal = 0.0;
+  }
+  
+  public int getNumUnidadesProducto(Producto p) {
+	  if(this.mapaProductos.containsKey(p)) {
+		  return this.mapaProductos.get(p);
+	  }
+	  else {
+		  return 0;
+	  }
+  }
+  
+  public List<Producto> getListaProductos(){
+	  return Collections.unmodifiableList(this.listaProductos);
+  }
+    
   /**
   * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades
   */
@@ -37,6 +61,7 @@ public class Carrito {
 	  }
     
 	  else {
+		  this.listaProductos.add(p);
 		  this.mapaProductos.put(p, 1);
 	  }
     
@@ -55,7 +80,8 @@ public class Carrito {
 	  if(this.mapaProductos.containsKey(p)){
 		  if(this.mapaProductos.get(p) == 1){
 			  this.mapaProductos.remove(p);
-	  }
+			  this.listaProductos.remove(p);
+		  }
 		  
 	  else{
 		  this.mapaProductos.put(p, this.mapaProductos.get(p) - 1);
@@ -68,5 +94,5 @@ public class Carrito {
 	  }
 	    
 	  return eliminado;
-	  }
+  }
 }
