@@ -37,7 +37,7 @@ public class Producto implements Reportable {
 	 * @param stock       Número de Productos disponibles.
 	 * @param precio      Precio del producto
 	 */
-	public Producto(String id, String nombre, String desc, int stock, double precio) {
+	public Producto(String id, String nombre, String desc, Integer stock, Double precio) {
 		this.id = id;
 		this.nombre = nombre;
 		this.desc = desc;
