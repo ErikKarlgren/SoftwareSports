@@ -52,7 +52,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 		
 		else {
-			addAction("Eliminar del carrito", a -> eliminarCarrito());
+			addAction("Eliminar del carrito", a -> eliminarCarrito(c));
 		}
 	}
 
@@ -98,13 +98,13 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 	}
 	
-	private void eliminarCarrito() {
+	private void eliminarCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres eliminar este producto de tu carrito?",
 				"Eliminar del carrito", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
 				options[1]);
 		if (option == JOptionPane.YES_OPTION) {
-			controlador.quitarProducto(object);
+			controlador.quitarProducto(object, c);
 		}
 	}
 }
