@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -18,6 +19,7 @@ import swsports.gui.AbstractPanelMain;
 import swsports.gui.EditarProductoPanel;
 import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
+import swsports.modelo.Carrito;
 import swsports.productos.ControladorProductos;
 
 public class PanelMainProductos extends AbstractPanelMain<Producto> {
@@ -32,7 +34,8 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private ControladorProductos controlador;
 	private JButton anyadirProductoButton;
 	private JButton carritoButton;
-	private boolean esModoTienda;
+	private EnumModoPanelProductos modo;
+	private Carrito carrito;
 
 	private class BuscarProductoWorker extends BuscarSwingWorker {
 
@@ -52,20 +55,22 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 			removeReportablePanels();
 			
 			for (Producto p : objetos) {
-				publish(new ProductoDataPanel(p, controlador, esModoTienda));
+				publish(new ProductoDataPanel(p, controlador, modo, carrito));
 			}
 						
 			return null;
 		}
 	}
 	
-	public PanelMainProductos(ControladorProductos ctrl, boolean tienda) {
+	public PanelMainProductos(ControladorProductos ctrl, EnumModoPanelProductos m, Carrito c) {
 		super("Productos");
 		this.controlador = ctrl;
-		this.esModoTienda = tienda;
+		this.modo = m;
+		this.carrito = c;
 		
-		if(esModoTienda) this.initGUITienda();
-		else this.initGUIProductos();
+		if(this.modo == EnumModoPanelProductos.PRODUCTOS) this.initGUIProductos();
+		else if(this.modo == EnumModoPanelProductos.CARRITO) this.initGUICarrito();
+		
 		
 	}
 	
@@ -80,17 +85,20 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		});
 	}
 	
-	private void initGUITienda() {
-		carritoButton = new JButton("Carrito");
+	private void initGUICarrito() {
+		carritoButton = new JButton("Tramitar Pedido");
 		add(carritoButton, BorderLayout.SOUTH);
 		carritoButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				new CarritoDialog();
+				tramitarCompra();
 			}
 		});
 	}
 	
+	/*
+	 * FALTA COMPROBAR/PROHIBIR QUE EL USUARIO COMPRE UN PRODUCTO CON STOCK = 0
+	 */
 	private class AnyadirProductoDialog extends JDialog {
 		private static final long serialVersionUID = 1L;
 
@@ -104,14 +112,13 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		}
 	}
 	
-	private class CarritoDialog extends JDialog{
-		private static final long serialVersionUID = 1L;
-
-		CarritoDialog() {
-			super();
-			this.setTitle("Carrito");
-			
-			this.setVisible(true);
+	private void tramitarCompra() {
+		String[] options = { "Si", "No" };
+		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres finalizar tu compra?",
+				"Tramitar pedido", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+				options[1]);
+		if (option == JOptionPane.YES_OPTION) {
+			controlador.comprar(carrito);
 		}
 	}
 
