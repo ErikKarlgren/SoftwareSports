@@ -1,7 +1,15 @@
 package swsports.daoproveedores;
 
 public interface IFachadaDAOProveedores {
-  	public List<Proveedor> busquedaProveedores(TransferProveedor tProv);
+  		/**
+	 * Devuelve una lista de los proveedores que se adhieren a los parámetros de
+	 * búsqueda proporcionados. Los parámetros que sean nulos en el objeto
+	 * {@link TransferProveedor} no se usarán para la búsqueda.
+	 * 
+	 * @param tProv Objeto {@link TransferProveedor} usado como parámetro de busca
+	 * @return Lista con los proveedores que buscamos
+	 */
+	public List<Proveedor> busquedaProveedores(TransferProveedor tProv);
 
 	/**
 	 * Actualiza el idProducto del proveedor en cuestion.
