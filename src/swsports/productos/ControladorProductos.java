@@ -2,8 +2,8 @@ package swsports.productos;
 import java.util.List;
 
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 /**
 * Controlador de lo relativo a los productos ({@link Producto})
@@ -11,7 +11,7 @@ import swsports.modelo.Tarjeta;
 public class ControladorProductos {
       
       private IFachadaProductos  facProd;
-	
+      
       public ControladorProductos(){
         facProd = new FachadaProductos();
       }
@@ -80,8 +80,8 @@ public class ControladorProductos {
       * @return <code>true</code> si se ha podido anyadir el producto correctamente.
       *         <code>false</code> en caso contrario.
       */
-      public boolean anyadirProducto(Producto prod){
-        return facProd.anyadirProducto(prod);
+      public boolean anyadirProducto(Producto prod, Carrito carrito){
+        return facProd.anyadirProducto(prod, carrito);
       }
   
       /**
@@ -91,8 +91,8 @@ public class ControladorProductos {
       * @return <code>true</code> si se ha podido eliminar el producto correctamente.
       *         <code>false</code> en caso contrario.
       */ 
-      public boolean quitarProducto(Producto prod){
-        return facProd.quitarProducto(prod);
+      public boolean quitarProducto(Producto prod, Carrito carrito){
+        return facProd.quitarProducto(prod, carrito);
       }
   
       /**
@@ -102,8 +102,8 @@ public class ControladorProductos {
       * @return <code>true</code> si se ha podido realizar la compra correctamente.
       *         <code>false</code> en caso contrario.
       */  
-      public boolean comprar(Tarjeta t, List<Producto> lp){
-        return facProd.comprar(t, lp);
+      public boolean comprar(Carrito carrito){
+        return facProd.comprar(carrito);
       }	
   
 }
