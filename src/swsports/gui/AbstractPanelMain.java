@@ -60,17 +60,102 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		@Override
 		protected void done() {
 			worker = null;
-			searchButton.setEnabled(true);
-			mainUsersAuxPanel.revalidate();
+			/*
+			 * Comprobamos si son 'null' porque las subclases de AbstractPanelMain pueden
+			 * sobrescribir los paneles
+			 */
+			if (searchButton != null)
+				searchButton.setEnabled(true);
+			if (mainObjectsAuxPanel != null)
+				mainObjectsAuxPanel.revalidate();
 		}
 
 		@Override
 		protected void process(List<DataPanel<T>> chunks) {
 			for (DataPanel<T> panel : chunks) {
-				mainUsersAuxPanel.add(Box.createVerticalStrut(5));
-				mainUsersAuxPanel.add(panel);
-				mainUsersAuxPanel.add(Box.createVerticalStrut(5));
+				mainObjectsAuxPanel.add(Box.createVerticalStrut(5));
+				mainObjectsAuxPanel.add(panel);
+				mainObjectsAuxPanel.add(Box.createVerticalStrut(5));
 			}
+		}
+	}
+
+	/**
+	 * Panel donde aparecerán los datos de los objetos de tipo {@link Reportable}
+	 * que se hayan buscado.
+	 */
+	private class DefaultPanelPrincipal extends JScrollPane {
+		private static final long serialVersionUID = 1L;
+		private final Color bgColor1 = SystemColor.textHighlight;
+		private final Color bgColor2 = Color.WHITE;
+		private final Color fgColor = Color.BLACK;
+		private final String cabecera;
+
+		/**
+		 * Crea un PanelPrincipal a partir de un {@link String} que sirve como cabecera
+		 * o título del panel.
+		 * 
+		 * @param cabecera Texto para usar como cabecera del panel.
+		 */
+		DefaultPanelPrincipal(String cabecera) {
+			this.cabecera = cabecera;
+			initGUI();
+		}
+
+		/**
+		 * Crea la interfaz gráfica del panel.
+		 */
+		private void initGUI() {
+			JPanel mainPanel = new JPanel();
+			mainPanel.setLayout(new BorderLayout(0, 0));
+			this.setViewportView(mainPanel);
+			this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+			JPanel mainUpPanel = new JPanel();
+			mainUpPanel.setBackground(bgColor2);
+			mainPanel.add(mainUpPanel, BorderLayout.NORTH);
+			mainUpPanel.setLayout(new BorderLayout(0, 0));
+
+			Component verticalStrut_2 = Box.createVerticalStrut(5);
+			mainUpPanel.add(verticalStrut_2, BorderLayout.NORTH);
+
+			JLabel lblNewLabel_6 = new JLabel(cabecera);
+			lblNewLabel_6.setForeground(fgColor);
+			lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+			mainUpPanel.add(lblNewLabel_6, BorderLayout.CENTER);
+
+			JPanel mainUpAuxPanel = new JPanel();
+			mainUpAuxPanel.setBackground(mainUpPanel.getBackground());
+			mainUpPanel.add(mainUpAuxPanel, BorderLayout.SOUTH);
+			mainUpAuxPanel.setLayout(new BorderLayout(0, 0));
+
+			Component verticalStrut_3 = Box.createVerticalStrut(5);
+			mainUpAuxPanel.add(verticalStrut_3, BorderLayout.NORTH);
+
+			JSeparator separator = new JSeparator();
+			mainUpAuxPanel.add(separator, BorderLayout.SOUTH);
+
+			Component horizontalStrut_2 = Box.createHorizontalStrut(150);
+			mainUpPanel.add(horizontalStrut_2, BorderLayout.WEST);
+
+			Component horizontalStrut_3 = Box.createHorizontalStrut(150);
+			mainUpPanel.add(horizontalStrut_3, BorderLayout.EAST);
+
+			JPanel mainUsersPanel = new JPanel();
+			mainUsersPanel.setLayout(new BorderLayout());
+			mainUsersPanel.setBackground(bgColor1);
+			mainPanel.add(mainUsersPanel, BorderLayout.CENTER);
+
+			mainObjectsAuxPanel = new JPanel();
+			mainUsersPanel.add(mainObjectsAuxPanel, BorderLayout.CENTER);
+			mainObjectsAuxPanel.setLayout(new BoxLayout(mainObjectsAuxPanel, BoxLayout.Y_AXIS));
+			mainObjectsAuxPanel.setBackground(mainUsersPanel.getBackground());
+
+			Component horizontalStrut_4 = Box.createHorizontalStrut(5);
+			mainUsersPanel.add(horizontalStrut_4, BorderLayout.EAST);
+
+			Component horizontalStrut_5 = Box.createHorizontalStrut(5);
+			mainUsersPanel.add(horizontalStrut_5, BorderLayout.WEST);
 		}
 	}
 
@@ -130,19 +215,6 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		}
 
 		/**
-		 * Invoca a una subclase de {@link SwingWorker} para que vaya buscando los
-		 * usuarios que cumplan los requisitos especificados en el panel lateral y crea
-		 * paneles con sus datos. Esto se hace en una hebra distina para evitar que la
-		 * hebra de Swing se sobrecargue.
-		 */
-		private final void buscarObjetosYCrearPaneles() {
-			if (worker == null) {
-				worker = getNewSwingWorker();
-				worker.execute();
-			}
-		}
-
-		/**
 		 * Crea un {@link JLabel} a partir de un {@link String} de modo que tenga unos
 		 * colores acordes al tema del panel (fondo naranja y letra en negro).
 		 * 
@@ -189,85 +261,6 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Panel donde aparecerán los datos de los objetos de tipo {@link Reportable}
-	 * que se hayan buscado.
-	 */
-	private class PanelPrincipal extends JScrollPane {
-		private static final long serialVersionUID = 1L;
-		private final Color bgColor1 = SystemColor.textHighlight;
-		private final Color bgColor2 = Color.WHITE;
-		private final Color fgColor = Color.BLACK;
-		private final String cabecera;
-
-		/**
-		 * Crea un PanelPrincipal a partir de un {@link String} que sirve como cabecera
-		 * o título del panel.
-		 * 
-		 * @param cabecera Texto para usar como cabecera del panel.
-		 */
-		PanelPrincipal(String cabecera) {
-			this.cabecera = cabecera;
-			initGUI();
-		}
-
-		/**
-		 * Crea la interfaz gráfica del panel.
-		 */
-		private void initGUI() {
-			JPanel mainPanel = new JPanel();
-			mainPanel.setLayout(new BorderLayout(0, 0));
-			this.setViewportView(mainPanel);
-			this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-			JPanel mainUpPanel = new JPanel();
-			mainUpPanel.setBackground(bgColor2);
-			mainPanel.add(mainUpPanel, BorderLayout.NORTH);
-			mainUpPanel.setLayout(new BorderLayout(0, 0));
-
-			Component verticalStrut_2 = Box.createVerticalStrut(5);
-			mainUpPanel.add(verticalStrut_2, BorderLayout.NORTH);
-
-			JLabel lblNewLabel_6 = new JLabel(cabecera);
-			lblNewLabel_6.setForeground(fgColor);
-			lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-			mainUpPanel.add(lblNewLabel_6, BorderLayout.CENTER);
-
-			JPanel mainUpAuxPanel = new JPanel();
-			mainUpAuxPanel.setBackground(mainUpPanel.getBackground());
-			mainUpPanel.add(mainUpAuxPanel, BorderLayout.SOUTH);
-			mainUpAuxPanel.setLayout(new BorderLayout(0, 0));
-
-			Component verticalStrut_3 = Box.createVerticalStrut(5);
-			mainUpAuxPanel.add(verticalStrut_3, BorderLayout.NORTH);
-
-			JSeparator separator = new JSeparator();
-			mainUpAuxPanel.add(separator, BorderLayout.SOUTH);
-
-			Component horizontalStrut_2 = Box.createHorizontalStrut(150);
-			mainUpPanel.add(horizontalStrut_2, BorderLayout.WEST);
-
-			Component horizontalStrut_3 = Box.createHorizontalStrut(150);
-			mainUpPanel.add(horizontalStrut_3, BorderLayout.EAST);
-
-			JPanel mainUsersPanel = new JPanel();
-			mainUsersPanel.setLayout(new BorderLayout());
-			mainUsersPanel.setBackground(bgColor1);
-			mainPanel.add(mainUsersPanel, BorderLayout.CENTER);
-
-			mainUsersAuxPanel = new JPanel();
-			mainUsersPanel.add(mainUsersAuxPanel, BorderLayout.CENTER);
-			mainUsersAuxPanel.setLayout(new BoxLayout(mainUsersAuxPanel, BoxLayout.Y_AXIS));
-			mainUsersAuxPanel.setBackground(mainUsersPanel.getBackground());
-
-			Component horizontalStrut_4 = Box.createHorizontalStrut(5);
-			mainUsersPanel.add(horizontalStrut_4, BorderLayout.EAST);
-
-			Component horizontalStrut_5 = Box.createHorizontalStrut(5);
-			mainUsersPanel.add(horizontalStrut_5, BorderLayout.WEST);
-		}
-	}
-
-	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -289,7 +282,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 
 	private BuscarSwingWorker worker;
 	private JButton searchButton;
-	private JPanel mainUsersAuxPanel;
+	private JPanel mainObjectsAuxPanel;
+	protected MainWindow owner;
 	protected List<T> objetos;
 
 	/**
@@ -299,14 +293,31 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	protected LinkedHashMap<String, JComponent> mapaComponentes;
 
 	/**
-	 * Create the panel.
+	 * Crea el panel. Recibe {@link MainWindow} y un nombre para el panel que en
+	 * principio se usará para el panel principal.
+	 * 
+	 * @param owner Ventana principal de la aplicación.
 	 */
-	public AbstractPanelMain(String nombreModulo) {
+	public AbstractPanelMain(MainWindow owner, String nombreModulo) {
+		this.owner = owner;
 		objetos = new LinkedList<>();
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
-		add(new PanelBusqueda(), BorderLayout.WEST);
-		add(new PanelPrincipal(nombreModulo), BorderLayout.CENTER);
+		add(getPanelLateral(), BorderLayout.WEST);
+		add(getPanelPrincipal(nombreModulo), BorderLayout.CENTER);
+	}
+
+	/**
+	 * Invoca a una subclase de {@link SwingWorker} para que vaya buscando los
+	 * usuarios que cumplan los requisitos especificados en el panel lateral y crea
+	 * paneles con sus datos. Esto se hace en una hebra distina para evitar que la
+	 * hebra de Swing se sobrecargue.
+	 */
+	protected final void buscarObjetosYCrearPaneles() {
+		if (worker == null) {
+			worker = getNewSwingWorker();
+			worker.execute();
+		}
 	}
 
 	/**
@@ -328,12 +339,36 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	protected abstract BuscarSwingWorker getNewSwingWorker();
 
 	/**
+	 * Devuelve el subpanel lateral de este panel. Puede sobrescribirse si no se
+	 * desea usar el panel por defecto({@link JScrollPane}).
+	 * 
+	 * @return Devuelve el subpanel lateral
+	 */
+	protected JScrollPane getPanelLateral() {
+		return new PanelBusqueda();
+	}
+
+	/**
+	 * Devuelve el subpanel principal con scroll ({@link JScrollPane}). Puede
+	 * sobrescribirse por otras clases si es necesario usar un panel distinto al de
+	 * por defecto ({@link DefaultPanelPrincipal}). Recibe un string que sirve como
+	 * título de dicho subpanel.
+	 * 
+	 * @param nombreModulo En principio el título de del subpanel, aunque se puede
+	 *                     omitir si se quiere al sobrescribir este método.
+	 * @return Devuelve un {@link JScrollPane} que servirá como panel principal.
+	 */
+	protected JScrollPane getPanelPrincipal(String nombreModulo) {
+		return new DefaultPanelPrincipal(nombreModulo);
+	}
+
+	/**
 	 * Quita los paneles {@link DataPanel} del PanelPrincipal. Se usa para no añadir
 	 * paneles duplicados cada vez que se busquen objetos.
 	 */
 	protected final void removeReportablePanels() {
-		if (mainUsersAuxPanel != null)
-			mainUsersAuxPanel.removeAll();
+		if (mainObjectsAuxPanel != null)
+			mainObjectsAuxPanel.removeAll();
 	}
 
 	/**

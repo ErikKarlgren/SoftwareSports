@@ -5,13 +5,11 @@ import java.util.LinkedHashMap;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
-
 import swsports.gui.AbstractPanelMain;
+import swsports.gui.MainWindow;
 import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
 import swsports.usuarios.ControladorUsuario;
@@ -42,7 +40,7 @@ public class PanelMainUsuarios extends AbstractPanelMain<Usuario> {
 
 			removeReportablePanels();
 			for (Usuario u : objetos) {
-				publish(new UsuarioDataPanel(u, tUsu, controlador));
+				publish(new UsuarioDataPanel(owner, controlador, u));
 			}
 			return null;
 		}
@@ -52,14 +50,6 @@ public class PanelMainUsuarios extends AbstractPanelMain<Usuario> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.add(new PanelMainUsuarios(new ControladorUsuario()));
-		frame.pack();
-		frame.setVisible(true);
-	}
 
 	private JTextField idTextField;
 	private JTextField nombreTextField;
@@ -72,12 +62,14 @@ public class PanelMainUsuarios extends AbstractPanelMain<Usuario> {
 	private ControladorUsuario controlador;
 
 	/**
-	 * Crea un {@link PanelMainUsuarios} dado un {@link ControladorUsuario}.
+	 * Crea un {@link PanelMainUsuarios} dado un {@link ControladorUsuario} y la
+	 * ventana principal del programa ({@link MainWindow}).
 	 * 
-	 * @param ctrl
+	 * @param owner Ventana principal
+	 * @param ctrl Controlador del módulo Usuarios
 	 */
-	public PanelMainUsuarios(ControladorUsuario ctrl) {
-		super("Usuarios");
+	public PanelMainUsuarios(MainWindow owner, ControladorUsuario ctrl) {
+		super(owner, "Usuarios");
 		controlador = ctrl;
 	}
 

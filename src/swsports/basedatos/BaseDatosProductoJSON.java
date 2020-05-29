@@ -7,7 +7,11 @@ import swsports.modelo.Producto;
 public class BaseDatosProductoJSON extends BaseDatosFicheroJSON<Producto>{
 
 	static BaseDatosProductoJSON bdProducto;
-
+	
+	protected BaseDatosProductoJSON() {
+		super("productos.json", "productos");
+	}
+	
 	/**
 	 * Devuelve una instancia única en el programa de {@link BaseDatosProductoJSON}.
 	 * 
@@ -17,10 +21,6 @@ public class BaseDatosProductoJSON extends BaseDatosFicheroJSON<Producto>{
 		if (bdProducto == null)
 			bdProducto = new BaseDatosProductoJSON();
 		return bdProducto;
-	}
-  
-	private BaseDatosProductoJSON() {
-		super("productos.json", "productos");
 	}
 
 	/**

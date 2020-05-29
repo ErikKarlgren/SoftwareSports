@@ -3,8 +3,8 @@ package swsports.productos;
 import java.util.List;
 
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 public interface IFachadaProductos {
       /**
@@ -61,7 +61,7 @@ public interface IFachadaProductos {
       * @return <code>true</code> si se ha podido anyadir el producto correctamente.
       *         <code>false</code> en caso contrario.
       */
-      public boolean anyadirProducto(Producto prod);
+      public boolean anyadirProducto(Producto prod, Carrito carrito);
   
       /**
       * Elimina un producto del carrito
@@ -70,7 +70,7 @@ public interface IFachadaProductos {
       * @return <code>true</code> si se ha podido eliminar el producto correctamente.
       *         <code>false</code> en caso contrario.
       */ 
-      public boolean quitarProducto(Producto prod);
+      public boolean quitarProducto(Producto prod, Carrito carrito);
   
       /**
       * 
@@ -79,5 +79,5 @@ public interface IFachadaProductos {
       * @return <code>true</code> si se ha podido realizar la compra correctamente.
       *         <code>false</code> en caso contrario.
       */  
-      public boolean comprar(Tarjeta t, List<Producto> lp);
+      public boolean comprar(Carrito carrito);
 }

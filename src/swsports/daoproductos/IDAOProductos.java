@@ -3,8 +3,8 @@ package swsports.daoproductos;
 import java.util.List;
 
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 /*
 * Interfaz para el acceso a los datos del módulo Productos.
@@ -65,7 +65,7 @@ interface IDAOProductos {
       * @return <code> true </code> si se ha podido activar el producto correctamente.
       * <code> false </code> en caso contrario.
       */
-      public  boolean  anyadirProducto (Producto  prod);
+      public  boolean  anyadirProducto (Producto  prod, Carrito carrito);
   
       /**
       * Eliminar un producto del carrito
@@ -74,7 +74,7 @@ interface IDAOProductos {
       * @return <code> true </code> si se puede eliminar el producto correctamente.
       * <code> false </code> en caso contrario.
       */ 
-      public  boolean  quitarProducto (Producto  prod);
+      public  boolean  quitarProducto (Producto  prod, Carrito carrito);
   
       /**
       * 
@@ -83,5 +83,5 @@ interface IDAOProductos {
       * @return <code> true </code> si se ha realizado la compra correctamente.
       * <code> false </code> en caso contrario.
       */  
-      public  boolean  comprar (Tarjeta  t, List <Producto> lp);
+      public  boolean  comprar (Carrito carrito);
 }

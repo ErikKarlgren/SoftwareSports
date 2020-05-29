@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+
 import javax.swing.border.LineBorder;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -55,14 +57,22 @@ public abstract class DataPanel<T extends Reportable> extends JPanel {
 	 */
 	private int dataCount;
 	private Component bottomMargin;
+	/**
+	 * Ventana principal de la aplicación. Se puede usar para interactuar con otros
+	 * componentes gráficos de la aplicación.
+	 */
+	protected MainWindow owner;
 
 	/**
-	 * Crea el panel dado un objeto {@link Reportable}.
+	 * Crea el panel dado un objeto {@link Reportable} y la ventana principal de la
+	 * aplicación.
 	 * 
-	 * @param obj Objeto del que queremos mostrar sus datos.
+	 * @param owner Ventana principal.
+	 * @param obj   Objeto del que queremos mostrar sus datos.
 	 */
-	public DataPanel(T obj) {
-		this.object = obj;
+	public DataPanel(MainWindow owner, T obj) {
+		this.owner = Objects.requireNonNull(owner);
+		this.object = Objects.requireNonNull(obj);
 		dataCount = 0;
 		initGUI();
 		addDataField("ID", object.getId());
@@ -83,7 +93,7 @@ public abstract class DataPanel<T extends Reportable> extends JPanel {
 		double preferredHeight = button.getPreferredSize().getHeight();
 		button.setMaximumSize(new Dimension((int) (preferredWidth * 1.0), (int) (preferredHeight * factor)));
 		button.setPreferredSize(button.getMaximumSize());
-		
+
 		button.setBackground(Color.WHITE);
 		actionsPanel.add(button);
 	}

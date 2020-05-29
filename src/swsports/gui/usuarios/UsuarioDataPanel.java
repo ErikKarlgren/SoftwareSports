@@ -1,12 +1,11 @@
 package swsports.gui.usuarios;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import swsports.gui.DataPanel;
+import swsports.gui.MainWindow;
 import swsports.gui.PerfilMainPanel;
 import swsports.modelo.TransferUsuario;
 import swsports.modelo.Usuario;
@@ -43,19 +42,6 @@ public class UsuarioDataPanel extends DataPanel<Usuario> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			ControladorUsuario ctrl = new ControladorUsuario();
-			Usuario usu = ctrl.consultaUsuario("z9");
-
-			JFrame frame = new JFrame();
-			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			frame.add(new UsuarioDataPanel(usu, null, ctrl));
-			frame.pack();
-			frame.setVisible(true);
-		});
-	}
-
 	private ControladorUsuario controlador;
 
 	/**
@@ -64,19 +50,13 @@ public class UsuarioDataPanel extends DataPanel<Usuario> {
 	 * implican que sus datos correspondientes no se mostrarán). El
 	 * {@link ControladorUsuario} es necesario para poder realizar las acciones de
 	 * editar el usuario o darlo de baja.
-	 * 
-	 * @param usu         {@link Usuario} del que queremos mostrar sus datos.
-	 * @param constraints Restricciones a la hora de mostrar o no los atributos de
-	 *                    <code>usu</code>. Los atributos nulos de
-	 *                    <code>constraints</code> implican que los atributos
-	 *                    correspondientes de <code>usu</code> no se mostrarán. Si
-	 *                    <code>constraints</code> es nulo se mostrarán todos los
-	 *                    datos.
+	 * @param owner TODO
 	 * @param ctrl        Controlador para poder interactuar con el resto del
 	 *                    programa.
+	 * @param usu         {@link Usuario} del que queremos mostrar sus datos.
 	 */
-	public UsuarioDataPanel(Usuario usu, TransferUsuario constraints, ControladorUsuario ctrl) {
-		super(usu);
+	public UsuarioDataPanel(MainWindow owner, ControladorUsuario ctrl, Usuario usu) {
+		super(owner, usu);
 		this.controlador = ctrl;
 		addData();
 		addActions();
