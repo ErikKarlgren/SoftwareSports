@@ -2,6 +2,9 @@ package swsports.gui;
 
 import javax.swing.JFrame;
 
+import swsports.gui.productos.EnumModoPanelProductos;
+import swsports.gui.productos.PanelMainCarrito;
+import swsports.gui.productos.PanelMainProductos;
 import swsports.gui.usuarios.PanelMainUsuarios;
 import swsports.main.Controlador;
 import swsports.modelo.Usuario;
@@ -22,6 +25,10 @@ import javax.swing.ImageIcon;
 
 import java.awt.Dimension;
 
+/**
+ * Ventana principal de la aplicación. Se accede a esta ventana después de que
+ * el usuario haya iniciado sesión.
+ */
 public class MainWindow extends JFrame {
 
 	/**
@@ -30,7 +37,18 @@ public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Controlador ctrl;
 	private Usuario usuario;
+	private PanelMainUsuarios pmUsuarios;
+	private PanelMainProductos pmProductos;
+	private PanelMainProductos pTienda;
+	private PanelMainCarrito pmCarrito;
 
+	/**
+	 * Crea un {@link MainWindow} a partir del usuario que ha iniciado sesión y el
+	 * controlador principal del programa.
+	 * 
+	 * @param usu  {@link Usuario} que ha iniciado sesión.
+	 * @param ctrl {@link Controlador} de la aplicación.
+	 */
 	public MainWindow(Usuario usu, Controlador ctrl) {
 		this.ctrl = ctrl;
 		this.usuario = usu;
@@ -47,13 +65,10 @@ public class MainWindow extends JFrame {
 
 		Color panelBG = Color.WHITE;
 		JPanel panel = new JPanel();
-		// JToolBar panel = new JToolBar();
 		panel.setForeground(Color.BLACK);
-		// panel.setFloatable(false);
 		panel.setBackground(panelBG);
 		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		// panel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
 
 		JButton btnCerrarSesion = new JButton(new ImageIcon("icons/cerrar_sesion.png"));
 		btnCerrarSesion.setSize(new Dimension(0, 15));
@@ -71,24 +86,60 @@ public class MainWindow extends JFrame {
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut);
 
-		if (usu.esAdmin()) {
-			tabbedPane.addTab("Usuarios", null, new PanelMainUsuarios(ctrl.getControladorUsuario()),
-					"Consultar y manejar los usuarios guardados en la base de datos");
-		}
+		anyadirPaneles(tabbedPane);
+
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
 		this.setMinimumSize(getSize());
 		this.setVisible(true);
 	}
 
+	/**
+	 * Añade los paneles principales a la ventana.
+	 * 
+	 * @param tabbedPane {@link JTabbedPane} en el que van los paneles.
+	 */
+	private void anyadirPaneles(JTabbedPane tabbedPane) {
+		if (usuario.esAdmin()) {
+			pmUsuarios = new PanelMainUsuarios(this, ctrl.getControladorUsuario());
+			pmProductos = new PanelMainProductos(this, ctrl.getControladorProductos(), EnumModoPanelProductos.PRODUCTOS,
+					null);
+
+			tabbedPane.addTab("Usuarios", null, pmUsuarios,
+					"Consultar y manejar los usuarios guardados en la base de datos");
+			tabbedPane.addTab("Productos", null, pmProductos,
+					"Consultar y manejar los productos guardados en la base de datos");
+		}
+
+		pTienda = new PanelMainProductos(this, ctrl.getControladorProductos(), EnumModoPanelProductos.TIENDA,
+				this.usuario.getCarrito());
+		pmCarrito = new PanelMainCarrito(this, ctrl.getControladorProductos());
+
+		tabbedPane.addTab("Tienda", null, pTienda, "Consultar y comprar los productos disponibles en la tienda");
+		tabbedPane.addTab("Carrito", null, pmCarrito, "Consultar productos del carrito y tramitar pedido");
+	}
+
+	/**
+	 * Pide confirmación al usuario para cerrar la sesión actual.
+	 */
 	private void cerrarSesion() {
-		int n = JOptionPane.showOptionDialog(this, "¿Seguro que quiere cerrar sesión?", "Cerrar sesión",
+		int n = JOptionPane.showOptionDialog(this, "ï¿½Seguro que quiere cerrar sesiï¿½n?", "Cerrar sesiï¿½n",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (n == JOptionPane.OK_OPTION)
 			ctrl.cerrarSesion(this);
 	}
 
+	/**
+	 * @return {@link Usuario} que ha iniciado sesión.
+	 */
 	public Usuario getUsuario() {
 		return usuario;
+	}
+
+	/**
+	 * Actualiza el panel para el carrito.
+	 */
+	public void actualizarPanelCarrito() {
+		pmCarrito.actualizar();
 	}
 }

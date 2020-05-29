@@ -3,8 +3,8 @@ package swsports.daoproductos;
 import java.util.List;
 
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 public class FachadaDAOProductos implements IFachadaDAOProductos  {
   
@@ -36,22 +36,22 @@ public class FachadaDAOProductos implements IFachadaDAOProductos  {
   
   @Override
   public List<Producto> busquedaProducto(TransferProducto tProd){
-  	return dao.busquedaProducto(null);
+  	return dao.busquedaProducto(tProd);
   }
   
   @Override
-  public boolean anyadirProducto(Producto prod){
-  	return dao.anyadirProducto(prod);
+  public boolean anyadirProducto(Producto prod, Carrito carrito){
+  	return dao.anyadirProducto(prod, carrito);
   }
   
   @Override 
-  public boolean quitarProducto(Producto prod){
-	return dao.quitarProducto(prod);
+  public boolean quitarProducto(Producto prod, Carrito carrito){
+	return dao.quitarProducto(prod, carrito);
   }
   
   @Override 
-  public boolean comprar(Tarjeta t, List<Producto> lp){
-	return dao.comprar(t, lp);
+  public boolean comprar(Carrito carrito){
+	return dao.comprar(carrito);
   }
 
 }

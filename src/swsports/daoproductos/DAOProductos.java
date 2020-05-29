@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 import swsports.basedatos.BaseDatos;
 import swsports.basedatos.BaseDatosProductoJSON;
 import swsports.modelo.TransferProducto;
+import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
-import swsports.modelo.Tarjeta;
 
 class DAOProductos implements IDAOProductos {
   
@@ -60,14 +60,10 @@ class DAOProductos implements IDAOProductos {
           boolean ok = true;          
           
           ok &= (tProd.getId() == null || p.getId().equals(tProd.getId()));
-          ok &= (tProd.getNombre() == null || p.getNombre().equals(tProd.getNombre()));
-          ok &= (tProd.getDesc() == null || p.getDesc().contains(tProd.getDesc()));
-     
-          ok &= (tProd.getStock() == null
-                  || String.valueOf(p.getStock()).contains(String.valueOf(tProd.getStock())));
-
-              ok &= (tProd.getPrecio() == null
-                  || String.valueOf(p.getPrecio()).contains(String.valueOf(tProd.getPrecio())));
+          ok &= (tProd.getNombre() == null || (p.getNombre().toLowerCase()).contains((tProd.getNombre().toLowerCase())));
+          ok &= (tProd.getDesc() == null || (p.getDesc().toLowerCase()).contains(tProd.getDesc().toLowerCase()));
+          ok &= (tProd.getStock() == null || p.getStock() == tProd.getStock());
+          ok &= (tProd.getPrecio() == null || p.getPrecio() == tProd.getPrecio());
               
           return ok;
 		}
@@ -77,18 +73,33 @@ class DAOProductos implements IDAOProductos {
 	}
   
   @Override
-  public boolean anyadirProducto(Producto prod){
-  	return consultaProducto(prod.getId()) != null;
+  public boolean anyadirProducto(Producto prod, Carrito carrito){
+	  carrito.anyadirProducto(prod);
+	  prod.setStock(prod.getStock() - 1);
+	  return true;
   }
   
   @Override 
-  public boolean quitarProducto(Producto prod){
-	return consultaProducto(prod.getId()) != null;
+  public boolean quitarProducto(Producto prod, Carrito carrito){
+	  if(carrito.eliminarProducto(prod)) {
+		  prod.setStock(prod.getStock() + 1);
+		  return true;
+	  }
+	  else {
+		  return false;
+	  }
   }
   
   @Override 
-  public boolean comprar(Tarjeta t, List<Producto> lp){
-	return false;
+  public boolean comprar(Carrito carrito){
+	  if(carrito.carritoVacio()) {
+		  return false;
+	  }
+	  
+	  else {
+		  carrito.vaciarCarrito();
+		  return true;
+	  }
   } 
 
 }
