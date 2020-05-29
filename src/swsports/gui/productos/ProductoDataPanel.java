@@ -9,9 +9,11 @@ import swsports.gui.EditarProductoPanel;
 import swsports.gui.MainWindow;
 import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
+
 import swsports.productos.ControladorProductos;
 
 public class ProductoDataPanel extends DataPanel<Producto> {
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,13 +27,12 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		EditarProductoDialog() {
 			super();
 			this.setTitle("Editar producto");
-			this.add(new EditarProductoPanel(object, controlador, false));
+      this.add(new EditarProductoPanel(object, controlador, false));
 			this.pack();
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setVisible(true);
 		}
 	}
-
 	public ProductoDataPanel(MainWindow owner, ControladorProductos ctrl, Producto prod, EnumModoPanelProductos m,
 			Carrito c) {
 		super(owner, prod);
@@ -81,7 +82,6 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 			controlador.bajaProducto(object);
 		}
 	}
-
 	private void anyadirCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres anyadir este producto a tu carrito?",

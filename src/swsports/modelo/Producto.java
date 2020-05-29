@@ -61,7 +61,7 @@ public class Producto implements Reportable {
 	/**
 	 * @return El identificador del producto.
 	 */
-	@Override
+  @Override
 	public String getId() {
 		return id;
 	}

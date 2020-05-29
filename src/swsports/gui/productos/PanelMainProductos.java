@@ -1,5 +1,6 @@
 package swsports.gui.productos;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,7 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private JTextField stockTextField;
 	private JTextField precioTextField;
 	private ControladorProductos controlador;
+
 	private JButton anyadirProductoButton;
 	private JButton carritoButton;
 	private EnumModoPanelProductos modo;
@@ -40,13 +42,14 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
 	private class BuscarProductoWorker extends BuscarSwingWorker {
 
+
 		@Override
 		protected Void doInBackground() throws Exception {
 			setSearchButtonEnabled(false);
 
 			String id = idTextField.getText().equals("") ? null : idTextField.getText();
 			String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
-			String desc = descTextField.getText().equals("") ? null : descTextField.getText();
+      String desc = descTextField.getText().equals("") ? null : descTextField.getText();
 			Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
 			Double precio = precioTextField.getText().equals("") ? null : Double.valueOf(precioTextField.getText());
 
@@ -143,13 +146,12 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		JPanel lateralAdminPanel = new JPanel();
 		lateralAdminPanel.setBackground(Color.ORANGE);
 		lateralAdminPanel.setLayout(new BoxLayout(lateralAdminPanel, BoxLayout.Y_AXIS));
-
 		return map;
 	}
 
 	@Override
 	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
-		return new BuscarProductoWorker();
+    return new BuscarProductoWorker();
 	}
 
 }
