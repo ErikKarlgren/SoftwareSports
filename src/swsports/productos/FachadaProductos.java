@@ -6,7 +6,7 @@ import swsports.modelo.TransferProducto;
 import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
 
-/*
+/**
 * Fachada del modulo Productos. Todas las operaciones que tengan
 * que ver con dicho modulo se realizan mediante llamadas a los métodos
 * que se encuentran en esta clase.
