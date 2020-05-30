@@ -9,6 +9,9 @@ import swsports.modelo.TransferProducto;
 import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
 
+/**
+ * Implementación de la lógica de acceso a datos.
+ */
 class DAOProductos implements IDAOProductos {
   
   private BaseDatos<Producto> bd;
