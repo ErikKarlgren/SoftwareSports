@@ -97,7 +97,13 @@ class DAOProductos implements IDAOProductos {
 	  }
 	  
 	  else {
-		  carrito.vaciarCarrito();
+		  
+		  for(Producto p : carrito.getMapaProductos().keySet()) {
+			  bd.editar(new Producto(p.getId(), p.getNombre(), p.getDesc(), p.getStock(), p.getPrecio()));
+		  }
+		  
+		  carrito.vaciarCarrito(true);
+		  
 		  return true;
 	  }
   } 
