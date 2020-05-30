@@ -47,49 +47,11 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 			return null;
 		}
 	}
-
-	private Carrito carrito;
-	private ControladorProductos controlador;
-
-	/**
-	 * Crea el panel para el carrito del usuario.
-	 * 
-	 * @param owner Ventana principal {@link MainWindow}.
-	 * @param ctrl  Controlador del m�dulo productos.
-	 */
-	public PanelMainCarrito(MainWindow owner, ControladorProductos ctrl) {
-		super(owner, "Carrito");
-		this.carrito = owner.getUsuario().getCarrito();
-		this.controlador = ctrl;
-	}
-
-	/**
-	 * Actualiza el panel principal con los {@link ProductoDataPanel} de los
-	 * productos del carrito del usuario.
-	 */
-	public void actualizar() {
-		buscarObjetosYCrearPaneles();
-		actualizarResumenCompra();
-	}
-
-	/**
-	 * No usa PanelBusqueda de AbstractPanelMain, as� que devuelve 'null'.
-	 */
-	@Override
-	protected LinkedHashMap<String, JComponent> getComponentesBusqueda() {
-		return null;
-	}
-
-	@Override
-	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
-		return new BuscarCarritoWorker();
-	}
-
-	protected JScrollPane getPanelLateral() {
-		return new PanelLateralCompra();
-	}
 	
-		
+	/**
+	 * Clase panel lateral de compra, que sustituye al panel de búsqueda del modo Productos y Tienda.
+	 * En esta clase aparece un resumen de compra y un botón para finalizarla, es decir, encargar el pedido.
+	 */
 	class PanelLateralCompra extends JScrollPane {
 
 		private static final long serialVersionUID = 1L;
@@ -147,7 +109,57 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		}
 		
 	}
+
+	/**
+	 * 
+	 */
+	private Carrito carrito;
+	private ControladorProductos controlador;
+
+	/**
+	 * Crea el panel para el carrito del usuario.
+	 * 
+	 * @param owner Ventana principal {@link MainWindow}.
+	 * @param ctrl  Controlador del m�dulo productos.
+	 */
+	public PanelMainCarrito(MainWindow owner, ControladorProductos ctrl) {
+		super(owner, "Carrito");
+		this.carrito = owner.getUsuario().getCarrito();
+		this.controlador = ctrl;
+	}
+
+	/**
+	 * Actualiza el panel principal con los {@link ProductoDataPanel} de los
+	 * productos del carrito del usuario y el resumen de compra.
+	 */
+	public void actualizar() {
+		buscarObjetosYCrearPaneles();
+		actualizarResumenCompra();
+	}
+
+	/**
+	 * No usa PanelBusqueda de AbstractPanelMain, as� que devuelve 'null'.
+	 */
+	@Override
+	protected LinkedHashMap<String, JComponent> getComponentesBusqueda() {
+		return null;
+	}
+
+	@Override
+	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
+		return new BuscarCarritoWorker();
+	}
+
+	protected JScrollPane getPanelLateral() {
+		return new PanelLateralCompra();
+	}
 	
+	/**
+	 * Muestra una ventana cuando el usuario pulsa el botón "comprar". 
+	 * 		- Si todo ha salido bien, aparece un mensaje de confirmación.
+	 * 		- Si ha ocurrido un error, se informa al usuario.
+	 * 
+	 */
 	private void finalizarCompra() {
 		if(controlador.comprar(carrito)) {
 			JOptionPane.showMessageDialog(this, "Su pedido ha sido encargado con exito. Podrá recogerlo en tienda en 2h.", "Confirmación de pedido",
@@ -162,6 +174,9 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		
 	}
 	
+	/**
+	 * Actualiza las etiquetas del resumen de compra.
+	 */
 	private void actualizarResumenCompra() {
 		numeroProductosLabel.setText("Número de productos: " + carrito.getNumProductos());
 		precioTotalLabel.setText("Total: " + carrito.getPrecioTotal() + "€");

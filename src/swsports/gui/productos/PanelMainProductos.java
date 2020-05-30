@@ -25,19 +25,12 @@ import swsports.productos.ControladorProductos;
 
 public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
-	private static final long serialVersionUID = 1L;
-
-	private JTextField idTextField;
-	private JTextField nombreTextField;
-	private JTextField descTextField;
-	private JTextField stockTextField;
-	private JTextField precioTextField;
-	private ControladorProductos controlador;
-	private JButton anyadirProductoButton;
-	private JButton carritoButton;
-	private EnumModoPanelProductos modo;
-	private Carrito carrito;
-
+	/**
+	 * Implementación de {@link BuscarSwingWorker} que busca productos según unos
+	 * criterios de búsqueda y crea paneles con sus datos. Durante la ejecución de
+	 * {@link #doInBackground()} se deshabilita el botón de búsqueda del panel
+	 * izquierdo.
+	 */
 	private class BuscarProductoWorker extends BuscarSwingWorker {
 
 		@Override
@@ -62,7 +55,32 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField idTextField;
+	private JTextField nombreTextField;
+	private JTextField descTextField;
+	private JTextField stockTextField;
+	private JTextField precioTextField;
+	private ControladorProductos controlador;
+	private JButton anyadirProductoButton;
+	private JButton carritoButton;
+	private EnumModoPanelProductos modo;
+	private Carrito carrito;
 
+	/**
+	 * Crea un {@link PanelMainProductos} dado un {@link ControladorUsuario}, la ventana principal del programa ({@link MainWindow}),
+	 * un enumerado para elegir el modo ({@link EnumModoPanelProductos}) y un carrito ({@link Carrito}).
+	 * 
+	 * @param owner Ventana principal
+	 * @param ctrl Controlador del módulo Usuarios
+	 * @param m Enumerado EnumModoPanelProductos para distinguir entre productos, tienda y carrito
+	 * @param c Carrito para manejar los productos
+	 */
 	public PanelMainProductos(MainWindow owner, ControladorProductos ctrl, EnumModoPanelProductos m, Carrito c) {
 		super(owner, "Productos");
 		this.controlador = ctrl;
@@ -76,6 +94,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
 	}
 
+	/**
+	 * Inicializa una interfaz en modo productos. Únicamente añade un botón para añadir nuevos productos a la base de datos.
+	 */
 	private void initGUIProductos() {
 		anyadirProductoButton = new JButton("Anyadir Producto");
 		add(anyadirProductoButton, BorderLayout.SOUTH);
@@ -89,6 +110,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		});
 	}
 
+	/**
+	 * Inicializa una interfaz en modo carrito. Únicamente añade un botón para finalizar la compra.
+	 */
 	private void initGUICarrito() {
 		carritoButton = new JButton("Tramitar Pedido");
 		add(carritoButton, BorderLayout.SOUTH);
@@ -101,8 +125,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		});
 	}
 
-	/*
-	 * FALTA COMPROBAR/PROHIBIR QUE EL USUARIO COMPRE UN PRODUCTO CON STOCK = 0
+	/**
+	 * Clase que crea una nueva ventana con un panel de tipi EditarProductoPanel, donde el administrador
+	 * puede introducir los nuevos datos de un producto.
 	 */
 	private class AnyadirProductoDialog extends JDialog {
 		private static final long serialVersionUID = 1L;
@@ -117,6 +142,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		}
 	}
 
+	/**
+	 * Abre una ventana de diálogo para confirmar la compra. Si se confirma, se finalizará dicha compra a través del controlador.
+	 */
 	private void tramitarCompra() {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres finalizar tu compra?", "Tramitar pedido",

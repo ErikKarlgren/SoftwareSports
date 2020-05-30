@@ -11,13 +11,15 @@ import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
 import swsports.productos.ControladorProductos;
 
+/**
+ * Panel que muestra los datos de un {@link Producto}. Permite además editar sus
+ * datos y darlo de baja.
+ */
 public class ProductoDataPanel extends DataPanel<Producto> {
-
-	private static final long serialVersionUID = 1L;
-
-	private ControladorProductos controlador;
-	private EnumModoPanelProductos modo;
-
+	
+	/**
+	 * Diálogo que muestra el panel para editar el producto.
+	 */
 	private class EditarProductoDialog extends JDialog {
 
 		private static final long serialVersionUID = 1L;
@@ -31,9 +33,26 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 			this.setVisible(true);
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	public ProductoDataPanel(MainWindow owner, ControladorProductos ctrl, Producto prod, EnumModoPanelProductos m,
-			Carrito c) {
+	private ControladorProductos controlador;
+	private EnumModoPanelProductos modo;
+
+	/**
+	 * Crea un panel con los datos de un {@link Producto}. El {@link ControladorProducto}
+	 * es necesario para poder realizar las acciones de editar el producto o darlo de baja.
+	 * 
+	 * @param owner Ventana principal.
+	 * @param ctrl Controlador para poder interactuar con el resto del programa.
+	 * @param prod {@link Producto} del que queremos mostrar sus datos.
+	 * @param m {@link EnumModoPanelProductos} enumerado para mostrar unas opciones u otras en función del modo.
+	 * @param c {@link Carrito} Carrito necesario para añadir productos.
+	 */
+	public ProductoDataPanel(MainWindow owner, ControladorProductos ctrl, Producto prod, EnumModoPanelProductos m, Carrito c) {
 		super(owner, prod);
 		this.controlador = ctrl;
 		this.modo = m;
@@ -41,6 +60,12 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		addActions(c);
 	}
 
+	/**
+	 * Añade las acciones del panel en función del modo:
+	 * 		- Si se encuentra en modo productos (gestión), podremos editar dicho producto o eliminarlo.
+	 * 		- Si estamos en modo tienda, podremos añadir el producto a nuestro carrito.
+	 * 		- Si estamos en modo carrito, podremos eliminar el producto de nuestro carrito.
+	 */
 	private void addActions(Carrito c) {
 
 		if (this.modo == EnumModoPanelProductos.PRODUCTOS) {
@@ -57,6 +82,16 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 	}
 
+	/**
+	 * Añade los campos del producto al panel en función del modo.
+	 * En todos los modos mostraremos: su identificador, su nombre, su descripción y su precio
+	 * En modo productos (gestión) y modo tienda mostraremos el número de unidades restantes.
+	 * En modo carrito, mostraremos las unidades que ha adquirido el usuario.
+	 * 
+	 * @param c {@link Carrito} Carrito para saber las unidades de un producto.
+	 * @param p {@link Producto} Producto del que mostraremos sus datos.
+	 * 
+	 */
 	private void addData(Carrito c, Producto p) {
 		addDataField("Nombre", String.valueOf(object.getNombre()));
 		addDataField("Descripcion", object.getDesc());
@@ -72,6 +107,10 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		addDataField("Precio", String.valueOf(object.getPrecio()));
 	}
 
+	/**
+	 * Da de baja a un {@link Producto} si el usuario de la aplicación confirma su
+	 * decisión.
+	 */
 	private void eliminarProducto() {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres dar de baja este producto?",
@@ -82,6 +121,10 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 	}
 
+	/**
+	 * Añade un producto al carrito si el usuario confirma la decisión.
+	 * @param c {@link Carrito} Carrito al que añadimos el producto.
+	 */
 	private void anyadirCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres anyadir este producto a tu carrito?",
@@ -92,6 +135,10 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 	}
 
+	/**
+	 * Elimina un producto del carrito si el usuario confirma la decisión.
+	 * @param c {@link Carrito} Carrito del que eliminamos el producto.
+	 */
 	private void eliminarCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Quieres eliminar este producto de tu carrito?",
