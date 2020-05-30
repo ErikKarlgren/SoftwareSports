@@ -24,9 +24,14 @@ import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 import javax.swing.JSeparator;
 
-
+/**
+ * Panel usado para editar un producto o añadir uno nuevo.
+ */
 public class EditarProductoPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	private JTextField nameTextField;
@@ -40,6 +45,13 @@ public class EditarProductoPanel extends JPanel {
 	private ControladorProductos controlador;
 	private boolean nuevoProducto;
 	
+	/**
+	 * Crea un panel para poder editar o añadir un producto.
+	 * 
+	 * @param prod  {@link Producto} que queremos editar (null si es nuevo).
+	 * @param ctrl Controlador del módulo Productos.
+	 * @param nuevo Booleano: true indica que estoy creando un producto nuevo, false que estoy editando.
+	 */
 	public EditarProductoPanel(Producto prod, ControladorProductos ctrl, boolean nuevo) {
 		setBackground(SystemColor.textHighlight);
 		this.controlador = ctrl;
@@ -48,6 +60,12 @@ public class EditarProductoPanel extends JPanel {
 		initGUI();
 	}
 
+	/**
+	 * Comprueba si se han rellenado todos los datos.
+	 * 
+	 * @return <code>true</code> si se han rellenado todos los datos,
+	 *         <code>false</code> en caso contrario.
+	 */
 	private boolean datosCompletos() {
 		
 		boolean completos = false;
@@ -66,11 +84,18 @@ public class EditarProductoPanel extends JPanel {
 		return completos; 
 	}
 
-	private void editar(ItemEvent i) {
+	/**
+	 * Método que sirve para editar o crear un producto. En un nuevo producto, los campos aparecen disponibles para escribir. Si estamos editando
+	 * un producto, habrá que pulsar el botón.
+	 */
+	private void editarCrear(ItemEvent i) {
 		
 		if (!nuevoProducto && i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
-		} else if (datosCompletos()) {
+		} 
+		
+		//Si están todos los datos completos
+		else if (datosCompletos()) {
 			
 			if(nuevoProducto){
 				controlador.altaProducto(leerDatosAnyadir());
@@ -85,13 +110,15 @@ public class EditarProductoPanel extends JPanel {
 				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
 						"Editar producto", JOptionPane.PLAIN_MESSAGE));
 			}
-			
-			
+				
 		} else {
 			JOptionPane.showMessageDialog(this, "Datos incompletos", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
+	/**
+	 * Crea la interfaz gráfica del panel.
+	 */
 	private void initGUI() {
 		setLayout(new BorderLayout(0, 0));
 
@@ -131,6 +158,10 @@ public class EditarProductoPanel extends JPanel {
 		gbc_lblNewLabel.gridy = 0;
 		dataAuxPanel.add(lblNewLabel, gbc_lblNewLabel);
 
+		/**
+		 * Si es un nuevo producto, añado un campo de texto para introducir el id.
+		 * Si estoy editando un producto, añado una etiqueta con su identificador, que no puede cambiar.
+		 */
 		if(nuevoProducto) {
 			idTextField = new JTextField();
 			idTextField.setEditable(true);
@@ -274,6 +305,9 @@ public class EditarProductoPanel extends JPanel {
 		bottomPanel.add(bottomAuxPanel, BorderLayout.CENTER);
 		bottomAuxPanel.setBackground(bottomPanel.getBackground());
 
+		/**
+		 * Cambia el botón en función de si edito/creo
+		 */
 		if(nuevoProducto) {
 			editProductoButton = new JToggleButton("Anyadir producto");
 		}
@@ -281,7 +315,7 @@ public class EditarProductoPanel extends JPanel {
 			editProductoButton = new JToggleButton("Editar producto");
 		}
 		
-		editProductoButton.addItemListener(this::editar);
+		editProductoButton.addItemListener(this::editarCrear);
 		editProductoButton.setBackground(Color.WHITE);
 		bottomAuxPanel.add(editProductoButton);
 
@@ -297,18 +331,33 @@ public class EditarProductoPanel extends JPanel {
 		setTextFieldsEditable(nuevoProducto);
 	}
 
+	/**
+	 * Si estoy editando un producto, cojo todos los campos y mantengo su id.
+	 * 
+	 * @return {@link TransferProducto} Nuevos datos del producto.
+	 */
 	private TransferProducto leerDatosEditar() {
 		return new TransferProducto(producto.getId(), nameTextField.getText(), descTextField.getText(),
 				Integer.valueOf(stockTextField.getText()),
 				Double.valueOf(precioTextField.getText()));
 	}
 	
+	/**
+	 * Si estoy creando un producto, cojo todos los campos.
+	 * 
+	 * @return {@link TransferProducto} Datos del nuevo producto.
+	 */
 	private Producto leerDatosAnyadir() {
 		return new Producto(idTextField.getText(), nameTextField.getText(), descTextField.getText(),
 				Integer.valueOf(stockTextField.getText()),
 				Double.valueOf(precioTextField.getText()));
 	}
 
+	/**
+	 * Establece si los campos son editables o no en función de un booleano.
+	 * 
+	 * @param b Boolean que indica si se ponen o no editables.
+	 */
 	private void setTextFieldsEditable(boolean b) {
 		nameTextField.setEditable(b);
 		descTextField.setEditable(b);
