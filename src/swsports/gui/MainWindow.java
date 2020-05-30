@@ -26,8 +26,8 @@ import javax.swing.ImageIcon;
 import java.awt.Dimension;
 
 /**
- * Ventana principal de la aplicación. Se accede a esta ventana después de que
- * el usuario haya iniciado sesión.
+ * Ventana principal de la aplicaciï¿½n. Se accede a esta ventana despuï¿½s de que
+ * el usuario haya iniciado sesiï¿½n.
  */
 public class MainWindow extends JFrame {
 
@@ -43,11 +43,11 @@ public class MainWindow extends JFrame {
 	private PanelMainCarrito pmCarrito;
 
 	/**
-	 * Crea un {@link MainWindow} a partir del usuario que ha iniciado sesión y el
+	 * Crea un {@link MainWindow} a partir del usuario que ha iniciado sesiï¿½n y el
 	 * controlador principal del programa.
 	 * 
-	 * @param usu  {@link Usuario} que ha iniciado sesión.
-	 * @param ctrl {@link Controlador} de la aplicación.
+	 * @param usu  {@link Usuario} que ha iniciado sesiï¿½n.
+	 * @param ctrl {@link Controlador} de la aplicaciï¿½n.
 	 */
 	public MainWindow(Usuario usu, Controlador ctrl) {
 		this.ctrl = ctrl;
@@ -95,7 +95,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Añade los paneles principales a la ventana.
+	 * Aï¿½ade los paneles principales a la ventana.
 	 * 
 	 * @param tabbedPane {@link JTabbedPane} en el que van los paneles.
 	 */
@@ -120,17 +120,19 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Pide confirmación al usuario para cerrar la sesión actual.
+	 * Pide confirmaciï¿½n al usuario para cerrar la sesiï¿½n actual.
 	 */
 	private void cerrarSesion() {
 		int n = JOptionPane.showOptionDialog(this, "ï¿½Seguro que quiere cerrar sesiï¿½n?", "Cerrar sesiï¿½n",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
-		if (n == JOptionPane.OK_OPTION)
+		if (n == JOptionPane.OK_OPTION) {
 			ctrl.cerrarSesion(this);
+			this.usuario.getCarrito().vaciarCarrito(false);
+		}
 	}
 
 	/**
-	 * @return {@link Usuario} que ha iniciado sesión.
+	 * @return {@link Usuario} que ha iniciado sesiï¿½n.
 	 */
 	public Usuario getUsuario() {
 		return usuario;

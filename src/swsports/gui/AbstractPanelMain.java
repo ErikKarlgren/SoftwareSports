@@ -27,29 +27,29 @@ import swsports.modelo.Reportable;
 
 /**
  * Clase abstracta creada para mantener una interfaz uniforme para los paneles
- * principales de cada módulo.
+ * principales de cada mï¿½dulo.
  * 
  * Las subclases deben de asegurarse de que los componentes que se quieran
- * añadir a la GUI se inicien en el método {@link #getComponentesBusqueda()} y
+ * aï¿½adir a la GUI se inicien en el mï¿½todo {@link #getComponentesBusqueda()} y
  * que {@link #getNewSwingWorker()} devuelva un nuevo objeto que sea subclase de
- * {@link BuscarSwingWorker} (se recomienda que la implementación sea una clase
- * interna por claridad del código).
+ * {@link BuscarSwingWorker} (se recomienda que la implementaciï¿½n sea una clase
+ * interna por claridad del cï¿½digo).
  * 
  * @param <T> Clase que implemente {@link Reportable}.
  */
 public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 
 	/**
-	 * Implementación de {@link SwingWorker} que busca usuarios según unos criterios
-	 * de búsqueda y crea paneles con sus datos. Durante la ejecución de
-	 * {@link #doInBackground()} se deshabilita el botón de búsqueda del panel
+	 * Implementaciï¿½n de {@link SwingWorker} que busca usuarios segï¿½n unos criterios
+	 * de bï¿½squeda y crea paneles con sus datos. Durante la ejecuciï¿½n de
+	 * {@link #doInBackground()} se deshabilita el botï¿½n de bï¿½squeda del panel
 	 * izquierdo.
 	 */
 	protected abstract class BuscarSwingWorker extends SwingWorker<Void, DataPanel<T>> {
 
 		/**
 		 * Se debe deshabilitar {@link AbstractPanelMain#searchButton} al comenzar el
-		 * método, leer los datos de los componentes guardados en
+		 * mï¿½todo, leer los datos de los componentes guardados en
 		 * {@link AbstractPanelMain#mapaComponentes}, llamar al controlador para buscar
 		 * los objetos {@link Reportable}, crear paneles del tipo {@link DataPanel}, y
 		 * llamar a {@link #publish(Object...)} con ellos.
@@ -81,7 +81,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Panel donde aparecerán los datos de los objetos de tipo {@link Reportable}
+	 * Panel donde aparecerï¿½n los datos de los objetos de tipo {@link Reportable}
 	 * que se hayan buscado.
 	 */
 	private class DefaultPanelPrincipal extends JScrollPane {
@@ -93,7 +93,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 
 		/**
 		 * Crea un PanelPrincipal a partir de un {@link String} que sirve como cabecera
-		 * o título del panel.
+		 * o tï¿½tulo del panel.
 		 * 
 		 * @param cabecera Texto para usar como cabecera del panel.
 		 */
@@ -103,7 +103,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		}
 
 		/**
-		 * Crea la interfaz gráfica del panel.
+		 * Crea la interfaz grï¿½fica del panel.
 		 */
 		private void initGUI() {
 			JPanel mainPanel = new JPanel();
@@ -160,8 +160,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Subpanel izquierdo en el que se introducen los parámetros de búsqueda. Los
-	 * campos que se dejen vacíos deberían ignorarse en las subclases de
+	 * Subpanel izquierdo en el que se introducen los parï¿½metros de bï¿½squeda. Los
+	 * campos que se dejen vacï¿½os deberï¿½an ignorarse en las subclases de
 	 * {@link AbstractPanelMain}.
 	 */
 	private class PanelBusqueda extends JScrollPane {
@@ -179,12 +179,12 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		}
 
 		/**
-		 * Añade una serie de componentes {@link JComponent} guardados en un mapa
+		 * Aï¿½ade una serie de componentes {@link JComponent} guardados en un mapa
 		 * {@link LinkedHashMap} intercalados con objetos {@link JLabel} creados a
-		 * partir de las claves de dicho mapa. Añade finalmente el botón de búsqueda.
+		 * partir de las claves de dicho mapa. Aï¿½ade finalmente el botï¿½n de bï¿½squeda.
 		 * 
 		 * @param comps Mapa con los componentes y su {@link String} correspondiente con
-		 *              el que se crearán sus respectivos {@link JLabel}.
+		 *              el que se crearï¿½n sus respectivos {@link JLabel}.
 		 */
 		private void addComponents(LinkedHashMap<String, JComponent> comps) {
 			for (Map.Entry<String, JComponent> entry : comps.entrySet()) {
@@ -206,9 +206,9 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		}
 
 		/**
-		 * Añade una separación vertical de un número determinado de píxeles.
+		 * Aï¿½ade una separaciï¿½n vertical de un nï¿½mero determinado de pï¿½xeles.
 		 * 
-		 * @param x Número de píxeles de separación.
+		 * @param x Nï¿½mero de pï¿½xeles de separaciï¿½n.
 		 */
 		private void addVerticalStrut(int x) {
 			lateralAuxPanel.add(Box.createVerticalStrut(x));
@@ -218,7 +218,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		 * Crea un {@link JLabel} a partir de un {@link String} de modo que tenga unos
 		 * colores acordes al tema del panel (fondo naranja y letra en negro).
 		 * 
-		 * @param name Parámetro para construir el {@link JLabel}.
+		 * @param name Parï¿½metro para construir el {@link JLabel}.
 		 * @return Un {@link JLabel} de acuerdo al tema del panel;
 		 */
 		private JLabel createLabel(String name) {
@@ -230,7 +230,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		}
 
 		/**
-		 * Crea la interfaz gráfica del panel.
+		 * Crea la interfaz grï¿½fica del panel.
 		 */
 		private void initGUI() {
 			JPanel lateralPanel = new JPanel();
@@ -268,11 +268,11 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	private static final int TXT_FIELD_HEIGHT = 20;
 
 	/**
-	 * Crea un campo de texto de un tamaño máximo determinado
-	 * ({@value #TXT_FIELD_HEIGHT} píxeles de alto, y {@value #TXT_FIELD_WIDTH}
-	 * píxeles de largo).
+	 * Crea un campo de texto de un tamaï¿½o mï¿½ximo determinado
+	 * ({@value #TXT_FIELD_HEIGHT} pï¿½xeles de alto, y {@value #TXT_FIELD_WIDTH}
+	 * pï¿½xeles de largo).
 	 * 
-	 * @return Un {@link JTextField} con cierto tamaño máximo.
+	 * @return Un {@link JTextField} con cierto tamaï¿½o mï¿½ximo.
 	 */
 	protected static JTextField createTextField() {
 		JTextField textField = new JTextField();
@@ -285,6 +285,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	private JPanel mainObjectsAuxPanel;
 	protected MainWindow owner;
 	protected List<T> objetos;
+	protected JScrollPane lateralPanel;
 
 	/**
 	 * Mapa ordenado con la clave siendo el nombre o identificador de un componente
@@ -294,16 +295,17 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 
 	/**
 	 * Crea el panel. Recibe {@link MainWindow} y un nombre para el panel que en
-	 * principio se usará para el panel principal.
+	 * principio se usarï¿½ para el panel principal.
 	 * 
-	 * @param owner Ventana principal de la aplicación.
+	 * @param owner Ventana principal de la aplicaciï¿½n.
 	 */
 	public AbstractPanelMain(MainWindow owner, String nombreModulo) {
 		this.owner = owner;
 		objetos = new LinkedList<>();
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
-		add(getPanelLateral(), BorderLayout.WEST);
+		lateralPanel = getPanelLateral();
+		add(lateralPanel, BorderLayout.WEST);
 		add(getPanelPrincipal(nombreModulo), BorderLayout.CENTER);
 	}
 
@@ -321,9 +323,9 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Método donde se deben iniciar los componentes que se vayan a añadir al
+	 * Mï¿½todo donde se deben iniciar los componentes que se vayan a aï¿½adir al
 	 * subpanel {@link PanelBusqueda} de {@link AbstractPanelMain}. Devuelve un mapa
-	 * {@link LinkedHashMap} con pares de {@link String} que se usarán para crear
+	 * {@link LinkedHashMap} con pares de {@link String} que se usarï¿½n para crear
 	 * {@link JLabel} y {@link JComponent}.
 	 * 
 	 * @return Mapa con pares de {@link String} y {@link JComponent}.
@@ -331,7 +333,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	protected abstract LinkedHashMap<String, JComponent> getComponentesBusqueda();
 
 	/**
-	 * Método que debe ser implementado y tiene que devolver la implementación de
+	 * Mï¿½todo que debe ser implementado y tiene que devolver la implementaciï¿½n de
 	 * BuscarSwingWorker correspondiente al tipo T {@link Reportable}.
 	 * 
 	 * @return Subclase de BuscarSwingWorker
@@ -352,18 +354,18 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	 * Devuelve el subpanel principal con scroll ({@link JScrollPane}). Puede
 	 * sobrescribirse por otras clases si es necesario usar un panel distinto al de
 	 * por defecto ({@link DefaultPanelPrincipal}). Recibe un string que sirve como
-	 * título de dicho subpanel.
+	 * tï¿½tulo de dicho subpanel.
 	 * 
-	 * @param nombreModulo En principio el título de del subpanel, aunque se puede
-	 *                     omitir si se quiere al sobrescribir este método.
-	 * @return Devuelve un {@link JScrollPane} que servirá como panel principal.
+	 * @param nombreModulo En principio el tï¿½tulo de del subpanel, aunque se puede
+	 *                     omitir si se quiere al sobrescribir este mï¿½todo.
+	 * @return Devuelve un {@link JScrollPane} que servirï¿½ como panel principal.
 	 */
 	protected JScrollPane getPanelPrincipal(String nombreModulo) {
 		return new DefaultPanelPrincipal(nombreModulo);
 	}
 
 	/**
-	 * Quita los paneles {@link DataPanel} del PanelPrincipal. Se usa para no añadir
+	 * Quita los paneles {@link DataPanel} del PanelPrincipal. Se usa para no aï¿½adir
 	 * paneles duplicados cada vez que se busquen objetos.
 	 */
 	protected final void removeReportablePanels() {
@@ -372,7 +374,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Habilita o deshabilita el botón de búsqueda.
+	 * Habilita o deshabilita el botï¿½n de bï¿½squeda.
 	 * 
 	 * @param b <code>true</code> para habilitarlo, <code>false</code> para
 	 *          deshabilitarlo.
