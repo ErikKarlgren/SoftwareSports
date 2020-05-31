@@ -30,20 +30,20 @@ import swsports.modelo.Reportable;
  * principales de cada mï¿½dulo.
  * 
  * Las subclases deben de asegurarse de que los componentes que se quieran
- * aï¿½adir a la GUI se inicien en el mï¿½todo {@link #getComponentesBusqueda()} y
- * que {@link #getNewSwingWorker()} devuelva un nuevo objeto que sea subclase de
- * {@link BuscarSwingWorker} (se recomienda que la implementaciï¿½n sea una clase
- * interna por claridad del cï¿½digo).
+ * añadir a la GUI se inicien en el mï¿½todo {@link #getComponentesBusqueda()}
+ * y que {@link #getNewSwingWorker()} devuelva un nuevo objeto que sea subclase
+ * de {@link BuscarSwingWorker} (se recomienda que la implementaciï¿½n sea una
+ * clase interna por claridad del cï¿½digo).
  * 
  * @param <T> Clase que implemente {@link Reportable}.
  */
 public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 
 	/**
-	 * Implementaciï¿½n de {@link SwingWorker} que busca usuarios segï¿½n unos criterios
-	 * de bï¿½squeda y crea paneles con sus datos. Durante la ejecuciï¿½n de
-	 * {@link #doInBackground()} se deshabilita el botï¿½n de bï¿½squeda del panel
-	 * izquierdo.
+	 * Implementaciï¿½n de {@link SwingWorker} que busca usuarios segï¿½n unos
+	 * criterios de bï¿½squeda y crea paneles con sus datos. Durante la ejecuciï¿½n
+	 * de {@link #doInBackground()} se deshabilita el botï¿½n de bï¿½squeda del
+	 * panel izquierdo.
 	 */
 	protected abstract class BuscarSwingWorker extends SwingWorker<Void, DataPanel<T>> {
 
@@ -160,8 +160,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Subpanel izquierdo en el que se introducen los parï¿½metros de bï¿½squeda. Los
-	 * campos que se dejen vacï¿½os deberï¿½an ignorarse en las subclases de
+	 * Subpanel izquierdo en el que se introducen los parï¿½metros de bï¿½squeda.
+	 * Los campos que se dejen vacï¿½os deberï¿½an ignorarse en las subclases de
 	 * {@link AbstractPanelMain}.
 	 */
 	private class PanelBusqueda extends JScrollPane {
@@ -181,7 +181,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 		/**
 		 * Aï¿½ade una serie de componentes {@link JComponent} guardados en un mapa
 		 * {@link LinkedHashMap} intercalados con objetos {@link JLabel} creados a
-		 * partir de las claves de dicho mapa. Aï¿½ade finalmente el botï¿½n de bï¿½squeda.
+		 * partir de las claves de dicho mapa. Aï¿½ade finalmente el botï¿½n de
+		 * bï¿½squeda.
 		 * 
 		 * @param comps Mapa con los componentes y su {@link String} correspondiente con
 		 *              el que se crearï¿½n sus respectivos {@link JLabel}.
@@ -333,8 +334,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	protected abstract LinkedHashMap<String, JComponent> getComponentesBusqueda();
 
 	/**
-	 * Mï¿½todo que debe ser implementado y tiene que devolver la implementaciï¿½n de
-	 * BuscarSwingWorker correspondiente al tipo T {@link Reportable}.
+	 * Mï¿½todo que debe ser implementado y tiene que devolver la implementaciï¿½n
+	 * de BuscarSwingWorker correspondiente al tipo T {@link Reportable}.
 	 * 
 	 * @return Subclase de BuscarSwingWorker
 	 */
@@ -354,10 +355,10 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	 * Devuelve el subpanel principal con scroll ({@link JScrollPane}). Puede
 	 * sobrescribirse por otras clases si es necesario usar un panel distinto al de
 	 * por defecto ({@link DefaultPanelPrincipal}). Recibe un string que sirve como
-	 * tï¿½tulo de dicho subpanel.
+	 * título de dicho subpanel.
 	 * 
 	 * @param nombreModulo En principio el tï¿½tulo de del subpanel, aunque se puede
-	 *                     omitir si se quiere al sobrescribir este mï¿½todo.
+	 *                     omitir si se quiere al sobrescribir este método.
 	 * @return Devuelve un {@link JScrollPane} que servirï¿½ como panel principal.
 	 */
 	protected JScrollPane getPanelPrincipal(String nombreModulo) {
@@ -365,8 +366,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Quita los paneles {@link DataPanel} del PanelPrincipal. Se usa para no aï¿½adir
-	 * paneles duplicados cada vez que se busquen objetos.
+	 * Quita los paneles {@link DataPanel} del PanelPrincipal. Se usa para no
+	 * aï¿½adir paneles duplicados cada vez que se busquen objetos.
 	 */
 	protected final void removeReportablePanels() {
 		if (mainObjectsAuxPanel != null)
@@ -374,7 +375,7 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	}
 
 	/**
-	 * Habilita o deshabilita el botï¿½n de bï¿½squeda.
+	 * Habilita o deshabilita el botón de búsqueda.
 	 * 
 	 * @param b <code>true</code> para habilitarlo, <code>false</code> para
 	 *          deshabilitarlo.

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -26,21 +27,26 @@ public class PanelMainUsuarios extends AbstractPanelMain<Usuario> {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			setSearchButtonEnabled(false);
+			try {
+				setSearchButtonEnabled(false);
 
-			String id = idTextField.getText().equals("") ? null : idTextField.getText();
-			String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
-			Integer tlfn = tlfnTextField.getText().equals("") ? null : Integer.valueOf(tlfnTextField.getText());
-			String direccion = directionTextField.getText().equals("") ? null : directionTextField.getText();
-			String email = emailTextField.getText().equals("") ? null : emailTextField.getText();
-			Boolean esAdmin = adminDaIgualRadioButton.isSelected() ? null : adminSiRadioButton.isSelected();
+				String id = idTextField.getText().equals("") ? null : idTextField.getText();
+				String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
+				Integer tlfn = tlfnTextField.getText().equals("") ? null : Integer.valueOf(tlfnTextField.getText());
+				String direccion = directionTextField.getText().equals("") ? null : directionTextField.getText();
+				String email = emailTextField.getText().equals("") ? null : emailTextField.getText();
+				Boolean esAdmin = adminDaIgualRadioButton.isSelected() ? null : adminSiRadioButton.isSelected();
 
-			TransferUsuario tUsu = new TransferUsuario(id, nombre, email, null, tlfn, direccion, esAdmin);
-			objetos = controlador.busquedaUsuarios(tUsu);
+				TransferUsuario tUsu = new TransferUsuario(id, nombre, email, null, tlfn, direccion, esAdmin);
+				objetos = controlador.busquedaUsuarios(tUsu);
 
-			removeReportablePanels();
-			for (Usuario u : objetos) {
-				publish(new UsuarioDataPanel(owner, controlador, u));
+				removeReportablePanels();
+				for (Usuario u : objetos) {
+					publish(new UsuarioDataPanel(owner, controlador, u));
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "El formato de al menos uno de los datos es incorrecto.", "Error al leer los datos", JOptionPane.WARNING_MESSAGE);
+				setSearchButtonEnabled(true);
 			}
 			return null;
 		}
@@ -82,11 +88,11 @@ public class PanelMainUsuarios extends AbstractPanelMain<Usuario> {
 		nombreTextField = createTextField();
 		map.put("Nombre", nombreTextField);
 		tlfnTextField = createTextField();
-		map.put("Telefono", tlfnTextField);
+		map.put("Tel\u00e9fono", tlfnTextField);
 		directionTextField = createTextField();
-		map.put("Direccion", directionTextField);
+		map.put("Direcci\u00f3n", directionTextField);
 		emailTextField = createTextField();
-		map.put("Correo electrónico", emailTextField);
+		map.put("Correo electr\u00f3nico", emailTextField);
 
 		JPanel lateralAdminPanel = new JPanel();
 		lateralAdminPanel.setBackground(Color.ORANGE);

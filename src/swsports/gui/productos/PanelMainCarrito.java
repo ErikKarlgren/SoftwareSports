@@ -3,6 +3,7 @@ package swsports.gui.productos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.LinkedHashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,9 +22,9 @@ import swsports.modelo.Producto;
 import swsports.productos.ControladorProductos;
 
 /**
- * Panel para consultar los productos a�adidos al carrito por el usuario. Sirve
- * tambi�n para encargarlos para poder recogerlos m�s tarde en la tienda f�sica
- * de Software Sports.
+ * Panel para consultar los productos a�adidos al carrito por el usuario.
+ * Sirve tambi�n para encargarlos para poder recogerlos m�s tarde en la
+ * tienda f�sica de Software Sports.
  */
 public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 
@@ -39,18 +40,19 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		@Override
 		protected Void doInBackground() throws Exception {
 			removeReportablePanels();
-			
-			for(Producto p : carrito.getMapaProductos().keySet()) {
+
+			for (Producto p : carrito.getMapaProductos().keySet()) {
 				publish(new ProductoDataPanel(owner, controlador, p, EnumModoPanelProductos.CARRITO, carrito));
 			}
-			
+
 			return null;
 		}
 	}
-	
+
 	/**
-	 * Clase panel lateral de compra, que sustituye al panel de búsqueda del modo Productos y Tienda.
-	 * En esta clase aparece un resumen de compra y un botón para finalizarla, es decir, encargar el pedido.
+	 * Clase panel lateral de compra, que sustituye al panel de búsqueda del modo
+	 * Productos y Tienda. En esta clase aparece un resumen de compra y un botón
+	 * para finalizarla, es decir, encargar el pedido.
 	 */
 	class PanelLateralCompra extends JScrollPane {
 
@@ -59,11 +61,11 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		private final Color fgColor = Color.BLACK;
 		private JPanel lateralAuxPanel;
 		private JButton comprar;
-		
+
 		PanelLateralCompra() {
 			initGUI();
 		}
-		
+
 		private void initGUI() {
 			JPanel lateralPanel = new JPanel();
 			lateralPanel.setBorder(null);
@@ -78,7 +80,6 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 			this.setViewportBorder(null);
 			this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			
 			lateralAuxPanel = new JPanel();
 			lateralAuxPanel.setBackground(lateralPanel.getBackground());
 
@@ -87,16 +88,18 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 
 			JLabel lblTitulo = new JLabel("Resumen de compra");
 			lblTitulo.setForeground(fgColor);
-			lblTitulo.setBackground(bgColor);	
+			lblTitulo.setBackground(bgColor);
 			lateralAuxPanel.add(lblTitulo);
-			
-			numeroProductosLabel = new JLabel("Número de productos: 0");
-			precioTotalLabel = new JLabel("Total: 0.0€");
+
+			numeroProductosLabel = new JLabel("N\u00famero de productos: 0");
+			numeroProductosLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+			precioTotalLabel = new JLabel("Total: 0.00\u20ac");
+			precioTotalLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 			lateralAuxPanel.add(Box.createVerticalStrut(20));
 			lateralAuxPanel.add(numeroProductosLabel);
 			lateralAuxPanel.add(Box.createVerticalStrut(20));
 			lateralAuxPanel.add(precioTotalLabel);
-			
+
 			lateralAuxPanel.add(Box.createVerticalStrut(20));
 			Component glue = Box.createVerticalGlue();
 			lateralAuxPanel.add(glue);
@@ -105,9 +108,9 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 			comprar.setBackground(Color.WHITE);
 			comprar.addActionListener(a -> finalizarCompra());
 			lateralAuxPanel.add(comprar);
-			
+
 		}
-		
+
 	}
 
 	/**
@@ -150,36 +153,39 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		return new BuscarCarritoWorker();
 	}
 
+	@Override
 	protected JScrollPane getPanelLateral() {
 		return new PanelLateralCompra();
 	}
-	
+
 	/**
-	 * Muestra una ventana cuando el usuario pulsa el botón "comprar". 
-	 * 		- Si todo ha salido bien, aparece un mensaje de confirmación.
-	 * 		- Si ha ocurrido un error, se informa al usuario.
+	 * Muestra una ventana cuando el usuario pulsa el botón "comprar". - Si todo ha
+	 * salido bien, aparece un mensaje de confirmación. - Si ha ocurrido un error,
+	 * se informa al usuario.
 	 * 
 	 */
 	private void finalizarCompra() {
-		if(controlador.comprar(carrito)) {
-			JOptionPane.showMessageDialog(this, "Su pedido ha sido encargado con exito. Podrá recogerlo en tienda en 2h.", "Confirmación de pedido",
-					JOptionPane.INFORMATION_MESSAGE);
+		if (controlador.comprar(carrito)) {
+			JOptionPane.showMessageDialog(this,
+					"Su pedido ha sido encargado con \u00e9xito. Podr\u00e1 recogerlo en tienda en 2h.",
+					"Confirmaci\u00f3n de pedido", JOptionPane.INFORMATION_MESSAGE);
 			actualizar();
 		}
-		
+
 		else {
-			JOptionPane.showMessageDialog(this, "Su carrito está vacío. Anyada algo para realizar el pedido.", "Error de carrito",
+			JOptionPane.showMessageDialog(this,
+					"Su carrito est\u00e1 vac\u00edo. A\u00f1ada algo para realizar el pedido.", "Error de carrito",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Actualiza las etiquetas del resumen de compra.
 	 */
 	private void actualizarResumenCompra() {
-		numeroProductosLabel.setText("Número de productos: " + carrito.getNumProductos());
-		precioTotalLabel.setText("Total: " + carrito.getPrecioTotal() + "€");
+		numeroProductosLabel.setText("N\u00famero de productos: " + carrito.getNumProductos());
+		precioTotalLabel.setText("Total: " + String.format("%.2f", Math.abs(carrito.getPrecioTotal())) + "\u20ac");
 	}
 
 }

@@ -18,7 +18,7 @@ import swsports.productos.ControladorProductos;
 public class ProductoDataPanel extends DataPanel<Producto> {
 	
 	/**
-	 * Diálogo que muestra el panel para editar el producto.
+	 * Di�logo que muestra el panel para editar el producto.
 	 */
 	private class EditarProductoDialog extends JDialog {
 
@@ -74,7 +74,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 		}
 
 		else if (this.modo == EnumModoPanelProductos.TIENDA) {
-			addAction("Anyadir al carrito", a -> anyadirCarrito(c));
+			addAction("A\u00f1adir al carrito", a -> anyadirCarrito(c));
 		}
 
 		else {
@@ -94,7 +94,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	 */
 	private void addData(Carrito c, Producto p) {
 		addDataField("Nombre", String.valueOf(object.getNombre()));
-		addDataField("Descripcion", object.getDesc());
+		addDataField("Descripci\u00f3n", object.getDesc());
 
 		if (this.modo == EnumModoPanelProductos.CARRITO) {
 			addDataField("Unidades", Integer.toString(c.getNumUnidadesProducto(p)));
@@ -113,7 +113,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	 */
 	private void eliminarProducto() {
 		String[] options = { "Si", "No" };
-		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres dar de baja este producto?",
+		int option = JOptionPane.showOptionDialog(this, "\u00bfSeguro que quieres dar de baja este producto?",
 				"Dar producto de baja", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
 				options[1]);
 		if (option == JOptionPane.YES_OPTION) {
@@ -122,12 +122,12 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	}
 
 	/**
-	 * Añade un producto al carrito si el usuario confirma la decisión.
+	 * A�ade un producto al carrito si el usuario confirma la decisión.
 	 * @param c {@link Carrito} Carrito al que añadimos el producto.
 	 */
 	private void anyadirCarrito(Carrito c) {
 		String[] options = { "Si", "No" };
-		int option = JOptionPane.showOptionDialog(this, "Quieres anyadir este producto a tu carrito?",
+		int option = JOptionPane.showOptionDialog(this, "Quieres a\u00f1adir este producto a tu carrito?",
 				"Anyadir carrito", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		if (option == JOptionPane.YES_OPTION) {
 			controlador.anyadirProducto(object, c);

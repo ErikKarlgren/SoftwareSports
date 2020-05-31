@@ -123,7 +123,7 @@ public class MainWindow extends JFrame {
 	 * Pide confirmaci�n al usuario para cerrar la sesi�n actual.
 	 */
 	private void cerrarSesion() {
-		int n = JOptionPane.showOptionDialog(this, "�Seguro que quiere cerrar sesi�n?", "Cerrar sesi�n",
+		int n = JOptionPane.showOptionDialog(this, "\u00bfSeguro que quiere cerrar sesi\u00f3n?", "Cerrar sesi\u00f3n",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (n == JOptionPane.OK_OPTION) {
 			ctrl.cerrarSesion(this);
