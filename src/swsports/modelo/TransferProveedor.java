@@ -4,7 +4,7 @@ public class TransferProveedor {
 	private final String id;
 	private String nombre;
 	private String descripcion;
-	private String idProducto;
+	private Producto prod;
 	private int stock;
 	private double precio;
 	
@@ -15,17 +15,16 @@ public class TransferProveedor {
 	 * @param id          Identificador del proveedor.
 	 * @param nombre      Nombre del proveedor.
 	 * @param desc        Descripcion del proveedor.
-	 * @param idProd	  id del producto a comprar.
+	 * @param prod	      Producto a comprar.
 	 * @param stck        Stock del producto a comprar.
-	 * @param p	          Precio de la compra del producto.
 	 */
-	public TransferProveedor(String id, String nombre, String desc, String idProd, int stck, double p) {
+	public TransferProveedor(String id, String nombre, String desc, Producto prod, int stck) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = desc;
-		this.idProducto = idProd;
+		this.prod = prod;
 		this.stock = stck;
-		this.precio = p;
+		this.precio = prod.getPrecio() * this.stock;
 	}
 
 	/**
@@ -37,7 +36,7 @@ public class TransferProveedor {
 		this.id = prov.getId();
 		this.nombre = prov.getNombre();
 		this.descripcion = prov.getDesc();
-		this.idProducto = prov.getIdProducto();
+		this.prod = prov.getProducto();
 		this.stock = prov.getStock();
 		this.precio = prov.getPrecio();
 	}
@@ -66,8 +65,8 @@ public class TransferProveedor {
 	/**
 	 * @return El id del producto a comprar
 	 */
-	public String getIdProducto() {
-		return idProducto;
+	public Producto getProducto() {
+		return prod;
 	}
 
 	/**
@@ -82,6 +81,11 @@ public class TransferProveedor {
 	 */
 	public double getPrecio() {
 		return precio;
+	}
+
+	public String getIdProd() {
+		// TODO Auto-generated method stub
+		return prod.getId();
 	}
 
 }

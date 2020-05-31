@@ -33,12 +33,11 @@ public class Proveedor implements Reportable {
 		this.id = p.getId();
 		this.nombre = p.getNombre();
 		this.descripcion = p.getDesc();
-		this.idProducto = p.getIdProducto();
+		this.idProducto = p.getIdProd();
 		this.stock = p.getStock();
 		this.precio = p.getPrecio();
 	}
 
-	@Override
 	public String getId() {
 		return id;
 	}
@@ -91,5 +90,7 @@ public class Proveedor implements Reportable {
 		obj.put("precio", precio);
 		return obj;
 	}
-	
+
+
+
 }
