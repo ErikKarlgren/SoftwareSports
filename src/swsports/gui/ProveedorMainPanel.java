@@ -11,6 +11,7 @@ import java.awt.SystemColor;
 import java.awt.event.ItemEvent;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,7 +46,7 @@ public class ProveedorMainPanel extends JPanel {
 
 	private boolean adminMode;
 
-// Descomentar este constructor cuando no se vaya a editar más la interfaz gráfica.
+// Descomentar este constructor cuando no se vaya a editar mÃ¡s la interfaz grÃ¡fica.
 // Dejarlo descomentado para luego intentar usar el plugin para editarlo provoca problemas.
 
 	/**
@@ -53,8 +54,8 @@ public class ProveedorMainPanel extends JPanel {
 	 * especificar
 	 * 
 	 * @param prov     {@link Proveedor} del que se quiere consultar el perfil.
-	 * @param ctrlProv Controlador del módulo Proveedores.
-	 * @param ctrlProd Controlador del módulo Productos.
+	 * @param ctrlProv Controlador del mÃ³dulo Proveedores.
+	 * @param ctrlProd Controlador del mÃ³dulo Productos.
 	 */
 	public ProveedorMainPanel(Proveedor prov, ControladorProveedores ctrlProv, ControladorProductos ctrlProd) {
 		setBackground(SystemColor.textHighlight);
@@ -87,7 +88,7 @@ public class ProveedorMainPanel extends JPanel {
 	}
 
 	/**
-	 * Crea la interfaz gráfica del panel.
+	 * Crea la interfaz grÃ¡fica del panel.
 	 */
 	private void initGUI() {
 		setLayout(new BorderLayout(0, 0));
@@ -174,14 +175,15 @@ public class ProveedorMainPanel extends JPanel {
 
 		descTextField = new JTextField(prov != null ? String.valueOf(prov.getDesc()) : "");
 		descTextField.setEditable(false);
-		GridBagConstraints gbc_telephoneTextField = new GridBagConstraints();
-		gbc_telephoneTextField.fill = GridBagConstraints.BOTH;
-		gbc_telephoneTextField.anchor = GridBagConstraints.NORTHWEST;
-		gbc_telephoneTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_telephoneTextField.gridx = 2;
-		gbc_telephoneTextField.gridy = 2;
-		dataAuxPanel.add(descTextField, gbc_telephoneTextField);
+		GridBagConstraints gbc_DescTextField = new GridBagConstraints();
+		gbc_DescTextField.fill = GridBagConstraints.BOTH;
+		gbc_DescTextField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_DescTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_DescTextField.gridx = 2;
+		gbc_DescTextField.gridy = 2;
+		dataAuxPanel.add(descTextField, gbc_DescTextField);
 		descTextField.setColumns(10);
+		
 
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
 		dataPanel.add(horizontalStrut_2, BorderLayout.WEST);
