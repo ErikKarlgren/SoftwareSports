@@ -87,10 +87,10 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 		map.put("ID", idTextField);
 		nameTextField = createTextField();
 		map.put("Nombre", nameTextField);
+		idProdTextField = createTextField();
+		map.put("ID producto", idProdTextField);
 		descTextField = createTextField();
-		map.put("ID Producto", idProdTextField);
-		stockTextField = createTextField();
-		map.put("Cantidad", stockTextField);
+		map.put("Descripcion", descTextField);
 		stockTextField = createTextField();
 		map.put("Cantidad", stockTextField);
 		anyadirProveedorButton = new JButton("Anyadir");

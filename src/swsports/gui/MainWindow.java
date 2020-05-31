@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import swsports.gui.productos.EnumModoPanelProductos;
 import swsports.gui.productos.PanelMainCarrito;
 import swsports.gui.productos.PanelMainProductos;
+import swsports.gui.proveedores.PanelMainProveedores;
 import swsports.gui.usuarios.PanelMainUsuarios;
 import swsports.main.Controlador;
 import swsports.modelo.Usuario;
@@ -41,6 +42,7 @@ public class MainWindow extends JFrame {
 	private PanelMainProductos pmProductos;
 	private PanelMainProductos pTienda;
 	private PanelMainCarrito pmCarrito;
+	private PanelMainProveedores pmProveedores;
 
 	/**
 	 * Crea un {@link MainWindow} a partir del usuario que ha iniciado sesión y el
@@ -104,11 +106,15 @@ public class MainWindow extends JFrame {
 			pmUsuarios = new PanelMainUsuarios(this, ctrl.getControladorUsuario());
 			pmProductos = new PanelMainProductos(this, ctrl.getControladorProductos(), EnumModoPanelProductos.PRODUCTOS,
 					null);
+			pmProveedores = new PanelMainProveedores(this, ctrl.getControladorProveedores(),
+					ctrl.getControladorProductos());
 
 			tabbedPane.addTab("Usuarios", null, pmUsuarios,
 					"Consultar y manejar los usuarios guardados en la base de datos");
 			tabbedPane.addTab("Productos", null, pmProductos,
 					"Consultar y manejar los productos guardados en la base de datos");
+			tabbedPane.addTab("Proveedores", null, pmProveedores,
+					"Consultar y manejar los proveedores guardados en la base de datos");
 		}
 
 		pTienda = new PanelMainProductos(this, ctrl.getControladorProductos(), EnumModoPanelProductos.TIENDA,
