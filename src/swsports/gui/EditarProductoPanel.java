@@ -68,25 +68,30 @@ public class EditarProductoPanel extends JPanel {
 	 * @return <code>true</code> si se han rellenado todos los datos y son correctos,
 	 *         <code>false</code> en caso contrario.
 	 */
-	private boolean datosCorrectos() {
+	private boolean datosCorrectos() throws Exception {
 		
 		boolean correcto = false;
+		
+		try {
+			if( !nameTextField.getText().trim().equals("")
+					&& !descTextField.getText().trim().equals("")
+					&& !stockTextField.getText().trim().equals("")
+					&& (Integer.parseInt(stockTextField.getText()) >= 0)
+					&& !precioTextField.getText().trim().equals("")
+					&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
 					
-		if( !nameTextField.getText().trim().equals("")
-			&& !descTextField.getText().trim().equals("")
-			&& !stockTextField.getText().trim().equals("")
-			&& (Integer.parseInt(stockTextField.getText()) >= 0)
-			&& !precioTextField.getText().trim().equals("")
-			&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
-			
-			if(nuevoProducto)
-				if(!idTextField.getText().trim().equals("") 
-					&& controlador.consultaProducto(idTextField.getText()) == null)
-					
-					correcto = true;
-			else 
-				correcto = true;
+					if(nuevoProducto)
+						if(!idTextField.getText().trim().equals("") 
+							&& controlador.consultaProducto(idTextField.getText()) == null)
+							
+							correcto = true;
+					else 
+						correcto = true;
+				}
+		} catch(Exception e) {
+			throw e;
 		}
+		
 			
 		return correcto; 
 	}
@@ -94,39 +99,48 @@ public class EditarProductoPanel extends JPanel {
 	/**
 	 * Método que sirve para editar o crear un producto. En un nuevo producto, los campos aparecen disponibles para escribir. Si estamos editando
 	 * un producto, habrá que pulsar el botón.
+	 * @throws Exception 
 	 */
-	private void editarCrear(ItemEvent i) {
+	private void editarCrear(ItemEvent i) throws Exception {
 		
-		if (!nuevoProducto && i.getStateChange() == ItemEvent.SELECTED) {
-			setTextFieldsEditable(true);
-		} 
-		
-		//Si están todos los datos completos
-		else if (datosCorrectos()) {
+		try {
 			
-			if(nuevoProducto){
-				controlador.altaProducto(leerDatosAnyadir());
-				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto", "Anyadir producto", JOptionPane.PLAIN_MESSAGE));
-			}
-			
-			else {
-				controlador.editarProducto(leerDatosEditar());
-				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado", "Editar producto", JOptionPane.PLAIN_MESSAGE));
-			}
+			if (!nuevoProducto && i.getStateChange() == ItemEvent.SELECTED) {
+				setTextFieldsEditable(true);
+			} 
+	
+			//Si están todos los datos completos
+			else if (datosCorrectos()) {
 				
-		} else {
-			String mensaje;
-			if(nuevoProducto) {
-				 mensaje = "Todos los campos deben estar completos.\n El id debe ser diferente a los productos ya existentes.\n El stock y el precio no pueden ser negativos.";
-			}
+				if(nuevoProducto){
+					controlador.altaProducto(leerDatosAnyadir());
+					setTextFieldsEditable(false);
+					this.idTextField.setEditable(false);
+					SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto", "Anyadir producto", JOptionPane.PLAIN_MESSAGE));
+				}
+				
+				else {
+					controlador.editarProducto(leerDatosEditar());
+					setTextFieldsEditable(false);
+					SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado", "Editar producto", JOptionPane.PLAIN_MESSAGE));
+				}
+			} 
 			
 			else {
-				mensaje = "Todos los campos deben estar completos.\n El stock y el precio no pueden ser negativos.";
+				String mensaje;
+				if(nuevoProducto) {
+					 mensaje = "Todos los campos deben estar completos.\n El id debe ser diferente a los productos ya existentes.\n El stock y el precio no pueden ser negativos.";
+				}
+				
+				else {
+					mensaje = "Todos los campos deben estar completos.\n El stock y el precio no pueden ser negativos.";
+				}
+				
+				JOptionPane.showMessageDialog(this, mensaje, "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
 			}
 			
-			JOptionPane.showMessageDialog(this, mensaje, "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+		} catch(Exception e) {
+			throw e;
 		}
 	}
 
@@ -329,7 +343,15 @@ public class EditarProductoPanel extends JPanel {
 			editProductoButton = new JToggleButton("Editar producto");
 		}
 		
-		editProductoButton.addItemListener(this::editarCrear);
+		editProductoButton.addItemListener(arg0 ->{
+			try {
+				editarCrear(arg0);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Stock y Precio deben ser de tipo Integer y Double respectivamente.\n Excepcion: " 
+						+ e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
 		editProductoButton.setBackground(Color.WHITE);
 		bottomAuxPanel.add(editProductoButton);
 
