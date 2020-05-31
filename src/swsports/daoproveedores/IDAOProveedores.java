@@ -47,7 +47,7 @@ interface IDAOProveedores {
 	 * @param rProv          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
-	public boolean recibirPedido(TransferProveedor tProv);
+	public boolean recibirPedido(TransferProveedor prov);
 
 	/**
 	 * Edita los datos de un proveedor.
