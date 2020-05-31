@@ -1,6 +1,5 @@
 package swsports.gui.productos;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -26,6 +25,46 @@ import swsports.productos.ControladorProductos;
 
 public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
+	/**
+	 * Implementación de {@link BuscarSwingWorker} que busca productos según unos
+	 * criterios de búsqueda y crea paneles con sus datos. Durante la ejecución de
+	 * {@link #doInBackground()} se deshabilita el botón de búsqueda del panel
+	 * izquierdo.
+	 */
+	private class BuscarProductoWorker extends BuscarSwingWorker {
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			try {
+				setSearchButtonEnabled(false);
+
+				String id = idTextField.getText().equals("") ? null : idTextField.getText();
+				String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
+				String desc = descTextField.getText().equals("") ? null : descTextField.getText();
+				Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
+				Double precio = precioTextField.getText().equals("") ? null : Double.valueOf(precioTextField.getText());
+
+				TransferProducto tProd = new TransferProducto(id, nombre, desc, stock, precio);
+				objetos = controlador.busquedaProducto(tProd);
+
+				removeReportablePanels();
+
+				for (Producto p : objetos) {
+					publish(new ProductoDataPanel(owner, controlador, p, modo, carrito));
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "El formato de al menos uno de los datos es incorrecto.",
+						"Error al leer los datos", JOptionPane.WARNING_MESSAGE);
+				setSearchButtonEnabled(true);
+			}
+
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	private JTextField idTextField;
@@ -34,40 +73,24 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private JTextField stockTextField;
 	private JTextField precioTextField;
 	private ControladorProductos controlador;
-
 	private JButton anyadirProductoButton;
 	private JButton carritoButton;
 	private EnumModoPanelProductos modo;
 	private Carrito carrito;
 
-	private class BuscarProductoWorker extends BuscarSwingWorker {
-
-
-		@Override
-		protected Void doInBackground() throws Exception {
-			setSearchButtonEnabled(false);
-
-			String id = idTextField.getText().equals("") ? null : idTextField.getText();
-			String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
-      String desc = descTextField.getText().equals("") ? null : descTextField.getText();
-			Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
-			Double precio = precioTextField.getText().equals("") ? null : Double.valueOf(precioTextField.getText());
-
-			TransferProducto tProd = new TransferProducto(id, nombre, desc, stock, precio);
-			objetos = controlador.busquedaProducto(tProd);
-
-			removeReportablePanels();
-
-			for (Producto p : objetos) {
-				publish(new ProductoDataPanel(owner, controlador, p, modo, carrito));
-			}
-
-			return null;
-		}
-	}
-
+	/**
+	 * Crea un {@link PanelMainProductos} dado un {@link ControladorUsuario}, la
+	 * ventana principal del programa ({@link MainWindow}), un enumerado para elegir
+	 * el modo ({@link EnumModoPanelProductos}) y un carrito ({@link Carrito}).
+	 * 
+	 * @param owner Ventana principal
+	 * @param ctrl  Controlador del módulo Usuarios
+	 * @param m     Enumerado EnumModoPanelProductos para distinguir entre
+	 *              productos, tienda y carrito
+	 * @param c     Carrito para manejar los productos
+	 */
 	public PanelMainProductos(MainWindow owner, ControladorProductos ctrl, EnumModoPanelProductos m, Carrito c) {
-		super(owner, "Productos");
+		super(owner, m == EnumModoPanelProductos.PRODUCTOS ? "Productos" : "Tienda");
 		this.controlador = ctrl;
 		this.modo = m;
 		this.carrito = c;
@@ -79,9 +102,14 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
 	}
 
+	/**
+	 * Inicializa una interfaz en modo productos. Únicamente añade un botón para
+	 * añadir nuevos productos a la base de datos.
+	 */
 	private void initGUIProductos() {
-		anyadirProductoButton = new JButton("Anyadir Producto");
+		anyadirProductoButton = new JButton("A\u00f1adir Producto");
 		add(anyadirProductoButton, BorderLayout.SOUTH);
+		anyadirProductoButton.setBackground(Color.WHITE);
 		anyadirProductoButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -91,6 +119,10 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		});
 	}
 
+	/**
+	 * Inicializa una interfaz en modo carrito. Únicamente añade un botón para
+	 * finalizar la compra.
+	 */
 	private void initGUICarrito() {
 		carritoButton = new JButton("Tramitar Pedido");
 		add(carritoButton, BorderLayout.SOUTH);
@@ -103,8 +135,9 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		});
 	}
 
-	/*
-	 * FALTA COMPROBAR/PROHIBIR QUE EL USUARIO COMPRE UN PRODUCTO CON STOCK = 0
+	/**
+	 * Clase que crea una nueva ventana con un panel de tipi EditarProductoPanel,
+	 * donde el administrador puede introducir los nuevos datos de un producto.
 	 */
 	private class AnyadirProductoDialog extends JDialog {
 		private static final long serialVersionUID = 1L;
@@ -119,6 +152,10 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		}
 	}
 
+	/**
+	 * Abre una ventana de diálogo para confirmar la compra. Si se confirma, se
+	 * finalizará dicha compra a través del controlador.
+	 */
 	private void tramitarCompra() {
 		String[] options = { "Si", "No" };
 		int option = JOptionPane.showOptionDialog(this, "Seguro que quieres finalizar tu compra?", "Tramitar pedido",
@@ -137,7 +174,7 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		nombreTextField = createTextField();
 		map.put("Nombre", nombreTextField);
 		descTextField = createTextField();
-		map.put("Descripcion", descTextField);
+		map.put("Descripci\u00f3n", descTextField);
 		stockTextField = createTextField();
 		map.put("Stock", stockTextField);
 		precioTextField = createTextField();
@@ -146,12 +183,13 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 		JPanel lateralAdminPanel = new JPanel();
 		lateralAdminPanel.setBackground(Color.ORANGE);
 		lateralAdminPanel.setLayout(new BoxLayout(lateralAdminPanel, BoxLayout.Y_AXIS));
+
 		return map;
 	}
 
 	@Override
 	protected AbstractPanelMain<Producto>.BuscarSwingWorker getNewSwingWorker() {
-    return new BuscarProductoWorker();
+		return new BuscarProductoWorker();
 	}
 
 }

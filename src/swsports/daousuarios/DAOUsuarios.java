@@ -31,7 +31,7 @@ class DAOUsuarios implements IDAOUsuarios {
 				ok &= (tUsu.getDireccion() == null || u.getDireccion().contains(tUsu.getDireccion()));
 				ok &= (tUsu.esAdmin() == null || u.esAdmin() == tUsu.esAdmin());
 				ok &= (tUsu.getMail() == null || u.getMail().contains(tUsu.getMail()));
-				ok &= (tUsu.getNombre() == null || u.getNombre().contains(tUsu.getNombre()));
+				ok &= (tUsu.getNombre() == null || u.getNombre().toLowerCase().contains(tUsu.getNombre().toLowerCase()));
 				ok &= (tUsu.getTelefono() == null
 						|| String.valueOf(u.getTelefono()).contains(String.valueOf(tUsu.getTelefono())));
 

@@ -99,10 +99,15 @@ public class PerfilMainPanel extends JPanel {
 		if (i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
 		} else if (datosCompletos()) {
-			controlador.editarUsuario(leerDatos());
-			setTextFieldsEditable(false);
-			SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
-					"Editar usuario", JOptionPane.PLAIN_MESSAGE));
+			try {
+				controlador.editarUsuario(leerDatos());
+				setTextFieldsEditable(false);
+				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
+						"Editar usuario", JOptionPane.PLAIN_MESSAGE));
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "El formato de alguno de los datos es incorrecto.",
+						"Error de formato", JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
 			JOptionPane.showMessageDialog(this, "Datos incompletos (unicos optativos: mail y direccion)", "Edit Error",
 					JOptionPane.ERROR_MESSAGE);

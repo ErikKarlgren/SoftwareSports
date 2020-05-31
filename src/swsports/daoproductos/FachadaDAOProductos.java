@@ -6,6 +6,9 @@ import swsports.modelo.TransferProducto;
 import swsports.modelo.Carrito;
 import swsports.modelo.Producto;
 
+/**
+ * Implementación de la fachada del módulo DAOProductos.
+ */
 public class FachadaDAOProductos implements IFachadaDAOProductos  {
   
   private IDAOProductos dao;
