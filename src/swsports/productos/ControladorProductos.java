@@ -16,7 +16,7 @@ public class ControladorProductos {
         facProd = new FachadaProductos();
       }
   
-      /*
+      /**
       * Da de alta un producto nuevo.
       *
       * @param prod Producto nuevo
@@ -74,10 +74,10 @@ public class ControladorProductos {
       }
   
       /**
-      * Anyade un producto al carrito
+      * Añade un producto al carrito
       *
-      * @param prod Producto que se anyade
-      * @return <code>true</code> si se ha podido anyadir el producto correctamente.
+      * @param prod Producto que se añade
+      * @return <code>true</code> si se ha podido añadir el producto correctamente.
       *         <code>false</code> en caso contrario.
       */
       public boolean anyadirProducto(Producto prod, Carrito carrito){

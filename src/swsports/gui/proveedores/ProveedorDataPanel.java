@@ -18,7 +18,6 @@ import javax.swing.WindowConstants;
 
 import swsports.gui.DataPanel;
 import swsports.gui.MainWindow;
-import swsports.gui.ProveedorMainPanel;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 import swsports.modelo.TransferUsuario;
@@ -33,7 +32,7 @@ public class ProveedorDataPanel extends DataPanel<Proveedor> {
 	private ControladorProveedores controlProv;
 	private ControladorProductos controlProd;
 	/**
-	 * Diálogo que muestra el panel para editar el perfil de un usuario, incluyendo
+	 * DiÃ¡logo que muestra el panel para editar el perfil de un usuario, incluyendo
 	 * si concederle o revocarle privilegios de administrador.
 	 */
 	private class EditarProveedorDialog extends JDialog {
@@ -234,19 +233,19 @@ public class ProveedorDataPanel extends DataPanel<Proveedor> {
 	/**
 	 * Crea un panel con los datos de un {@link Usuario} y siguiendo las
 	 * restricciones guardadas en un {@link TransferUsuario} (los atributos nulos
-	 * implican que sus datos correspondientes no se mostrarán). El
+	 * implican que sus datos correspondientes no se mostrarÃ¡n). El
 	 * {@link ControladorUsuario} es necesario para poder realizar las acciones de
 	 * editar el usuario o darlo de baja.
 	 * 
 	 * @param owner       Ventana principal del programa.
-	 * @param ctrlProv    Controlador del m�dulo Proveedores.
-	 * @param ctrlProd    Controlador del m�dulo Productos.
+	 * @param ctrlProv    Controlador del módulo Proveedores.
+	 * @param ctrlProd    Controlador del módulo Productos.
 	 * @param usu         {@link Usuario} del que queremos mostrar sus datos.
 	 * @param constraints Restricciones a la hora de mostrar o no los atributos de
 	 *                    <code>usu</code>. Los atributos nulos de
 	 *                    <code>constraints</code> implican que los atributos
-	 *                    correspondientes de <code>usu</code> no se mostrarán. Si
-	 *                    <code>constraints</code> es nulo se mostrarán todos los
+	 *                    correspondientes de <code>usu</code> no se mostrarÃ¡n. Si
+	 *                    <code>constraints</code> es nulo se mostrarÃ¡n todos los
 	 *                    datos.
 	 */
 	public ProveedorDataPanel(MainWindow owner, ControladorProveedores ctrlProv, ControladorProductos ctrlProd,
@@ -258,7 +257,7 @@ public class ProveedorDataPanel extends DataPanel<Proveedor> {
 	}
 
 	/**
-	 * Añade las acciones del panel: editar un usuario y darlo de baja.
+	 * AÃ±ade las acciones del panel: editar un usuario y darlo de baja.
 	 */
 	private void addActions() {
 		addAction("Editar proveedor", a -> new EditarProveedorDialog());
@@ -278,7 +277,7 @@ public class ProveedorDataPanel extends DataPanel<Proveedor> {
 	}
 
 	/**
-	 * Añade los campos del usuario al panel siguiendo los criterios marcados por
+	 * AÃ±ade los campos del usuario al panel siguiendo los criterios marcados por
 	 * un {@link TransferUsuario}.
 	 */
 	private void addData() {
@@ -292,12 +291,12 @@ public class ProveedorDataPanel extends DataPanel<Proveedor> {
 	}
 
 	/**
-	 * Da de baja a un {@link Usuario} si el usuario de la aplicación confirma su
-	 * decisión.
+	 * Da de baja a un {@link Usuario} si el usuario de la aplicaciÃ³n confirma su
+	 * decisiÃ³n.
 	 */
 	private void darDeBaja() {
-		String[] options = { "Sí", "No" };
-		int option = JOptionPane.showOptionDialog(this, "¿Seguro que quieres eliminar a este proveedor?",
+		String[] options = { "SÃ­", "No" };
+		int option = JOptionPane.showOptionDialog(this, "Â¿Seguro que quieres eliminar a este proveedor?",
 				"Eliminar proveedor", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
 				options[1]);
 		if (option == JOptionPane.YES_OPTION) {

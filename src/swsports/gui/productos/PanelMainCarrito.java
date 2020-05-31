@@ -1,10 +1,19 @@
 package swsports.gui.productos;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.util.LinkedHashMap;
-
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import swsports.gui.AbstractPanelMain;
 import swsports.gui.MainWindow;
@@ -13,16 +22,15 @@ import swsports.modelo.Producto;
 import swsports.productos.ControladorProductos;
 
 /**
- * Panel para consultar los productos añadidos al carrito por el usuario. Sirve
- * también para encargarlos para poder recogerlos más tarde en la tienda física
- * de Software Sports.
+ * Panel para consultar los productos aï¿½adidos al carrito por el usuario.
+ * Sirve tambiï¿½n para encargarlos para poder recogerlos mï¿½s tarde en la
+ * tienda fï¿½sica de Software Sports.
  */
 public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private JLabel numeroProductosLabel;
+	private JLabel precioTotalLabel;
 
 	/**
 	 * {@link BuscarSwingWorker} que busca entre los productos del carrito del
@@ -32,13 +40,82 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 		@Override
 		protected Void doInBackground() throws Exception {
 			removeReportablePanels();
-			for (Producto p : carrito.getListaProductos()) {
+
+			for (Producto p : carrito.getMapaProductos().keySet()) {
 				publish(new ProductoDataPanel(owner, controlador, p, EnumModoPanelProductos.CARRITO, carrito));
 			}
+
 			return null;
 		}
 	}
 
+	/**
+	 * Clase panel lateral de compra, que sustituye al panel de bÃºsqueda del modo
+	 * Productos y Tienda. En esta clase aparece un resumen de compra y un botÃ³n
+	 * para finalizarla, es decir, encargar el pedido.
+	 */
+	class PanelLateralCompra extends JScrollPane {
+
+		private static final long serialVersionUID = 1L;
+		private final Color bgColor = Color.ORANGE;
+		private final Color fgColor = Color.BLACK;
+		private JPanel lateralAuxPanel;
+		private JButton comprar;
+
+		PanelLateralCompra() {
+			initGUI();
+		}
+
+		private void initGUI() {
+			JPanel lateralPanel = new JPanel();
+			lateralPanel.setBorder(null);
+			lateralPanel.setBackground(bgColor);
+			lateralPanel.setLayout(new BorderLayout(0, 0));
+			lateralPanel.add(Box.createHorizontalStrut(25), BorderLayout.EAST);
+			lateralPanel.add(Box.createHorizontalStrut(15), BorderLayout.WEST);
+			lateralPanel.add(Box.createVerticalStrut(10), BorderLayout.NORTH);
+			lateralPanel.add(Box.createVerticalStrut(10), BorderLayout.SOUTH);
+
+			this.setViewportView(lateralPanel);
+			this.setViewportBorder(null);
+			this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+			lateralAuxPanel = new JPanel();
+			lateralAuxPanel.setBackground(lateralPanel.getBackground());
+
+			lateralAuxPanel.setLayout(new BoxLayout(lateralAuxPanel, BoxLayout.Y_AXIS));
+			lateralPanel.add(lateralAuxPanel, BorderLayout.CENTER);
+
+			JLabel lblTitulo = new JLabel("Resumen de compra");
+			lblTitulo.setForeground(fgColor);
+			lblTitulo.setBackground(bgColor);
+			lateralAuxPanel.add(lblTitulo);
+
+			numeroProductosLabel = new JLabel("N\u00famero de productos: 0");
+			numeroProductosLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+			precioTotalLabel = new JLabel("Total: 0.00\u20ac");
+			precioTotalLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lateralAuxPanel.add(Box.createVerticalStrut(20));
+			lateralAuxPanel.add(numeroProductosLabel);
+			lateralAuxPanel.add(Box.createVerticalStrut(20));
+			lateralAuxPanel.add(precioTotalLabel);
+
+			lateralAuxPanel.add(Box.createVerticalStrut(20));
+			Component glue = Box.createVerticalGlue();
+			lateralAuxPanel.add(glue);
+
+			comprar = new JButton("Comprar");
+			comprar.setBackground(Color.WHITE);
+			comprar.addActionListener(a -> finalizarCompra());
+			lateralAuxPanel.add(comprar);
+
+		}
+
+	}
+
+	/**
+	 * 
+	 */
 	private Carrito carrito;
 	private ControladorProductos controlador;
 
@@ -46,7 +123,7 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 	 * Crea el panel para el carrito del usuario.
 	 * 
 	 * @param owner Ventana principal {@link MainWindow}.
-	 * @param ctrl  Controlador del módulo productos.
+	 * @param ctrl  Controlador del mï¿½dulo productos.
 	 */
 	public PanelMainCarrito(MainWindow owner, ControladorProductos ctrl) {
 		super(owner, "Carrito");
@@ -56,14 +133,15 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 
 	/**
 	 * Actualiza el panel principal con los {@link ProductoDataPanel} de los
-	 * productos del carrito del usuario.
+	 * productos del carrito del usuario y el resumen de compra.
 	 */
 	public void actualizar() {
 		buscarObjetosYCrearPaneles();
+		actualizarResumenCompra();
 	}
 
 	/**
-	 * No usa PanelBusqueda de AbstractPanelMain, así que devuelve 'null'.
+	 * No usa PanelBusqueda de AbstractPanelMain, asï¿½ que devuelve 'null'.
 	 */
 	@Override
 	protected LinkedHashMap<String, JComponent> getComponentesBusqueda() {
@@ -77,11 +155,37 @@ public class PanelMainCarrito extends AbstractPanelMain<Producto> {
 
 	@Override
 	protected JScrollPane getPanelLateral() {
-		JPanel p = new JPanel();
-		// Escribir código del panel lateral aquí o como clase interna
-		// ...
+		return new PanelLateralCompra();
+	}
 
-		return new JScrollPane(p);
+	/**
+	 * Muestra una ventana cuando el usuario pulsa el botÃ³n "comprar". - Si todo ha
+	 * salido bien, aparece un mensaje de confirmaciÃ³n. - Si ha ocurrido un error,
+	 * se informa al usuario.
+	 * 
+	 */
+	private void finalizarCompra() {
+		if (controlador.comprar(carrito)) {
+			JOptionPane.showMessageDialog(this,
+					"Su pedido ha sido encargado con \u00e9xito. Podr\u00e1 recogerlo en tienda en 2h.",
+					"Confirmaci\u00f3n de pedido", JOptionPane.INFORMATION_MESSAGE);
+			actualizar();
+		}
+
+		else {
+			JOptionPane.showMessageDialog(this,
+					"Su carrito est\u00e1 vac\u00edo. A\u00f1ada algo para realizar el pedido.", "Error de carrito",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	/**
+	 * Actualiza las etiquetas del resumen de compra.
+	 */
+	private void actualizarResumenCompra() {
+		numeroProductosLabel.setText("N\u00famero de productos: " + carrito.getNumProductos());
+		precioTotalLabel.setText("Total: " + String.format("%.2f", Math.abs(carrito.getPrecioTotal())) + "\u20ac");
 	}
 
 }
