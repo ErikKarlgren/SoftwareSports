@@ -22,6 +22,7 @@ import swsports.modelo.TransferProducto;
 import swsports.modelo.Producto;
 import swsports.modelo.Carrito;
 import swsports.productos.ControladorProductos;
+import swsports.usuarios.ControladorUsuario;
 
 public class PanelMainProductos extends AbstractPanelMain<Producto> {
 
@@ -79,7 +80,7 @@ public class PanelMainProductos extends AbstractPanelMain<Producto> {
 	private Carrito carrito;
 
 	/**
-	 * Crea un {@link PanelMainProductos} dado un {@link ControladorUsuario}, la
+	 * Crea un {@link PanelMainProductos} dado un {@link ControladorProductos}, la
 	 * ventana principal del programa ({@link MainWindow}), un enumerado para elegir
 	 * el modo ({@link EnumModoPanelProductos}) y un carrito ({@link Carrito}).
 	 * 

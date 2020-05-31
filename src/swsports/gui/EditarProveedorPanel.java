@@ -5,8 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.Box;
 import swsports.modelo.TransferProducto;
+import swsports.modelo.TransferProveedor;
 import swsports.modelo.Producto;
+import swsports.modelo.Proveedor;
 import swsports.productos.ControladorProductos;
+import swsports.proveedores.ControladorProveedores;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,59 +29,73 @@ import java.awt.SystemColor;
 import javax.swing.JSeparator;
 
 /**
- * Panel usado para editar un producto o a帽adir uno nuevo.
+ * Panel usado para editar un proveedor o a馻dir uno nuevo.
  */
-public class EditarProductoPanel extends JPanel {
+public class EditarProveedorPanel extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private JTextField idTextField;
 	private JTextField nameTextField;
 	private JTextField descTextField;
-	private JTextField stockTextField;
-	private JTextField precioTextField;
-	private JTextField idTextField;
+//	private JTextField idProductoTextField;
+//	private JTextField stockTextField;
+//	private JTextField precioTextField;
+
 	private JLabel productIDLabel;
 	private JToggleButton editProductoButton;
-	private Producto producto;
-	private ControladorProductos controlador;
-	private boolean nuevoProducto;
+	private Proveedor proveedor;
+	private ControladorProductos controlProd;
+	private ControladorProveedores controlProv;
+	private boolean nuevoProveedor;
 
 	/**
-	 * Crea un panel para poder editar o a帽adir un producto.
+	 * Crea un panel para poder editar o a馻dir un proveedor.
 	 * 
-	 * @param prod  {@link Producto} que queremos editar (null si es nuevo).
-	 * @param ctrl  Controlador del m贸dulo Productos.
-	 * @param nuevo Booleano: true indica que estoy creando un producto nuevo, false
-	 *              que estoy editando.
+	 * @param ctrlProv Controlador del m骴ulo Proveedores.
+	 * @param ctrlProd Controlador del m骴ulo Productos.
+	 * @param prod     {@link Producto} que queremos editar (null si es nuevo).
+	 * @param nuevo    Booleano: true indica que estoy creando un proveedor nuevo,
+	 *                 false que estoy editando.
 	 */
-	public EditarProductoPanel(Producto prod, ControladorProductos ctrl, boolean nuevo) {
+	public EditarProveedorPanel(ControladorProveedores ctrlProv, ControladorProductos ctrlProd, Proveedor prod,
+			boolean nuevo) {
 		setBackground(SystemColor.textHighlight);
-		this.controlador = ctrl;
-		this.nuevoProducto = nuevo;
-		this.producto = prod;
+		this.controlProd = ctrlProd;
+		this.controlProv = ctrlProv;
+		this.nuevoProveedor = nuevo;
+		this.proveedor = prod;
 		initGUI();
 	}
 
 	/**
-	 * Comprueba si se han rellenado todos los datos.
+	 * Comprueba si se han rellenado todos los datos y son correctos: - Si es un
+	 * nuevo proveedor, compruebo que se ha rellenado el campo del id y que no
+	 * exista otro proveedor con el mismo.
 	 * 
-	 * @return <code>true</code> si se han rellenado todos los datos,
-	 *         <code>false</code> en caso contrario.
+	 * - Tanto si es editar como a帽adir, compruebo si los campos est醤 rellenados y
+	 * que tanto stock como precio no tengan valores negativos.
+	 * 
+	 * @return <code>true</code> si se han rellenado todos los datos y son
+	 *         correctos, <code>false</code> en caso contrario.
 	 */
 	private boolean datosCorrectos() {
 		boolean correcto = false;
 		try {
 			if (!nameTextField.getText().trim().equals("") && !descTextField.getText().trim().equals("")
-					&& !stockTextField.getText().trim().equals("") && (Integer.parseInt(stockTextField.getText()) >= 0)
-					&& !precioTextField.getText().trim().equals("")
-					&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
+			// && !idProductoTextField.getText().trim().equals("")
+			// && !stockTextField.getText().trim().equals("")
+			// && (Integer.parseInt(stockTextField.getText()) >= 0)
+			// && !precioTextField.getText().trim().equals("")
+			// && (Double.parseDouble(precioTextField.getText()) >= 0.0))
+			) {
 
-				if (nuevoProducto) {
+				if (nuevoProveedor) {
 					if (!idTextField.getText().trim().equals("")
-							&& controlador.consultaProducto(idTextField.getText()) == null)
+							&& controlProd.consultaProducto(idTextField.getText()) == null)
 						correcto = true;
 				} else {
 					correcto = true;
@@ -91,25 +108,23 @@ public class EditarProductoPanel extends JPanel {
 	}
 
 	/**
-	 * M閠odo que sirve para editar o crear un producto. En un nuevo producto, los
+	 * M茅todo que sirve para editar o crear un producto. En un nuevo producto, los
 	 * campos aparecen disponibles para escribir. Si estamos editando un producto,
 	 * habr谩 que pulsar el bot贸n.
 	 * 
-	 * @param ItemEvent
+	 * @param i {@link ItemEvent}
 	 */
-	/**
-	
-	 */
+
 	private void editarCrear(ItemEvent i) {
-		if (!nuevoProducto && i.getStateChange() == ItemEvent.SELECTED) {
+		if (i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
 		} else if (datosCorrectos()) {
 			editarCrearAux();
 		} else {
 			String mensaje;
-			if (nuevoProducto) {
+			if (nuevoProveedor) {
 				mensaje = "Todos los campos deben estar completos."
-						+ "\nEl id debe ser diferente a los productos ya existentes."
+						+ "\nEl id debe ser diferente a los proveedores ya existentes."
 						+ "\nEl stock y el precio deben ser n鷐eros no negativos.";
 			} else {
 				mensaje = "Todos los campos deben estar completos."
@@ -123,22 +138,16 @@ public class EditarProductoPanel extends JPanel {
 	 * M閠odo auxiliar para editar o crear un {@link Producto}.
 	 */
 	private void editarCrearAux() {
-		try {
-			if (nuevoProducto) {
-				controlador.altaProducto(leerDatosAnyadir());
-				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto",
-						"Anyadir producto", JOptionPane.PLAIN_MESSAGE));
-
-			} else {
-				controlador.editarProducto(leerDatosEditar());
-				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
-						"Editar producto", JOptionPane.PLAIN_MESSAGE));
-			}
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El formato de alguno de los datos es incorrecto.", "Error de formato",
-					JOptionPane.ERROR_MESSAGE);
+		if (nuevoProveedor) {
+			controlProv.anyadirProveedor(new Proveedor(leerDatos()));
+			setTextFieldsEditable(false);
+			SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto",
+					"Anyadir producto", JOptionPane.PLAIN_MESSAGE));
+		} else {
+			controlProv.editarProveedor(leerDatos());
+			setTextFieldsEditable(false);
+			SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
+					"Editar producto", JOptionPane.PLAIN_MESSAGE));
 		}
 	}
 
@@ -189,7 +198,7 @@ public class EditarProductoPanel extends JPanel {
 		 * estoy editando un producto, a帽ado una etiqueta con su identificador, que no
 		 * puede cambiar.
 		 */
-		if (nuevoProducto) {
+		if (nuevoProveedor) {
 			idTextField = new JTextField();
 			idTextField.setEditable(true);
 			GridBagConstraints gbc_idTextField = new GridBagConstraints();
@@ -203,7 +212,7 @@ public class EditarProductoPanel extends JPanel {
 
 		} else {
 			productIDLabel = new JLabel(
-					producto != null ? producto.getId() : "(deberia aparecer el ID del producto aqui)");
+					proveedor != null ? proveedor.getId() : "(deberia aparecer el ID del producto aqui)");
 			productIDLabel.setForeground(Color.BLACK);
 			productIDLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 			GridBagConstraints gbc_productIDLabel = new GridBagConstraints();
@@ -226,7 +235,7 @@ public class EditarProductoPanel extends JPanel {
 		gbc_lblNewLabel_1.gridy = 1;
 		dataAuxPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		nameTextField = new JTextField(producto != null ? producto.getNombre() : "");
+		nameTextField = new JTextField(proveedor != null ? proveedor.getNombre() : "");
 		nameTextField.setEditable(false);
 		GridBagConstraints gbc_nameTextField = new GridBagConstraints();
 		gbc_nameTextField.fill = GridBagConstraints.BOTH;
@@ -248,7 +257,7 @@ public class EditarProductoPanel extends JPanel {
 		gbc_lblNewLabel_2.gridy = 2;
 		dataAuxPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
-		descTextField = new JTextField(producto != null ? producto.getDesc() : "");
+		descTextField = new JTextField(proveedor != null ? proveedor.getDesc() : "");
 		descTextField.setEditable(false);
 		GridBagConstraints gbc_descTextField = new GridBagConstraints();
 		gbc_descTextField.fill = GridBagConstraints.BOTH;
@@ -259,57 +268,23 @@ public class EditarProductoPanel extends JPanel {
 		dataAuxPanel.add(descTextField, gbc_descTextField);
 		descTextField.setColumns(10);
 
-		JLabel lblNewLabel_3 = new JLabel("Stock");
-		lblNewLabel_3.setForeground(Color.BLACK);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.fill = GridBagConstraints.BOTH;
-		gbc_lblNewLabel_3.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 3;
-		dataAuxPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
-
-		stockTextField = new JTextField(producto != null ? String.valueOf(producto.getStock()) : "");
-		stockTextField.setEditable(false);
+//		stockTextField = new JTextField(proveedor != null ? String.valueOf(proveedor.getStock()) : "");
+//		stockTextField.setEditable(false);
 		GridBagConstraints gbc_stockTextField = new GridBagConstraints();
 		gbc_stockTextField.fill = GridBagConstraints.BOTH;
 		gbc_stockTextField.anchor = GridBagConstraints.NORTHWEST;
 		gbc_stockTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_stockTextField.gridx = 2;
 		gbc_stockTextField.gridy = 3;
-		dataAuxPanel.add(stockTextField, gbc_stockTextField);
-		stockTextField.setColumns(10);
 
-		JLabel lblNewLabel_4 = new JLabel("Precio");
-		lblNewLabel_4.setForeground(Color.BLACK);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.fill = GridBagConstraints.BOTH;
-		gbc_lblNewLabel_4.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 4;
-		dataAuxPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
-		precioTextField = new JTextField(producto != null ? String.valueOf(producto.getPrecio()) : "");
-		precioTextField.setEditable(false);
+//		precioTextField = new JTextField(proveedor != null ? String.valueOf(proveedor.getPrecio()) : "");
+//		precioTextField.setEditable(false);
 		GridBagConstraints gbc_precioTextField = new GridBagConstraints();
 		gbc_precioTextField.fill = GridBagConstraints.BOTH;
 		gbc_precioTextField.anchor = GridBagConstraints.NORTHWEST;
 		gbc_precioTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_precioTextField.gridx = 2;
 		gbc_precioTextField.gridy = 4;
-		dataAuxPanel.add(precioTextField, gbc_precioTextField);
-		precioTextField.setColumns(10);
-
-		JPanel adminButtonsPanel = new JPanel();
-		adminButtonsPanel.setBackground(dataAuxPanel.getBackground());
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 2;
-		gbc_panel_1.gridy = 6;
-		dataAuxPanel.add(adminButtonsPanel, gbc_panel_1);
 
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
 		dataPanel.add(horizontalStrut_2, BorderLayout.WEST);
@@ -335,13 +310,14 @@ public class EditarProductoPanel extends JPanel {
 		/**
 		 * Cambia el bot贸n en funci贸n de si edito/creo
 		 */
-		if (nuevoProducto) {
+		if (nuevoProveedor) {
 			editProductoButton = new JToggleButton("Anyadir producto");
 		} else {
 			editProductoButton = new JToggleButton("Editar producto");
 		}
 
-		editProductoButton.addItemListener(this::editarCrear);
+		editProductoButton.addItemListener(arg0 -> editarCrear(arg0));
+
 		editProductoButton.setBackground(Color.WHITE);
 		bottomAuxPanel.add(editProductoButton);
 
@@ -354,7 +330,7 @@ public class EditarProductoPanel extends JPanel {
 		JSeparator separator = new JSeparator();
 		bottomPanel.add(separator, BorderLayout.NORTH);
 
-		setTextFieldsEditable(nuevoProducto);
+		setTextFieldsEditable(false);
 	}
 
 	/**
@@ -362,19 +338,9 @@ public class EditarProductoPanel extends JPanel {
 	 * 
 	 * @return {@link TransferProducto} Nuevos datos del producto.
 	 */
-	private TransferProducto leerDatosEditar() {
-		return new TransferProducto(producto.getId(), nameTextField.getText(), descTextField.getText(),
-				Integer.valueOf(stockTextField.getText()), Double.valueOf(precioTextField.getText()));
-	}
-
-	/**
-	 * Si estoy creando un producto, cojo todos los campos.
-	 * 
-	 * @return {@link TransferProducto} Datos del nuevo producto.
-	 */
-	private Producto leerDatosAnyadir() {
-		return new Producto(idTextField.getText(), nameTextField.getText(), descTextField.getText(),
-				Integer.valueOf(stockTextField.getText()), Double.valueOf(precioTextField.getText()));
+	private TransferProveedor leerDatos() {
+		String id = this.nuevoProveedor ? idTextField.getText() : this.proveedor.getId();
+		return new TransferProveedor(id, nameTextField.getText(), descTextField.getText(), null, null, null, false);
 	}
 
 	/**
@@ -385,8 +351,13 @@ public class EditarProductoPanel extends JPanel {
 	private void setTextFieldsEditable(boolean b) {
 		nameTextField.setEditable(b);
 		descTextField.setEditable(b);
-		stockTextField.setEditable(b);
-		precioTextField.setEditable(b);
+//		stockTextField.setEditable(b);
+//		precioTextField.setEditable(b);
+//		idProductoTextField.setEditable(b);
+
+		if (nuevoProveedor) {
+			idTextField.setEditable(b);
+		}
 
 	}
 }

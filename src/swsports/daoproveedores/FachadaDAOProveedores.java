@@ -5,6 +5,9 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Fachada dao proveedores
+ */
 public class FachadaDAOProveedores implements IFachadaDAOProveedores {
 
 	private IDAOProveedores dao;
@@ -15,13 +18,11 @@ public class FachadaDAOProveedores implements IFachadaDAOProveedores {
 
 	@Override
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		return dao.busquedaProveedores(tProv);
 	}
 
 	@Override
 	public boolean pedidoProveedor(TransferProveedor prov) {
-		// TODO Auto-generated method stub
 		return dao.pedidoProveedor(prov);
 	}
 

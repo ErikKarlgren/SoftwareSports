@@ -30,9 +30,9 @@ import swsports.modelo.Reportable;
  * principales de cada mï¿½dulo.
  * 
  * Las subclases deben de asegurarse de que los componentes que se quieran
- * añadir a la GUI se inicien en el mï¿½todo {@link #getComponentesBusqueda()}
- * y que {@link #getNewSwingWorker()} devuelva un nuevo objeto que sea subclase
- * de {@link BuscarSwingWorker} (se recomienda que la implementaciï¿½n sea una
+ * añadir a la GUI se inicien en el mï¿½todo {@link #getComponentesBusqueda()} y
+ * que {@link #getNewSwingWorker()} devuelva un nuevo objeto que sea subclase de
+ * {@link BuscarSwingWorker} (se recomienda que la implementaciï¿½n sea una
  * clase interna por claridad del cï¿½digo).
  * 
  * @param <T> Clase que implemente {@link Reportable}.
@@ -298,7 +298,8 @@ public abstract class AbstractPanelMain<T extends Reportable> extends JPanel {
 	 * Crea el panel. Recibe {@link MainWindow} y un nombre para el panel que en
 	 * principio se usarï¿½ para el panel principal.
 	 * 
-	 * @param owner Ventana principal de la aplicaciï¿½n.
+	 * @param owner        Ventana principal de la aplicación.
+	 * @param nombreModulo Nombre representativo para el panel principal.
 	 */
 	public AbstractPanelMain(MainWindow owner, String nombreModulo) {
 		this.owner = owner;

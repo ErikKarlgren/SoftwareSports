@@ -43,7 +43,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	private EnumModoPanelProductos modo;
 
 	/**
-	 * Crea un panel con los datos de un {@link Producto}. El {@link ControladorProducto}
+	 * Crea un panel con los datos de un {@link Producto}. El {@link ControladorProductos}
 	 * es necesario para poder realizar las acciones de editar el producto o darlo de baja.
 	 * 
 	 * @param owner Ventana principal.
@@ -65,6 +65,7 @@ public class ProductoDataPanel extends DataPanel<Producto> {
 	 * 		- Si se encuentra en modo productos (gestión), podremos editar dicho producto o eliminarlo.
 	 * 		- Si estamos en modo tienda, podremos añadir el producto a nuestro carrito.
 	 * 		- Si estamos en modo carrito, podremos eliminar el producto de nuestro carrito.
+	 * @param c Carrito
 	 */
 	private void addActions(Carrito c) {
 

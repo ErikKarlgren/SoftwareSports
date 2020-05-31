@@ -28,7 +28,7 @@ class SAProveedores implements ISAProveedores {
 
 	@Override
 	public boolean quitarProveedor(Proveedor prov){
-		return (dao.consultaProveedor(prov.getId()) != null) && dao.quitarProveedor(prov);
+		return (dao.consultaProveedor(prov.getId()) != null) && dao.quitarProveedor(prov.getId());
 	}
 
 	@Override

@@ -45,7 +45,7 @@ interface ISAProveedores {
 	/**
 	 * Edita los datos de un proveedor, con el idProducto a nulo.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param prov          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean recibirPedido(Proveedor prov);
@@ -53,7 +53,7 @@ interface ISAProveedores {
 	/**
 	 * Edita los datos de un proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param tProv          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean editarProveedor(TransferProveedor tProv);
@@ -61,7 +61,7 @@ interface ISAProveedores {
 	/**
 	 * Cancela el pedido con el proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado con el idProducto a nulo.
+	 * @param prov          Proveedor actualizado con el idProducto a nulo.
 	 * @return <code>true</code> si se ha podido editar los datos.
 	 */
 	public boolean cancelarPedido(Proveedor prov);

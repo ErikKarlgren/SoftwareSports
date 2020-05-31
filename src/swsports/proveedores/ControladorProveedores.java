@@ -20,7 +20,7 @@ public class ControladorProveedores {
 	/**
 	 * Devuelve una lista de los proveedores que se adhieren a los parámetros de
 	 * búsqueda proporcionados. Los parámetros que sean nulos en el objeto
-	 * {@link TransferProovedor} no se usarán para la búsqueda.
+	 * {@link TransferProvedor} no se usarán para la búsqueda.
 	 * 
 	 * @param tProv Objeto {@link TransferProveedor} usado como parámetro de busqueda.
 	 * @return Lista con los proveedores que buscamos.
@@ -75,7 +75,7 @@ public class ControladorProveedores {
 	/**
 	 * Se realiza un pedido a un proveedor.
 	 * 
-	 * @param tProv Proveedor al que se realiza el pedido.
+	 * @param prov Proveedor al que se realiza el pedido.
 	 * @return <code>true</code> si se ha podido realizar el pedido al Proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
@@ -86,7 +86,7 @@ public class ControladorProveedores {
 	/**
 	 * Cancela el pedido que se realiza al proveedor.
 	 * 
-	 * @param string Proveedor al que se realiza el pedido
+	 * @param prov Proveedor al que se realiza el pedido
 	 * @return <code>true</code> si se ha podido cancelar el pedido realizado al Proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
@@ -97,7 +97,7 @@ public class ControladorProveedores {
 	/**
 	 * Informa si se ha recibido el pedido realizado al proveedor.
 	 * 
-	 * @param string Proveedor al que se le ha realizado el pedido.
+	 * @param prov Proveedor al que se le ha realizado el pedido.
 	 * @return <code>true</code> si el pedido se ha recibido correctamente.
 	 *         <code>false</code> en caso contrario.
 	 */

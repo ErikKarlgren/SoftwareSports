@@ -2,15 +2,18 @@ package swsports.modelo;
 
 import org.json.JSONObject;
 
+/**
+ * Clase para representar un proveedor.
+ */
 public class Proveedor implements Reportable {
-	
+
 	private final String id;
 	private String nombre;
 	private String descripcion;
 	private String idProducto;
-	private int stock;
-	private double precio;
-	
+	private Integer stock;
+	private Double precio;
+
 	public Proveedor(JSONObject prov) {
 		this.id = prov.getString("id");
 		this.nombre = prov.getString("nombre");
@@ -19,8 +22,8 @@ public class Proveedor implements Reportable {
 		this.stock = prov.getInt("stock");
 		this.precio = prov.getDouble("precio");
 	}
-	
-	public Proveedor(String id, String nombre, String desc, String idP, int stck, double p) {
+
+	public Proveedor(String id, String nombre, String desc, String idP, Integer stck, Double p) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = desc;
@@ -28,7 +31,7 @@ public class Proveedor implements Reportable {
 		this.stock = stck;
 		this.precio = p;
 	}
-	
+
 	public Proveedor(TransferProveedor p) {
 		this.id = p.getId();
 		this.nombre = p.getNombre();
@@ -42,7 +45,7 @@ public class Proveedor implements Reportable {
 	public String getId() {
 		return id;
 	}
-	
+
 	public String getIdProducto() {
 		return idProducto;
 	}
@@ -78,19 +81,21 @@ public class Proveedor implements Reportable {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	
+	public void setIdProd(String id) {
+		this.idProducto = id;
+	}
 
 	@Override
 	public JSONObject report() {
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
+		obj.put("idProducto", idProducto == null ? "" : idProducto);
 		obj.put("nombre", nombre);
 		obj.put("descripcion", descripcion);
-		obj.put("producto", idProducto);
-		obj.put("stock", stock);
-		obj.put("precio", precio);
+		obj.put("stock", stock == null ? 0 : stock);
+		obj.put("precio", precio + 0.0);
 		return obj;
 	}
-
-
 
 }

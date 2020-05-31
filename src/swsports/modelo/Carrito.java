@@ -10,15 +10,17 @@ import java.util.HashMap;
 public class Carrito {
 
 	/**
-	 * Mapa cuyo par clave-valor representa un producto y el número de unidades que ha añadido el usuario respectivamente.
-	 * Es una forma de evitar añadir el mismo producto varias veces.
+	 * Mapa cuyo par clave-valor representa un producto y el número de unidades que
+	 * ha añadido el usuario respectivamente. Es una forma de evitar añadir el
+	 * mismo producto varias veces.
 	 */
 	private Map<Producto, Integer> mapaProductos;
 	private Integer numProductos;
 	private Double precioTotal;
 
 	/**
-	 * Crea un carrito nuevo. Para ello inicializa el mapa y pone a 0 el número de productos y el precio.
+	 * Crea un carrito nuevo. Para ello inicializa el mapa y pone a 0 el número de
+	 * productos y el precio.
 	 */
 	public Carrito() {
 		this.mapaProductos = new HashMap<Producto, Integer>();
@@ -29,50 +31,53 @@ public class Carrito {
 	/**
 	 * Método para saber si hay algún producto en el carrito.
 	 * 
-	 * @return 	<code>true</code> si no hay ningún producto.
-	 * 			<code>false</code> en caso contrario.
+	 * @return <code>true</code> si no hay ningún producto. <code>false</code> en
+	 *         caso contrario.
 	 */
 	public boolean carritoVacio() {
 		return this.mapaProductos.size() == 0;
 	}
 
 	/**
-	 * Método que devuelve el precio total de la compra.
+	 * @return devuelve el precio total de la compra.
 	 */
 	public Double getPrecioTotal() {
 		return this.precioTotal;
 	}
 
 	/**
-	 * Método que devuelve el número total de productos.
+	 * @return devuelve el número total de productos.
 	 */
 	public Integer getNumProductos() {
 		return this.numProductos;
 	}
 
 	/**
-	 * Método que vacía un carrito. Además si el usuario ha finalizado la compra, es decir, ha encargado los productos,
-	 * estos se restan de la base de datos.
-	 * @param compraFinalizada	<code>true</code> si ha finalizado la compra.
-	 * 							<code>false</code> en caso contrario.
+	 * Método que vacía un carrito. Además si el usuario ha finalizado la compra,
+	 * es decir, ha encargado los productos, estos se restan de la base de datos.
+	 * 
+	 * @param compraFinalizada <code>true</code> si ha finalizado la compra.
+	 *                         <code>false</code> en caso contrario.
 	 */
 	public void vaciarCarrito(boolean compraFinalizada) {
-		
-		if(!compraFinalizada) {
-			for(Producto p : mapaProductos.keySet()) {
+
+		if (!compraFinalizada) {
+			for (Producto p : mapaProductos.keySet()) {
 				p.setStock(p.getStock() + mapaProductos.get(p));
 			}
 		}
-	
+
 		this.mapaProductos.clear();
 		this.numProductos = 0;
 		this.precioTotal = 0.0;
 	}
 
 	/**
-	 * Método que devuelve el número de unidades de un producto que ha adquirido el usuario.
+	 * Método que devuelve el número de unidades de un producto que ha adquirido
+	 * el usuario.
 	 * 
-	 * @param p {@link Producto} Producto del que queremos saber cuantas unidades ha adquirido el usuario.
+	 * @param p {@link Producto} Producto del que queremos saber cuantas unidades ha
+	 *          adquirido el usuario.
 	 * @return int con el número de unidades, 0 si no se encuentra en el mapa.
 	 */
 	public int getNumUnidadesProducto(Producto p) {
@@ -82,16 +87,23 @@ public class Carrito {
 			return 0;
 		}
 	}
-	
+
 	/**
-	 * Devuelve una copia del mapa de productos que nunca se podrá modificar. Esto se utiliza para editar la base de datos cuando el usuario finaliza una compra.
+	 * Devuelve una copia del mapa de productos que nunca se podrá modificar. Esto
+	 * se utiliza para editar la base de datos cuando el usuario finaliza una
+	 * compra.
+	 * 
+	 * @return Mapa no modificable
 	 */
-	public Map<Producto, Integer> getMapaProductos(){
+	public Map<Producto, Integer> getMapaProductos() {
 		return Collections.unmodifiableMap(this.mapaProductos);
 	}
 
 	/**
-	 * Añade un producto p al carrito. Si el producto ya está, simplemente se actualiza el número de unidades.
+	 * A�ade un producto p al carrito. Si el producto ya está, simplemente se
+	 * actualiza el número de unidades.
+	 * 
+	 * @param p producto a a�adir
 	 */
 	public void anyadirProducto(Producto p) {
 		if (this.mapaProductos.containsKey(p)) {
@@ -107,8 +119,12 @@ public class Carrito {
 	}
 
 	/**
-	 * Elimina un producto p al carrito. Si el número de unidades es 1, lo elimina del mapa, si no, le resta una unidad. También devuelve true si el producto
+	 * Elimina un producto p al carrito. Si el número de unidades es 1, lo elimina
+	 * del mapa, si no, le resta una unidad. También devuelve true si el producto
 	 * se ha eliminado, es decir, existe en el mapa.
+	 * 
+	 * @param p producto
+	 * @return true si se ha eliminado
 	 */
 	public boolean eliminarProducto(Producto p) {
 

@@ -41,7 +41,7 @@ public class BaseDatosProveedorJSON extends BaseDatosFicheroJSON<Proveedor>{
 
 		correcto &= comprobarClaveYClase(obj, "id", String.class);
 		correcto &= comprobarClaveYClase(obj, "nombre", String.class);
-		correcto &= comprobarClaveYClase(obj, "descipcion", String.class);
+		correcto &= comprobarClaveYClase(obj, "descripcion", String.class);
 		correcto &= comprobarClaveYClase(obj, "idProducto", String.class);
 		correcto &= comprobarClaveYClase(obj, "stock", Integer.class);
 		correcto &= comprobarClaveYClase(obj, "precio", Double.class);

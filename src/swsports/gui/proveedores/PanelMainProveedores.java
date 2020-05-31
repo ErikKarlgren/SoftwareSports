@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import swsports.gui.AbstractPanelMain;
+import swsports.gui.EditarProveedorPanel;
 import swsports.gui.MainWindow;
 import swsports.proveedores.ControladorProveedores;
 
@@ -49,22 +50,25 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			setSearchButtonEnabled(false);
+			try {
+				setSearchButtonEnabled(false);
 
-			String id = idTextField.getText().equals("") ? null : idTextField.getText();
-			String nombre = nameTextField.getText().equals("") ? null : nameTextField.getText();
-			String desc = descTextField.getText().equals("") ? null : descTextField.getText();
-			String idProd = idProdTextField.getText().equals("") ? null : idProdTextField.getText();
-			prod = controlProd.consultaProducto(idProd);
-			Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
+				String id = idTextField.getText().equals("") ? null : idTextField.getText();
+				String nombre = nameTextField.getText().equals("") ? null : nameTextField.getText();
+				String desc = descTextField.getText().equals("") ? null : descTextField.getText();
+				String idProd = idProdTextField.getText().equals("") ? null : idProdTextField.getText();
+				Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
 
-			TransferProveedor tProv = new TransferProveedor(id, nombre, desc, prod, stock);
-			objetos = controlProv.busquedaProveedores(tProv);
+				TransferProveedor tProv = new TransferProveedor(id, nombre, desc, idProd, stock, null, true);
+				objetos = controlProv.busquedaProveedores(tProv);
 
-			removeReportablePanels();
+				removeReportablePanels();
 
-			for (Proveedor p : objetos) {
-				publish(new ProveedorDataPanel(owner, controlProv, controlProd, p));
+				for (Proveedor p : objetos) {
+					publish(new ProveedorDataPanel(owner, controlProv, controlProd, p));
+				}
+			} catch (NumberFormatException e) {
+				// nada
 			}
 
 			return null;
@@ -92,13 +96,7 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 		stockTextField = createTextField();
 		map.put("Cantidad", stockTextField);
 		anyadirProveedorButton = new JButton("Anyadir");
-		anyadirProveedorButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				new AnyadirProveedorDialog();
-			}
-		});
+		anyadirProveedorButton.addActionListener(a -> new AnyadirProveedorDialog());
 		map.put("Anyadir nuevo proveedor", anyadirProveedorButton);
 
 		return map;
@@ -114,7 +112,8 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 		AnyadirProveedorDialog() {
 			super();
 			this.setTitle("Anyadir proveedor");
-			initGUI();
+			//initGUI();
+			this.add(new EditarProveedorPanel(controlProv, controlProd, null, true));
 			this.pack();
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setVisible(true);
@@ -193,11 +192,10 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 
 			JButton anyadir = new JButton("Anyadir");
 			anyadir.addActionListener(new ActionListener() {
-				Proveedor prov = new Proveedor(idTextField.getText(), nameTextField.getText(), descTextField.getText(),
-						"", 0, 0);
-
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					Proveedor prov = new Proveedor(idTextField.getText(), nameTextField.getText(), descTextField.getText(),
+							"", 0, 0.0);
 					controlProv.anyadirProveedor(prov);
 				}
 			});

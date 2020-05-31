@@ -5,6 +5,9 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Fachada modulo dao proveedores
+ */
 public interface IFachadaDAOProveedores {
 	/**
 	 * Devuelve una lista de los proveedores que se adhieren a los parámetros de
@@ -35,7 +38,7 @@ public interface IFachadaDAOProveedores {
 	/**
 	 * Da de baja a un proveedor.
 	 * 
-	 * @param prov Proveedor a eliminar.
+	 * @param id Proveedor a eliminar.
 	 * @return <code>true</code> si se ha podido dar de baja al proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
@@ -44,7 +47,7 @@ public interface IFachadaDAOProveedores {
 	/**
 	 * Edita los datos de un proveedor, con el idProducto a nulo.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param prov          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean recibirPedido(Proveedor prov);
@@ -52,7 +55,7 @@ public interface IFachadaDAOProveedores {
 	/**
 	 * Edita los datos de un proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param tProv          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean editarProveedor(TransferProveedor tProv);
@@ -60,7 +63,7 @@ public interface IFachadaDAOProveedores {
 	/**
 	 * Cancela el pedido con el proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado con el idProducto a nulo.
+	 * @param prov          Proveedor actualizado con el idProducto a nulo.
 	 * @return <code>true</code> si se ha podido editar los datos.
 	 */
 	public boolean cancelarPedido(Proveedor prov);

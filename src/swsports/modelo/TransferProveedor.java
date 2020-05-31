@@ -1,45 +1,39 @@
 package swsports.modelo;
 
+/**
+ * Clase con datos del proveedor.
+ */
 public class TransferProveedor {
 	private final String id;
 	private String nombre;
 	private String descripcion;
-	private Producto prod;
-	private int stock;
-	private double precio;
-	
+	private String idProd;
+	private Integer stock;
+	private Double precioTotal;
 
 	/**
 	 * Crea un {@link TransferProveedor} a partir de los argumentos dados.
 	 * 
-	 * @param id          Identificador del proveedor.
-	 * @param nombre      Nombre del proveedor.
-	 * @param desc        Descripcion del proveedor.
-	 * @param prod	      Producto a comprar.
-	 * @param stck        Stock del producto a comprar.
+	 * @param id             Identificador del proveedor.
+	 * @param nombre         Nombre del proveedor.
+	 * @param desc           Descripcion del proveedor.
+	 * @param idProd         Producto a comprar.
+	 * @param stock          Stock del producto a comprar.
+	 * @param precioProducto Precio de una unidad del producto.
+	 * @param haveNulls      true para que pueda tener nulls este transfer
 	 */
-	public TransferProveedor(String id, String nombre, String desc, Producto prod, int stck) {
+	public TransferProveedor(String id, String nombre, String desc, String idProd, Integer stock, Double precioProducto,
+			boolean haveNulls) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = desc;
-		this.prod = prod;
-		this.stock = stck;
-		this.precio = prod.getPrecio() * this.stock;
+		this.idProd = idProd;
+		this.stock = stock == null && haveNulls ? null : stock;
+		if (precioProducto == null || stock == null)
+			precioTotal = haveNulls ? null : 0.0;
+		else
+			this.precioTotal = precioProducto * this.stock;
 	}
-
-//	/**
-//	 * Crea un {@link TransferProveedor} a partir de los datos de un {@link Proveedor}.
-//	 * 
-//	 * @param prov Proveedor del que se extraen los datos.
-//	 */
-//	public TransferProveedor(Proveedor prov) {
-//		this.id = prov.getId();
-//		this.nombre = prov.getNombre();
-//		this.descripcion = prov.getDesc();
-//		this.prod = prov.getProducto();
-//		this.stock = prov.getStock();
-//		this.precio = prov.getPrecio();
-//	}
 
 	/**
 	 * @return El identificador del proveedor
@@ -63,28 +57,24 @@ public class TransferProveedor {
 	}
 
 	/**
-	 * @return El id del producto a comprar
-	 */
-	public Producto getProducto() {
-		return prod;
-	}
-
-	/**
 	 * @return El stock (cantidad) del producto a comprar
 	 */
-	public int getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
 	/**
 	 * @return El precio de la compra, stock * producto.precio;
 	 */
-	public double getPrecio() {
-		return precio;
+	public Double getPrecio() {
+		return precioTotal;
 	}
 
+	/**
+	 * @return El id del producto a comprar.
+	 */
 	public String getIdProd() {
-		return prod.getId();
+		return idProd;
 	}
 
 }

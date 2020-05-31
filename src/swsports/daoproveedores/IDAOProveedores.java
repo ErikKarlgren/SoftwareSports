@@ -5,6 +5,9 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Interfaz dao proveedores
+ */
 interface IDAOProveedores {
 	/**
 	 * Devuelve una lista de los proveedores que se adhieren a los parámetros de
@@ -19,7 +22,7 @@ interface IDAOProveedores {
 	/**
 	 * Actualiza el idProducto del proveedor en cuestion.
 	 * 
-  	 * @param prov Proveedor a actualizar.
+	 * @param prov Proveedor a actualizar.
 	 * @return <code>true</code> si se ha podido actualizar correctamente.
 	 */
 	public boolean pedidoProveedor(TransferProveedor prov);
@@ -40,11 +43,11 @@ interface IDAOProveedores {
 	 *         <code>false</code> en caso contrario.
 	 */
 	public boolean quitarProveedor(String id);
-	
+
 	/**
 	 * Edita los datos de un proveedor, con el idProducto a nulo.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param rProv Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean recibirPedido(Proveedor prov);
@@ -52,7 +55,7 @@ interface IDAOProveedores {
 	/**
 	 * Edita los datos de un proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado.
+	 * @param rProv Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
 	public boolean editarProveedor(TransferProveedor tProv);
@@ -60,7 +63,7 @@ interface IDAOProveedores {
 	/**
 	 * Cancela el pedido con el proveedor.
 	 * 
-	 * @param rProv          Proveedor actualizado con el idProducto a nulo.
+	 * @param rProv Proveedor actualizado con el idProducto a nulo.
 	 * @return <code>true</code> si se ha podido editar los datos.
 	 */
 	public boolean cancelarPedido(Proveedor prov);

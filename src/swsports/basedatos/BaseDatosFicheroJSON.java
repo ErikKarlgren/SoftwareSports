@@ -45,8 +45,19 @@ abstract class BaseDatosFicheroJSON<T extends Reportable> implements BaseDatos<T
 	 *         <code>false</code> en caso contrario.
 	 */
 	protected static boolean comprobarClaveYClase(JSONObject obj, String key, Class<?> clase) {
-		return obj.has(key) && clase.isInstance(obj.get(key));
+		Object aTestear = obj.get(key);
+		if (clase.equals(Double.class) && !(aTestear instanceof Double)) {
+			try {
+				Double d = (Integer) aTestear * 1.0;
+				return obj.has(key);
+			} catch(Exception e) {
+				return false;
+			}
+		}
+		else
+			return obj.has(key) && clase.isInstance(aTestear);
 	}
+
 	/**
 	 * Como todos los {@link JSONObject} tienen al menos una etiqueta, especificamos
 	 * cuál esperamos en nuestra base de datos con este atributo.
@@ -218,7 +229,7 @@ abstract class BaseDatosFicheroJSON<T extends Reportable> implements BaseDatos<T
 			}
 		}
 	}
-	
+
 	@Override
 	public void limpiar() {
 		list = new LinkedList<>();

@@ -12,7 +12,8 @@ public interface IFachadaProveedores {
 	 * búsqueda proporcionados. Los parámetros que sean nulos en el objeto
 	 * {@link TransferProveedor} no se usarán para la búsqueda.
 	 * 
-	 * @param tProv Objeto {@link TransferProveedor} usado como parámetro de busqueda.
+	 * @param tProv Objeto {@link TransferProveedor} usado como parámetro de
+	 *              busqueda.
 	 * @return Lista con los proveedores que buscamos.
 	 */
 	public List<Proveedor> busquedaProveedor(TransferProveedor tProv);
@@ -35,8 +36,8 @@ public interface IFachadaProveedores {
 	public boolean quitarProveedor(Proveedor prov);
 
 	/**
-	 * Edita los datos de un proveedor. Su identificador (id) se usará para buscar el
-	 * proveedor que se quiere editar y se sobrescribirán el resto de datos.
+	 * Edita los datos de un proveedor. Su identificador (id) se usará para buscar
+	 * el proveedor que se quiere editar y se sobrescribirán el resto de datos.
 	 * 
 	 * @param tProv Objeto con los nuevos atributos del proveedor.
 	 * @return <code>true</code> si se ha podido editar el proveedor.
@@ -64,16 +65,16 @@ public interface IFachadaProveedores {
 	/**
 	 * Cancela el pedido que se realiza al proveedor.
 	 * 
-	 * @param tProv Proveedor al que se realiza el pedido
-	 * @return <code>true</code> si se ha podido cancelar el pedido realizado al Proveedor.
-	 *         <code>false</code> en caso contrario.
+	 * @param prov Proveedor al que se realiza el pedido
+	 * @return <code>true</code> si se ha podido cancelar el pedido realizado al
+	 *         Proveedor. <code>false</code> en caso contrario.
 	 */
 	public boolean cancelarPedido(Proveedor prov);
 
 	/**
 	 * Informa si se ha recibido el pedido realizado al proveedor.
 	 * 
-	 * @param string Proveedor al que se le ha realizado el pedido.
+	 * @param prov Proveedor al que se le ha realizado el pedido.
 	 * @return <code>true</code> si el pedido se ha recibido correctamente.
 	 *         <code>false</code> en caso contrario.
 	 */
