@@ -27,7 +27,7 @@ class DAOProveedores implements IDAOProveedores {
 				ok &= (tProv.getId() == null || prov.getId().equals(tProv.getId()));
 				ok &= (tProv.getNombre() == null || prov.getNombre().equals(tProv.getNombre()));
 				ok &= (tProv.getDesc() == null || prov.getDesc() == tProv.getDesc());
-				ok &= (tProv.getIdProducto() == null || prov.getIdProducto().contains(tProv.getIdProducto()));
+				ok &= (tProv.getProducto() == null || prov.getIdProducto().contains(tProv.getProducto().getId()));
 				ok &= (prov.getStock()==tProv.getStock());
 				ok &= (prov.getPrecio()==tProv.getPrecio());
 
@@ -55,10 +55,10 @@ class DAOProveedores implements IDAOProveedores {
 	}
 
 	@Override
-	public boolean quitarProveedor(Proveedor prov) {
+	public boolean quitarProveedor(String id) {
 		// TODO Auto-generated method stub
 		try {
-			bd.eliminar(prov.getId());
+			bd.eliminar(id);
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
@@ -66,10 +66,10 @@ class DAOProveedores implements IDAOProveedores {
 	}
 
 	@Override
-	public boolean recibirPedido(TransferProveedor tProv) {
+	public boolean recibirPedido(Proveedor prov) {
 		// TODO Auto-generated method stub
 		try {
-			bd.editar(new Proveedor(tProv));
+			bd.editar(prov);
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
@@ -88,10 +88,10 @@ class DAOProveedores implements IDAOProveedores {
 	}
 
 	@Override
-	public boolean cancelarPedido(TransferProveedor tProv) {
+	public boolean cancelarPedido(Proveedor prov) {
 		// TODO Auto-generated method stub
 		try {
-			bd.editar(new Proveedor(tProv));
+			bd.editar(prov);
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
