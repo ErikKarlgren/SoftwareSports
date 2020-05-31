@@ -68,18 +68,10 @@ public class EditarProductoPanel extends JPanel {
 	 * @return <code>true</code> si se han rellenado todos los datos y son correctos,
 	 *         <code>false</code> en caso contrario.
 	 */
-	private boolean datosCompletos() {
+	private boolean datosCorrectos() {
 		
 		boolean correcto = false;
-		
-		if(	nuevoProducto 
-			&& !idTextField.getText().trim().equals("") 
-			&& controlador.consultaProducto(idTextField.getText()) == null) {
-			
-			correcto = true;
-		}
-		else correcto = false;
-		
+					
 		if( !nameTextField.getText().trim().equals("")
 			&& !descTextField.getText().trim().equals("")
 			&& !stockTextField.getText().trim().equals("")
@@ -87,9 +79,14 @@ public class EditarProductoPanel extends JPanel {
 			&& !precioTextField.getText().trim().equals("")
 			&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
 			
-			correcto = true;
+			if(nuevoProducto)
+				if(!idTextField.getText().trim().equals("") 
+					&& controlador.consultaProducto(idTextField.getText()) == null)
+					
+					correcto = true;
+			else 
+				correcto = true;
 		}
-		else correcto = false;
 			
 		return correcto; 
 	}
@@ -105,7 +102,7 @@ public class EditarProductoPanel extends JPanel {
 		} 
 		
 		//Si están todos los datos completos
-		else if (datosCompletos()) {
+		else if (datosCorrectos()) {
 			
 			if(nuevoProducto){
 				controlador.altaProducto(leerDatosAnyadir());
@@ -120,7 +117,16 @@ public class EditarProductoPanel extends JPanel {
 			}
 				
 		} else {
-			JOptionPane.showMessageDialog(this, "Datos incompletos", "Error", JOptionPane.ERROR_MESSAGE);
+			String mensaje;
+			if(nuevoProducto) {
+				 mensaje = "Todos los campos deben estar completos.\n El id debe ser diferente a los productos ya existentes.\n El stock y el precio no pueden ser negativos.";
+			}
+			
+			else {
+				mensaje = "Todos los campos deben estar completos.\n El stock y el precio no pueden ser negativos.";
+			}
+			
+			JOptionPane.showMessageDialog(this, mensaje, "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
