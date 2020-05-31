@@ -32,8 +32,8 @@ class SAProveedores implements ISAProveedores {
 	}
 
 	@Override
-	public boolean recibirPedido(String tProv){
-		return dao.recibirPedido(tProv);
+	public boolean recibirPedido(Proveedor prov){
+		return dao.recibirPedido(prov);
 	}
 
 	@Override
@@ -42,8 +42,8 @@ class SAProveedores implements ISAProveedores {
 	}
 
 	@Override
-	public boolean cancelarPedido(String tProv){
-		return dao.cancelarPedido(tProv);
+	public boolean cancelarPedido(Proveedor prov){
+		return dao.cancelarPedido(prov);
 	}
 
 	@Override

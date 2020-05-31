@@ -18,11 +18,11 @@ public class ControladorProveedores {
 	}
 
 	/**
-	 * Devuelve una lista de los proveedores que se adhieren a los par√°metros de
-	 * b√∫squeda proporcionados. Los par√°metros que sean nulos en el objeto
-	 * {@link TransferProovedor} no se usar√°n para la b√∫squeda.
+	 * Devuelve una lista de los proveedores que se adhieren a los par·metros de
+	 * b˙squeda proporcionados. Los par·metros que sean nulos en el objeto
+	 * {@link TransferProovedor} no se usar·n para la b˙squeda.
 	 * 
-	 * @param tProv Objeto {@link TransferProveedor} usado como par√°metro de busqueda.
+	 * @param tProv Objeto {@link TransferProveedor} usado como par·metro de busqueda.
 	 * @return Lista con los proveedores que buscamos.
 	 */
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv){
@@ -51,8 +51,8 @@ public class ControladorProveedores {
 	}
 
 	/**
-	 * Edita los datos de un proveedor. Su identificador (id) se usar√° para buscar el
-	 * proveedor que se quiere editar y se sobrescribir√°n el resto de datos.
+	 * Edita los datos de un proveedor. Su identificador (id) se usar· para buscar el
+	 * proveedor que se quiere editar y se sobrescribir·n el resto de datos.
 	 * 
 	 * @param tProv Objeto con los nuevos atributos del proveedor.
 	 * @return <code>true</code> si se ha podido editar el proveedor.
@@ -62,7 +62,7 @@ public class ControladorProveedores {
 	}
 
 	/**
-	 * Da de alta un proveedor y lo registra en la aplicaci√≥n.
+	 * Da de alta un proveedor y lo registra en la aplicaciÛn.
 	 * 
 	 * @param prov Proveedor a registrar.
 	 * @return <code>true</code> si se ha podido registrar al Proveedor.
@@ -90,8 +90,8 @@ public class ControladorProveedores {
 	 * @return <code>true</code> si se ha podido cancelar el pedido realizado al Proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
-	public boolean cancelarPedido(String string){
-		return fachProv.cancelarPedido(string);
+	public boolean cancelarPedido(Proveedor prov){
+		return fachProv.cancelarPedido(prov);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class ControladorProveedores {
 	 * @return <code>true</code> si el pedido se ha recibido correctamente.
 	 *         <code>false</code> en caso contrario.
 	 */
-	public boolean recibirPedido(String string){
-		return fachProv.recibirPedido(string);
+	public boolean recibirPedido(Proveedor prov){
+		return fachProv.recibirPedido(prov);
 	}
 }

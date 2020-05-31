@@ -8,11 +8,11 @@ import swsports.modelo.TransferProveedor;
 interface ISAProveedores {
 
 	/**
-	 * Devuelve una lista de los proveedores que se adhieren a los par√°metros de
-	 * b√∫squeda proporcionados. Los par√°metros que sean nulos en el objeto
-	 * {@link TransferProveedor} no se usar√°n para la b√∫squeda.
+	 * Devuelve una lista de los proveedores que se adhieren a los par·metros de
+	 * b˙squeda proporcionados. Los par·metros que sean nulos en el objeto
+	 * {@link TransferProveedor} no se usar·n para la b˙squeda.
 	 * 
-	 * @param tProv Objeto {@link TransferProveedor} usado como par√°metro de busca
+	 * @param tProv Objeto {@link TransferProveedor} usado como par·metro de busca
 	 * @return Lista con los proveedores que buscamos
 	 */
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv);
@@ -48,7 +48,7 @@ interface ISAProveedores {
 	 * @param rProv          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
-	public boolean recibirPedido(String tProv);
+	public boolean recibirPedido(Proveedor prov);
 
 	/**
 	 * Edita los datos de un proveedor.
@@ -64,10 +64,10 @@ interface ISAProveedores {
 	 * @param rProv          Proveedor actualizado con el idProducto a nulo.
 	 * @return <code>true</code> si se ha podido editar los datos.
 	 */
-	public boolean cancelarPedido(String tProv);
+	public boolean cancelarPedido(Proveedor prov);
 
 	/**
-	 * Da de alta un proveedor y lo registra en la apliaci√≥n.
+	 * Da de alta un proveedor y lo registra en la apliaciÛn.
 	 * 
 	 * @param prov Proveedor a registrar
 	 * @return <code>true</code> si se ha podido registrar al proveedor.
