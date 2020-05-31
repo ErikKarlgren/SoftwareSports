@@ -39,7 +39,7 @@ interface IDAOProveedores {
 	 * @return <code>true</code> si se ha podido dar de baja al proveedor.
 	 *         <code>false</code> en caso contrario.
 	 */
-	public boolean quitarProveedor(Proveedor prov);
+	public boolean quitarProveedor(String id);
 	
 	/**
 	 * Edita los datos de un proveedor, con el idProducto a nulo.
