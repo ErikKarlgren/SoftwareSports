@@ -38,9 +38,9 @@ public class FachadaDAOProveedores implements IFachadaDAOProveedores {
 	}
 
 	@Override
-	public boolean recibirPedido(TransferProveedor tProv) {
+	public boolean recibirPedido(Proveedor prov) {
 		// TODO Auto-generated method stub
-		return dao.recibirPedido(tProv);
+		return dao.recibirPedido(prov);
 	}
 
 	@Override
@@ -50,9 +50,9 @@ public class FachadaDAOProveedores implements IFachadaDAOProveedores {
 	}
 
 	@Override
-	public boolean cancelarPedido(TransferProveedor tProv) {
+	public boolean cancelarPedido(Proveedor prov) {
 		// TODO Auto-generated method stub
-		return dao.cancelarPedido(tProv);
+		return dao.cancelarPedido(prov);
 	}
 
 	@Override
