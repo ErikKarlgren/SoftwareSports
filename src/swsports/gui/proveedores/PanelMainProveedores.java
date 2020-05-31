@@ -1,17 +1,14 @@
 package swsports.gui.proveedores;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 
 import swsports.modelo.Producto;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
+import swsports.productos.ControladorProductos;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import swsports.gui.AbstractPanelMain;
@@ -31,7 +28,8 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 	private JTextField idProdTextField;
 	private JTextField stockTextField;
 	private JTextField precioTextField;
-	private ControladorProveedores controlador;
+	private ControladorProveedores controlProv;
+	private ControladorProductos controlProd;
 	private JButton anyadirProveedorButton;
 	private Producto prod;
 	//private EnumModoPanelProductos modo;
@@ -47,32 +45,31 @@ public class PanelMainProveedores extends AbstractPanelMain<Proveedor> {
 			String nombre = nombreTextField.getText().equals("") ? null : nombreTextField.getText();
 			String desc =  descTextField.getText().equals("") ? null : descTextField.getText();
 			String idProd = idProdTextField.getText().equals("") ? null : idProdTextField.getText();
-			prod = controlador.busquedaProducto(idProd);
+			prod = controlProd.consultaProducto(idProd);
 			Integer stock = stockTextField.getText().equals("") ? null : Integer.valueOf(stockTextField.getText());
 			//Double precio = precioTextField.getText().equals("") ? null : Double.valueOf(precioTextField.getText());
 			
 			TransferProveedor tProv = new TransferProveedor(id, nombre, desc, prod, stock);
-			objetos = controlador.busquedaProveedor(tProv);
+			objetos = controlProv.busquedaProveedores(tProv);
 			
 			removeReportablePanels();
 			
 			for (Proveedor p : objetos) {
-				publish(new ProveedorDataPanel(p, controlador));
+				publish(new ProveedorDataPanel(owner, controlProv, controlProd, p));
 			}
 						
 			return null;
 		}
 	}
 
-	public PanelMainProveedores(ControladorProveedores ctrlProv) {
-		super("Proveedores");
-		controlador = ctrlProv;
-		// TODO Auto-generated constructor stub
+	public PanelMainProveedores(MainWindow owner, ControladorProveedores ctrlProv, ControladorProductos ctrlProd) {
+		super(owner, "Proveedores");
+		controlProv = ctrlProv;
+		controlProd = ctrlProd;
 	}
 
 	@Override
 	protected LinkedHashMap<String, JComponent> getComponentesBusqueda() {
-		// TODO Auto-generated method stub
 		LinkedHashMap<String, JComponent> map = new LinkedHashMap<>();
 
 		idTextField = createTextField();

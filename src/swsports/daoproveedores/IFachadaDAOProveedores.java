@@ -1,5 +1,10 @@
 package swsports.daoproveedores;
 
+import java.util.List;
+
+import swsports.modelo.Proveedor;
+import swsports.modelo.TransferProveedor;
+
 public interface IFachadaDAOProveedores {
   		/**
 	 * Devuelve una lista de los proveedores que se adhieren a los parámetros de

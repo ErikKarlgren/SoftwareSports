@@ -8,31 +8,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
-import swsports.gui.proveedores.PanelMainProveedores;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
-import swsports.modelo.TransferUsuario;
-import swsports.modelo.Usuario;
+import swsports.productos.ControladorProductos;
 import swsports.proveedores.ControladorProveedores;
-import swsports.usuarios.ControladorUsuario;
 
 public class ProveedorMainPanel extends JPanel {
 	/**
@@ -49,7 +40,8 @@ public class ProveedorMainPanel extends JPanel {
 	private JToggleButton pedidoRecibido;
 	private JToggleButton quitarPedido;
 	private Proveedor prov;
-	private ControladorProveedores controlador;
+	private ControladorProveedores controlProv;
+	private ControladorProductos controlProd;
 
 	private boolean adminMode;
 
@@ -60,13 +52,14 @@ public class ProveedorMainPanel extends JPanel {
 	 * Crea un panel para poder editar el perfil de un usuario teniendo que
 	 * especificar
 	 * 
-	 * @param prov       {@link Proveedor} del que se quiere consultar el perfil.
-	 * @param ctrl      Controlador del módulo Proveedores.
+	 * @param prov     {@link Proveedor} del que se quiere consultar el perfil.
+	 * @param ctrlProv Controlador del módulo Proveedores.
+	 * @param ctrlProd Controlador del módulo Productos.
 	 */
-	public ProveedorMainPanel(Proveedor prov, ControladorProveedores ctrl) {
+	public ProveedorMainPanel(Proveedor prov, ControladorProveedores ctrlProv, ControladorProductos ctrlProd) {
 		setBackground(SystemColor.textHighlight);
 		this.prov = prov;
-		this.controlador = ctrl;
+		this.controlProv = ctrlProv;
 		initGUI();
 	}
 
@@ -84,13 +77,12 @@ public class ProveedorMainPanel extends JPanel {
 		if (i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
 		} else if (datosCompletos()) {
-			controlador.editarProveedor(leerDatos());
+			controlProv.editarProveedor(leerDatos());
 			setTextFieldsEditable(false);
 			SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
 					"Editar proveedor", JOptionPane.PLAIN_MESSAGE));
 		} else {
-			JOptionPane.showMessageDialog(this, "Datos incompletos", "Edit Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Datos incompletos", "Edit Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -136,8 +128,7 @@ public class ProveedorMainPanel extends JPanel {
 		gbc_lblNewLabel.gridy = 0;
 		dataAuxPanel.add(lblNewLabel, gbc_lblNewLabel);
 
-		provIDLabel = new JLabel(
-				prov != null ? prov.getId() : "(deber\u00EDa aparecer el ID del proveedor aqu\u00ED)");
+		provIDLabel = new JLabel(prov != null ? prov.getId() : "(deber\u00EDa aparecer el ID del proveedor aqu\u00ED)");
 		provIDLabel.setForeground(Color.BLACK);
 		provIDLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_userIDLabel = new GridBagConstraints();
@@ -221,12 +212,13 @@ public class ProveedorMainPanel extends JPanel {
 
 		JSeparator separator = new JSeparator();
 		bottomPanel.add(separator, BorderLayout.NORTH);
-		
+
 		setTextFieldsEditable(false);
 	}
 
 	private TransferProveedor leerDatos() {
-		return new TransferProveedor(prov.getId(), prov.getNombre(), prov.getDesc(), controlador.getProducto()):
+		return new TransferProveedor(prov.getId(), prov.getNombre(), prov.getDesc(),
+				controlProd.consultaProducto(prov.getIdProducto()), prov.getStock());
 	}
 
 	private void setTextFieldsEditable(boolean b) {

@@ -4,8 +4,8 @@ import java.util.List;
 
 import swsports.daoproveedores.FachadaDAOProveedores;
 import swsports.daoproveedores.IFachadaDAOProveedores;
-import swsports.modelo.TransferProveedores;
-import swsports.modelo.Proveedores;
+import swsports.modelo.TransferProveedor;
+import swsports.modelo.Proveedor;
 
 class SAProveedores implements ISAProveedores {
 
@@ -17,22 +17,18 @@ class SAProveedores implements ISAProveedores {
 
 	@Override
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv){
-		dao.busquedaProveedores(tProv);
+		return dao.busquedaProveedores(tProv);
 	}
 
-	@Override
-	public boolean pedidoProveedor(TransferProveedor prov){
-		return dao.consultaProveedor(id) != null && dao.pedidoProveedor(prov);
-	}
 
 	@Override
 	public Proveedor consultaProveedor(String id){
-		return id == null ? nul : dao.consultaProveedor(id);
+		return id == null ? null : dao.consultaProveedor(id);
 	}
 
 	@Override
 	public boolean quitarProveedor(Proveedor prov){
-		return (dao.consultaProveedor(id) != null) && dao.quitarProveedor(prov);
+		return (dao.consultaProveedor(prov.getId()) != null) && dao.quitarProveedor(prov);
 	}
 
 	@Override
@@ -54,4 +50,10 @@ class SAProveedores implements ISAProveedores {
 	public boolean anyadirProveedor(Proveedor prov){
 		return prov != null && (dao.consultaProveedor(prov.getId()) == null) && dao.anyadirProveedor(prov);
 	}
+
+	@Override
+	public boolean pedidoProveedor(TransferProveedor prov){
+		return dao.consultaProveedor(prov.getId()) != null && dao.pedidoProveedor(prov);
+	}
+
 }

@@ -38,6 +38,7 @@ public class Proveedor implements Reportable {
 		this.precio = p.getPrecio();
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -80,7 +81,6 @@ public class Proveedor implements Reportable {
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
 		obj.put("nombre", nombre);

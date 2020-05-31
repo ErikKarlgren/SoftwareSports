@@ -27,19 +27,19 @@ public class TransferProveedor {
 		this.precio = prod.getPrecio() * this.stock;
 	}
 
-	/**
-	 * Crea un {@link TransferProveedor} a partir de los datos de un {@link Proveedor}.
-	 * 
-	 * @param prov Proveedor del que se extraen los datos.
-	 */
-	public TransferProveedor(Proveedor prov) {
-		this.id = prov.getId();
-		this.nombre = prov.getNombre();
-		this.descripcion = prov.getDesc();
-		this.prod = prov.getProducto();
-		this.stock = prov.getStock();
-		this.precio = prov.getPrecio();
-	}
+//	/**
+//	 * Crea un {@link TransferProveedor} a partir de los datos de un {@link Proveedor}.
+//	 * 
+//	 * @param prov Proveedor del que se extraen los datos.
+//	 */
+//	public TransferProveedor(Proveedor prov) {
+//		this.id = prov.getId();
+//		this.nombre = prov.getNombre();
+//		this.descripcion = prov.getDesc();
+//		this.prod = prov.getProducto();
+//		this.stock = prov.getStock();
+//		this.precio = prov.getPrecio();
+//	}
 
 	/**
 	 * @return El identificador del proveedor
@@ -84,7 +84,6 @@ public class TransferProveedor {
 	}
 
 	public String getIdProd() {
-		// TODO Auto-generated method stub
 		return prod.getId();
 	}
 

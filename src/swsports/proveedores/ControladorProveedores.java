@@ -26,7 +26,7 @@ public class ControladorProveedores {
 	 * @return Lista con los proveedores que buscamos.
 	 */
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv){
-		return fachProv.busquedaProveedores(tProv);
+		return fachProv.busquedaProveedor(tProv);
 	}
 
 	/**

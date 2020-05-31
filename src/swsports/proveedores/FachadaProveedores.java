@@ -1,6 +1,9 @@
 package swsports.proveedores;
 
 import swsports.modelo.TransferProveedor;
+
+import java.util.List;
+
 import swsports.modelo.Proveedor;
 
 public class FachadaProveedores implements IFachadaProveedores {
@@ -11,34 +14,42 @@ public class FachadaProveedores implements IFachadaProveedores {
 		sa = new SAProveedores();
 	}
 
+	@Override
 	public List<Proveedor> busquedaProveedor(TransferProveedor tProv){
-		return sa.busquedaProvedor(tProv);
+		return sa.busquedaProveedores(tProv);
 	}
 
+	@Override
 	public Proveedor consultaProveedor(String id){
 		return sa.consultaProveedor(id);
 	}
 
+	@Override
 	public boolean quitarProveedor(Proveedor prov){
 		return sa.quitarProveedor(prov);
 	}
 
+	@Override
 	public boolean editarProveedor(TransferProveedor tProv){
 		return sa.editarProveedor(tProv);
 	}
 
+	@Override
 	public boolean anyadirProveedor(Proveedor prov){
 		return sa.anyadirProveedor(prov);
 	}
 
+	@Override
 	public boolean pedidoProveedor(TransferProveedor prov){
-		return sa.pedidoProveedor(tProv);
+		return sa.pedidoProveedor(prov);
 	}
 
+	@Override
 	public boolean cancelarPedido(TransferProveedor tProv){
 		return sa.cancelarPedido(tProv);
 	}
 
+	@Override
 	public boolean recibirPedido(TransferProveedor tProv){
 		return sa.recibirPedido(tProv);
 	}

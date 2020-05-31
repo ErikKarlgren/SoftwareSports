@@ -18,7 +18,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		Predicate<Proveedor> pred = new Predicate<Proveedor>() {
 			@Override
 			public boolean test(Proveedor prov) {
@@ -26,10 +25,10 @@ class DAOProveedores implements IDAOProveedores {
 
 				ok &= (tProv.getId() == null || prov.getId().equals(tProv.getId()));
 				ok &= (tProv.getNombre() == null || prov.getNombre().equals(tProv.getNombre()));
-				ok &= (tProv.getDesc() == null || prov.getDesc() == tProv.getDesc());
-				ok &= (tProv.getIdProducto() == null || prov.getIdProducto().contains(tProv.getIdProducto()));
-				ok &= (prov.getStock()==tProv.getStock());
-				ok &= (prov.getPrecio()==tProv.getPrecio());
+				ok &= (tProv.getDesc() == null || prov.getDesc().contains(tProv.getDesc()));
+				ok &= (tProv.getIdProd() == null || prov.getIdProducto().contains(tProv.getIdProd()));
+				ok &= (prov.getStock() == tProv.getStock());
+				ok &= (prov.getPrecio() == tProv.getPrecio());
 
 				return ok;
 			}
@@ -39,7 +38,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public boolean pedidoProveedor(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		try {
 			bd.editar(new Proveedor(tProv));
 			return true;
@@ -50,13 +48,11 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public Proveedor consultaProveedor(String id) {
-		// TODO Auto-generated method stub
 		return bd.consulta(id);
 	}
 
 	@Override
 	public boolean quitarProveedor(Proveedor prov) {
-		// TODO Auto-generated method stub
 		try {
 			bd.eliminar(prov.getId());
 			return true;
@@ -67,7 +63,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public boolean recibirPedido(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		try {
 			bd.editar(new Proveedor(tProv));
 			return true;
@@ -78,7 +73,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public boolean editarProveedor(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		try {
 			bd.editar(new Proveedor(tProv));
 			return true;
@@ -89,7 +83,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public boolean cancelarPedido(TransferProveedor tProv) {
-		// TODO Auto-generated method stub
 		try {
 			bd.editar(new Proveedor(tProv));
 			return true;
@@ -100,7 +93,6 @@ class DAOProveedores implements IDAOProveedores {
 
 	@Override
 	public boolean anyadirProveedor(Proveedor prov) {
-		// TODO Auto-generated method stub
 		try {
 			bd.anyadir(prov);
 			return true;
