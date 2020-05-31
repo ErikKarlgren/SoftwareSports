@@ -45,12 +45,12 @@ public class FachadaProveedores implements IFachadaProveedores {
 	}
 
 	@Override
-	public boolean cancelarPedido(TransferProveedor tProv){
+	public boolean cancelarPedido(String tProv){
 		return sa.cancelarPedido(tProv);
 	}
 
 	@Override
-	public boolean recibirPedido(TransferProveedor tProv){
+	public boolean recibirPedido(String tProv){
 		return sa.recibirPedido(tProv);
 	}
 }
