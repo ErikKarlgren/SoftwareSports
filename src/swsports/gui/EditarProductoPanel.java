@@ -61,27 +61,37 @@ public class EditarProductoPanel extends JPanel {
 	}
 
 	/**
-	 * Comprueba si se han rellenado todos los datos.
+	 * Comprueba si se han rellenado todos los datos y son correctos: 
+	 * 		- Si es un nuevo producto, compruebo que se ha rellenado el campo del id y que no exista otro producto con el mismo.
+	 * 		- Tanto si es editar como añadir, compruebo si los campos están rellenados y que tanto stock como precio no tengan valores negativos.
 	 * 
-	 * @return <code>true</code> si se han rellenado todos los datos,
+	 * @return <code>true</code> si se han rellenado todos los datos y son correctos,
 	 *         <code>false</code> en caso contrario.
 	 */
 	private boolean datosCompletos() {
 		
-		boolean completos = false;
+		boolean correcto = false;
 		
-		if(!nameTextField.getText().trim().equals("")
-				&& !descTextField.getText().trim().equals("")
-				&& !stockTextField.getText().trim().equals("")
-				&& !precioTextField.getText().trim().equals("")) {
-			completos = true;
+		if(	nuevoProducto 
+			&& !idTextField.getText().trim().equals("") 
+			&& controlador.consultaProducto(idTextField.getText()) == null) {
+			
+			correcto = true;
 		}
+		else correcto = false;
 		
-		if(nuevoProducto && idTextField.getText().trim().equals("")) {
-			completos = false;
+		if( !nameTextField.getText().trim().equals("")
+			&& !descTextField.getText().trim().equals("")
+			&& !stockTextField.getText().trim().equals("")
+			&& (Integer.parseInt(stockTextField.getText()) >= 0)
+			&& !precioTextField.getText().trim().equals("")
+			&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
+			
+			correcto = true;
 		}
-		
-		return completos; 
+		else correcto = false;
+			
+		return correcto; 
 	}
 
 	/**
@@ -100,15 +110,13 @@ public class EditarProductoPanel extends JPanel {
 			if(nuevoProducto){
 				controlador.altaProducto(leerDatosAnyadir());
 				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto",
-						"Anyadir producto", JOptionPane.PLAIN_MESSAGE));
+				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto", "Anyadir producto", JOptionPane.PLAIN_MESSAGE));
 			}
 			
 			else {
 				controlador.editarProducto(leerDatosEditar());
 				setTextFieldsEditable(false);
-				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
-						"Editar producto", JOptionPane.PLAIN_MESSAGE));
+				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado", "Editar producto", JOptionPane.PLAIN_MESSAGE));
 			}
 				
 		} else {
