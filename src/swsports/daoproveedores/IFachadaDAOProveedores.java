@@ -47,7 +47,7 @@ public interface IFachadaDAOProveedores {
 	 * @param rProv          Proveedor actualizado.
 	 * @return <code>true</code> si se ha podido editar al proveedor.
 	 */
-	public boolean recibirPedido(TransferProveedor tProv);
+	public boolean recibirPedido(Proveedor prov);
 
 	/**
 	 * Edita los datos de un proveedor.
@@ -63,7 +63,7 @@ public interface IFachadaDAOProveedores {
 	 * @param rProv          Proveedor actualizado con el idProducto a nulo.
 	 * @return <code>true</code> si se ha podido editar los datos.
 	 */
-	public boolean cancelarPedido(TransferProveedor tProv);
+	public boolean cancelarPedido(Proveedor prov);
 
 	/**
 	 * Da de alta un proveedor y lo registra en la apliación.
