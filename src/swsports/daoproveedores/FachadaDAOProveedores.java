@@ -5,6 +5,9 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Implementación de la fachada del módulo DAOUsuarios.
+ */
 public class FachadaDAOProveedores implements IFachadaDAOProveedores {
 
 	private IDAOProveedores dao;

@@ -5,13 +5,16 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Interfaz para el acceso a los datos del mÛdulo Proveedores.
+ */
 interface IDAOProveedores {
 	/**
-	 * Devuelve una lista de los proveedores que se adhieren a los par√°metros de
-	 * b√∫squeda proporcionados. Los par√°metros que sean nulos en el objeto
-	 * {@link TransferProveedor} no se usar√°n para la b√∫squeda.
+	 * Devuelve una lista de los proveedores que se adhieren a los par·metros de
+	 * b˙squeda proporcionados. Los par·metros que sean nulos en el objeto
+	 * {@link TransferProveedor} no se usar·n para la b˙squeda.
 	 * 
-	 * @param tProv Objeto {@link TransferProveedor} usado como par√°metro de busca
+	 * @param tProv Objeto {@link TransferProveedor} usado como par·metro de busca
 	 * @return Lista con los proveedores que buscamos
 	 */
 	public List<Proveedor> busquedaProveedores(TransferProveedor tProv);

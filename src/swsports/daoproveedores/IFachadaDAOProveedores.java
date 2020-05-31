@@ -5,6 +5,10 @@ import java.util.List;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Interfaz para la fachada del módulo DAOProveedores, es decir, el que se encarga
+ * de acceder a los contenidos de la base de datos.
+ */
 public interface IFachadaDAOProveedores {
 	/**
 	 * Devuelve una lista de los proveedores que se adhieren a los parÃ¡metros de

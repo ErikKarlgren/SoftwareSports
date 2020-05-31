@@ -8,6 +8,9 @@ import swsports.basedatos.BaseDatosProveedorJSON;
 import swsports.modelo.Proveedor;
 import swsports.modelo.TransferProveedor;
 
+/**
+ * Implementación de la lógica de acceso a datos.
+ */
 class DAOProveedores implements IDAOProveedores {
 
 	private BaseDatos<Proveedor> bd;
