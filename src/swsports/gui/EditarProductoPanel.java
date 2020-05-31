@@ -68,24 +68,32 @@ public class EditarProductoPanel extends JPanel {
 	 * @return <code>true</code> si se han rellenado todos los datos,
 	 *         <code>false</code> en caso contrario.
 	 */
-	private boolean datosCompletos() {
+	private boolean datosCorrectos() {
+		boolean correcto = false;
+		try {
+			if (!nameTextField.getText().trim().equals("")
+					&& !descTextField.getText().trim().equals("")
+					&& !stockTextField.getText().trim().equals("")
+					&& (Integer.parseInt(stockTextField.getText()) >= 0)
+					&& !precioTextField.getText().trim().equals("")
+					&& (Double.parseDouble(precioTextField.getText()) >= 0.0)) {
 
-		boolean completos = false;
-
-		if (!nameTextField.getText().trim().equals("") && !descTextField.getText().trim().equals("")
-				&& !stockTextField.getText().trim().equals("") && !precioTextField.getText().trim().equals("")) {
-			completos = true;
+				if (nuevoProducto) {
+					if (!idTextField.getText().trim().equals("")
+							&& controlador.consultaProducto(idTextField.getText()) == null)
+						correcto = true;
+				} else {
+					correcto = true;
+				}
+			}
+		} catch (NumberFormatException e) {
+			// no hacer nada, 'correcto' es false
 		}
-
-		if (nuevoProducto && idTextField.getText().trim().equals("")) {
-			completos = false;
-		}
-
-		return completos;
+		return correcto;
 	}
 
 	/**
-	 * MÃ©todo que sirve para editar o crear un producto. En un nuevo producto, los
+	 * Método que sirve para editar o crear un producto. En un nuevo producto, los
 	 * campos aparecen disponibles para escribir. Si estamos editando un producto,
 	 * habrÃ¡ que pulsar el botÃ³n.
 	 */
@@ -93,26 +101,42 @@ public class EditarProductoPanel extends JPanel {
 
 		if (!nuevoProducto && i.getStateChange() == ItemEvent.SELECTED) {
 			setTextFieldsEditable(true);
-		} else if (datosCompletos()) {
-			try {
-				if (nuevoProducto) {
-					controlador.altaProducto(leerDatosAnyadir());
-					setTextFieldsEditable(false);
-					SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this,
-							"Se ha anyadido el nuevo producto", "Anyadir producto", JOptionPane.PLAIN_MESSAGE));
-
-				} else {
-					controlador.editarProducto(leerDatosEditar());
-					setTextFieldsEditable(false);
-					SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this,
-							"Los nuevos datos se han guardado", "Editar producto", JOptionPane.PLAIN_MESSAGE));
-				}
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "El formato de alguno de los datos es incorrecto.",
-						"Error de formato", JOptionPane.ERROR_MESSAGE);
-			}
+		} else if (datosCorrectos()) {
+			editarCrearAux();
 		} else {
-			JOptionPane.showMessageDialog(this, "Datos incompletos", "Error", JOptionPane.ERROR_MESSAGE);
+			String mensaje;
+			if (nuevoProducto) {
+				mensaje = "Todos los campos deben estar completos."
+						+ "\nEl id debe ser diferente a los productos ya existentes."
+						+ "\nEl stock y el precio deben ser números no negativos.";
+			} else {
+				mensaje = "Todos los campos deben estar completos."
+						+ "\nEl stock y el precio deben ser números no negativos.";
+			}
+			JOptionPane.showMessageDialog(this, mensaje, "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * Método auxiliar para editar o crear un {@link Producto}.
+	 */
+	private void editarCrearAux() {
+		try {
+			if (nuevoProducto) {
+				controlador.altaProducto(leerDatosAnyadir());
+				setTextFieldsEditable(false);
+				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Se ha anyadido el nuevo producto",
+						"Anyadir producto", JOptionPane.PLAIN_MESSAGE));
+
+			} else {
+				controlador.editarProducto(leerDatosEditar());
+				setTextFieldsEditable(false);
+				SwingUtilities.invokeLater(() -> JOptionPane.showConfirmDialog(this, "Los nuevos datos se han guardado",
+						"Editar producto", JOptionPane.PLAIN_MESSAGE));
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El formato de alguno de los datos es incorrecto.", "Error de formato",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
